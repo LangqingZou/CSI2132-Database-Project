@@ -5,12 +5,13 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta http-equiv="Content-Language" content="ch-cn">
 </head>
-<body>
-	<p style="text-align: center;">Host Menu</p>
-		<div id="" style = "margin-left: 42%">
-			<button type="button" ><a href="PropertyList.jsp">My Property List</a></button>
-			<button type="button"><a href="RetalAgreementList.jsp">My rental Agreement</a></button>
-			
-		</div>
-</body>
+	<body>
+		<form method="post" action="hostmenu">
+			<p style="text-align: center;">Host Menu</p>
+			<div id="" style = "margin-left: 42%">
+				<button type="button" ><a href="PropertyList.jsp">My Property List</a></button>
+				<button type="button"><a href="RetalAgreementList.jsp">My rental Agreement</a></button>		
+			</div>
+		</form>>
+	</body>
 </html>
