@@ -29,16 +29,8 @@ public class HostMenuServlet extends HttpServlet{
 		String phoneNumber = req.getParameter("phonenumber");
 		String email = req.getParameter("email");
 		
-		String[] info = new String[5];
-		ps = db.prepareStatement("select * from project.Person where email = email");
-		rs = ps.executeQuery();
-		while(rs.next()){
-			String room_no = rs.getString("room_no");
-			String room_status = rs.getString("room_status");
-			Room room = new Room(room_no, room_status);
-			Rooms.add(room);
-		}
-		
+		String[] info = (String[]) req.getAttribute("accinfo");
+		System.out.println(info);
 	}
 	
 }
