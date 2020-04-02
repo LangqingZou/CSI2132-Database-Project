@@ -22,7 +22,7 @@ public class EmployeeConn extends DBConnect{
 	public int createEmployee(Employee employee) {
 		try {
 			//connectDB();
-			sql = "insert into project.Employee values(?,?,?)";
+			sql = "insert into project.Employee(PID,position,salary) values(?,?,?)";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, employee.getPID());
 			//preparedStatement.setInt(2, employee.getEmployID());

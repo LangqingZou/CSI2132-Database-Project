@@ -167,10 +167,8 @@ public class  PostgreSqlConn{
 				e.printStackTrace();
 			} finally {
 	        	closeDB();
-	        }
-						
+	        }	
 			return Rooms;
-			
 		}
 		
 		public String bookRoom(String custName, String roomno){

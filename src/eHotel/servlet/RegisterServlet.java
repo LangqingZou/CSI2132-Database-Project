@@ -30,69 +30,51 @@ public class RegisterServlet extends HttpServlet{
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		String custFirstName = req.getParameter("firstname");
-		String custLastName = req.getParameter("lastname");
-		String custAddress = req.getParameter("address");
-		String custPhoneNumber = req.getParameter("phonenumber");
-		String custEmail = req.getParameter("email");
-		String cusPassword = req.getParameter("password");
-		String custPosition = req.getParameter("position");
-		String custSalary = req.getParameter("salary");
-		String custPwd = req.getParameter("custPwd");
-		String roleBtn = req.getParameter("Role");
-		
-		// System.out.println(custEmail);
+		String firstName = req.getParameter("firstname");
+		String lastName  = req.getParameter("lastname");
+		String address = req.getParameter("address");
+		String phone = req.getParameter("phonenumber");
+		String pwd = req.getParameter("pwd");
+		String pwdAgain = req.getParameter("pwdAgain");
+		String position = req.getParameter("position");
+		String salary = req.getParameter("salary");
+		String email = req.getParameter("email");
+		String role = req.getParameter("role");
 		
 		// Establish connection
 		DBConnect dbConnect = new DBConnect();
 	
 		// Check if email already exist
 		PersonConn pconn = new PersonConn(dbConnect);
-		if(pconn.checkPersonExist(custEmail)) {
-			req.setAttribute("email", custEmail);
-			req.getRequestDispatcher("register_fail.jsp").forward(req, resp);
-			return;
-		}
-		
-		//insert into table Person
-		Person p = new Person(100,custFirstName,custLastName,custAddress,custPhoneNumber,custEmail,custPwd);
-		int newPID = pconn.createPerson(p);
 
-		switch (roleBtn.toString()) {
-		case "host":
-			Host host = new Host(newPID,-1);
-			HostConn hconn = new HostConn(dbConnect);
-			hconn.createHost(host);
-		case "emp":
-			Employee e = new Employee(newPID, -1, custPosition, custSalary);
-			if((custPosition != "") && (custSalary != "")) {
-				EmployeeConn econn = new EmployeeConn(dbConnect);
-				econn.createEmployee(e);
+		//insert into table Person
+		Person p = new Person(100,firstName,lastName,address,phone,email,pwd);
+		int newPID = pconn.createPerson(p);
+		
+		System.out.println("Local PID:" + p.getPID()+ "DB PID:" + newPID);
+		
+		if (newPID == -1) {
+			session.setAttribute("emailAlert", "true");
+			resp.sendRedirect("Register.jsp");
+			return;
+		}else {
+			switch (role) {
+			case "host":
+				Host host = new Host(newPID,-1);
+				HostConn hconn = new HostConn(dbConnect);
+				hconn.createHost(host);
+			case "emp":
+				Employee e = new Employee(newPID, -1, position, salary);
+				if((position != "") && (salary != "")) {
+					EmployeeConn econn = new EmployeeConn(dbConnect);
+					econn.createEmployee(e);
+				}
+			case "guest":
+				Guest guest = new Guest(newPID,-1);
+				GuestConn gconn = new GuestConn(dbConnect);
+				gconn.createGuest(guest);
 			}
-		case "guest":
-			Guest guest = new Guest(newPID,-1);
-			GuestConn gconn = new GuestConn(dbConnect);
-			gconn.createGuest(guest);
 		}
-		
-		System.out.println(p.getPID()+ " " + newPID);
-		
-		if (newPID != 0) {			
-				System.out.println("Responsed pid: " + newPID);
-//				ArrayList<Room> bookedRooms = con.getbookedRooms(custSSN);
-//				
-//				ArrayList<Room> allRooms = con.getAllAvailRooms();
-//				
-//				System.out.println(allRooms);
-//				
-//				req.setAttribute("CustName", custName);
-//				req.setAttribute("bookedRooms", bookedRooms);
-//				req.setAttribute("allRooms", allRooms);
-//				req.getRequestDispatcher("register.jsp").forward(req, resp);
-				resp.sendRedirect("Login.html");
-				return;			
-		}
-		resp.sendRedirect("register_fail.jsp");
 		
 		// Close connection
 		dbConnect.closeDB();

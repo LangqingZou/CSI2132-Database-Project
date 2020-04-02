@@ -24,7 +24,7 @@ public class PersonConn{
 	public int createPerson(Person person) {
 		try {
 			if(checkPersonExist(person.getEmail())) {
-				return 0;
+				return -1;
 			}
 			sql = "insert into project.Person(FirstName,LastName,Address,Email,PhoneNumber,password) values(?,?,?,?,?,?) returning PID";
 			preparedStatement = db.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class PersonConn{
 		} catch (SQLException e) {
 			System.out.println("Person creation error.");
 			e.printStackTrace();
-			return 0;
+			return -1;
 		}
 				
 	}
@@ -63,39 +63,24 @@ public class PersonConn{
 			e.printStackTrace();
 			return false;
 		}
-		
 	}
 	
-	public boolean checkPwd(String email, String pwdEntered){
-		String pwdDB = "";
+	public String[] getInfo(String email){
+		String[] info = new String[7];
+
         try{
-        	preparedStatement = db.prepareStatement("select password from project.person where email = ?");
-        	preparedStatement.setString(1, email);              
+        	preparedStatement = db.prepareStatement("select * from project.person where email = ?");
+        	preparedStatement.setString(1, email); 
         	resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				pwdDB = resultSet.getString(1);
+				for (int index = 0; index < info.length; index++) {
+					info[index] = resultSet.getString(index+1);
+				}
 			}
-			System.out.println("Pwd from DB:" + pwdDB + " : " + "Pwd from user:" + pwdEntered);
         }catch(SQLException e){
-        	System.out.println("Password checking error.");
+        	System.out.println("Info getting error.");
             e.printStackTrace();
         }
-		return pwdDB.equals(pwdEntered);       
+		return info;       
     }
-	
-//	public boolean findPerson(Person person) {
-//		try {
-//			sql = "select * from person where PID = ?";
-//			preparedStatement = db.prepareStatement(sql);
-//			resultSet = preparedStatement.executeQuery();
-//			if (resultSet.next()) {
-//				return true;
-//			}
-//			return false;
-//		} catch (SQLException e) {
-//			// Auto-generated catch block
-//			e.printStackTrace();
-//			return false;
-//		}s
-//	}
 }

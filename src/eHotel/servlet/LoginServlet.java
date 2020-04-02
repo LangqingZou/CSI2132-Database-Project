@@ -22,57 +22,34 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
+	//handle the http post request
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		HttpSession session = req.getSession();
-		
+		//connect the database if there exist the action
 		DBConnect dbConnect = new DBConnect();
+		//everything contained in form called parameter which is not null
+		//while attributes is null at the beginning until setAttribute() was called
 		String email = req.getParameter("Email");
 		String pwd = req.getParameter("pwd");
 		
 		PersonConn pconn = new PersonConn(dbConnect);
+		String[] infoDB = pconn.getInfo(email);
+		String pwdDB = infoDB[6];
 		
 		// Check password
-		if(pconn.checkPwd(email, pwd)) {
-			req.getRequestDispatcher("login_success.jsp").forward(req, resp);
+		if(pwdDB.equals(pwd)) {
+			//req.setAttribute(Tagname,Value) 
+			//session.setAttribute(Tagname,Value) wrong: we want to carry the req to the next page, while 
+			//session will finish in the current page
+			req.setAttribute("accinfo", infoDB);
+			//req.getRequestDispatcher(next page).forward(req, resp);  -> moveforward to the next page
+			req.getRequestDispatcher("HostMenu.jsp").forward(req, resp);
 		}else {
-			resp.sendRedirect("login_failure.jsp");
+			session.setAttribute("pwdAlert", "true");
+			//resp.sendRedirect("move back to the last page");
+			resp.sendRedirect("Login.jsp");
 		}
 		dbConnect.closeDB();
 		
-//		try {
-//			lconn = new LoginConn();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		if(lconn.checkLoginPassword(email, pwd)) {
-//			Login login = new Login(email,pwd);
-//			int row  = lconn.insertLoginInfo(login);
-//			resp.sendRedirect("login_success.jsp");
-//		} 
-//		else resp.sendRedirect("login_failure.jsp");
-		
-//		employee account = new employee();
-//		String userSSN = req.getParameter("userSSN");
-//		[0]:name,[1]:pwd
-//		PostgreSqlConn con = new PostgreSqlConn();
-//		String[] pwdfromdb = con.getuserinforbycustSSN(email);
-//		
-//		if (pwd.equals(pwdfromdb[1])) {			
-//			
-//			ArrayList<Room> bookedRooms = con.getbookedRooms(userSSN);
-//			
-//			ArrayList<Room> allRooms = con.getAllAvailRooms();
-//			
-//			
-//			req.setAttribute("CustName", pwdfromdb[0]);
-//			req.setAttribute("bookedRooms", bookedRooms);
-//			req.setAttribute("allRooms", allRooms);
-//
-//			req.getRequestDispatcher("booking.jsp").forward(req, resp);
-//			return;	
-//		}
-//		resp.sendRedirect("login_failure.jsp");
-//		return;
 	}
 }
