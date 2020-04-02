@@ -23,7 +23,8 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	//handle the http post request
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
+		//the lifecircle of session will be ended when user leave about 20 mins
 		HttpSession session = req.getSession();
 		//connect the database if there exist the action
 		DBConnect dbConnect = new DBConnect();
@@ -41,12 +42,13 @@ public class LoginServlet extends HttpServlet {
 			//req.setAttribute(Tagname,Value) 
 			//session.setAttribute(Tagname,Value) wrong: we want to carry the req to the next page, while 
 			//session will finish in the current page
-			req.setAttribute("accinfo", infoDB);
-			//req.getRequestDispatcher(next page).forward(req, resp);  -> moveforward to the next page
-			req.getRequestDispatcher("HostMenu.jsp").forward(req, resp);
+			session.setAttribute("accinfo", infoDB);
+			
+			resp.sendRedirect("HostMenu.jsp");
 		}else {
 			session.setAttribute("pwdAlert", "true");
-			//resp.sendRedirect("move back to the last page");
+			//req.getRequestDispatcher(next page).forward(req, resp);  -> url unchanged
+			//resp.sendRedirect("move back to the last page"); -> url change and request cannot be shared
 			resp.sendRedirect("Login.jsp");
 		}
 		dbConnect.closeDB();

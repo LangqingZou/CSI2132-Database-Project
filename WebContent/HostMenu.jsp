@@ -9,10 +9,10 @@
 	</script>
 </head>
 	<body>
-		<form method="post" action="hostmenu" onSubmit=true>
+		<form method="post" action="hostmenu">
 			<p style="text-align: center;">Host Menu</p>
 			<div id="" style = "margin-left: 42%">
-				<button type="Submit"><a href="PropertyList.jsp">My Property List</a></button>
+				<button type="Submit"><a href="PropertyList.jsp"</a>My Property Lis</button>
 				<button type="Submit"><a href="RetalAgreementList.jsp">My rental Agreement</a></button>		
 			</div>
 		</form>>

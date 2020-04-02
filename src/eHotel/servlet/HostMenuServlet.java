@@ -29,7 +29,8 @@ public class HostMenuServlet extends HttpServlet{
 		String phoneNumber = "";
 		String email = "";
 		
-		String[] info = (String[]) req.getAttribute("accinfo");
-		System.out.println(info);
+		String[] info = (String[]) session.getAttribute("accinfo");
+		
+		System.out.println(info[1]);
 	}
 }

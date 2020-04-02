@@ -57,24 +57,24 @@ public class RegisterServlet extends HttpServlet{
 			session.setAttribute("emailAlert", "true");
 			resp.sendRedirect("Register.jsp");
 			return;
-		}else {
-			switch (role) {
-			case "host":
-				Host host = new Host(newPID,-1);
-				HostConn hconn = new HostConn(dbConnect);
-				hconn.createHost(host);
-			case "emp":
-				Employee e = new Employee(newPID, -1, position, salary);
-				if((position != "") && (salary != "")) {
-					EmployeeConn econn = new EmployeeConn(dbConnect);
-					econn.createEmployee(e);
-				}
-			case "guest":
-				Guest guest = new Guest(newPID,-1);
-				GuestConn gconn = new GuestConn(dbConnect);
-				gconn.createGuest(guest);
-			}
 		}
+		switch (role) {
+		case "host":
+			Host host = new Host(newPID,-1);
+			HostConn hconn = new HostConn(dbConnect);
+			hconn.createHost(host);
+		case "emp":
+			Employee e = new Employee(newPID, -1, position, salary);
+			if((position != "") && (salary != "")) {
+				EmployeeConn econn = new EmployeeConn(dbConnect);
+				econn.createEmployee(e);
+			}
+		case "guest":
+			Guest guest = new Guest(newPID,-1);
+			GuestConn gconn = new GuestConn(dbConnect);
+			gconn.createGuest(guest);
+		}
+		resp.sendRedirect("Login.jsp");
 		
 		// Close connection
 		dbConnect.closeDB();
