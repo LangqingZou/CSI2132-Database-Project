@@ -7,14 +7,13 @@
 	<script type="text/javascript">
 		
 	</script>
-	
 </head>
 	<body>
-		<form method="post" action="hostmenu">
+		<form method="post" action="hostmenu" onSubmit=true>
 			<p style="text-align: center;">Host Menu</p>
 			<div id="" style = "margin-left: 42%">
-				<button type="button" ><a href="PropertyList.jsp">My Property List</a></button>
-				<button type="button"><a href="RetalAgreementList.jsp">My rental Agreement</a></button>		
+				<button type="Submit"><a href="PropertyList.jsp">My Property List</a></button>
+				<button type="Submit"><a href="RetalAgreementList.jsp">My rental Agreement</a></button>		
 			</div>
 		</form>>
 	</body>
