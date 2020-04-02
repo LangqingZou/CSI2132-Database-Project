@@ -31,16 +31,16 @@
 		button {margin:0 10 0 10}
 	</style>
 </head>
-<body>
-	<h2>Login Page</h2>
-	<div>
-		<!-- when we click SUBMIT, only "return validate();" is true, the form will be submited -->		
-		<form method="post" action="login" onSubmit="return validate();">  <!--cuslogin is here -->
-			Email:<input type="text" id="email" name="Email"><br><br>
-			Password:<input type="password" id="pass" name="pwd"><br><br>
-			<button type="Submit" value="Login">Login</button>
-		</form>
-		<button type="button"  value="Register"><a href="Register.jsp">Register</a></button>
-	</div>
-</body>
+	<body>
+		<h2>Login Page</h2>
+		<div>
+			<!-- when we click SUBMIT, only "return validate();" is true, the form will be submited -->		
+			<form method="post" action="login" onSubmit="return validate();">  <!--cuslogin is here -->
+				Email:<input type="text" id="email" name="Email"><br><br>
+				Password:<input type="password" id="pass" name="pwd"><br><br>
+				<button type="Submit" value="Login">Login</button>
+			</form>
+			<button type="button"  value="Register"><a href="Register.jsp">Register</a></button>
+		</div>
+	</body>
 </html>

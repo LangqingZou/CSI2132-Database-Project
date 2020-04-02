@@ -23,14 +23,13 @@ public class HostMenuServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
 		
-		String firstName = req.getParameter("firstname");
-		String lastName = req.getParameter("lastname");
-		String address = req.getParameter("address");
-		String phoneNumber = req.getParameter("phonenumber");
-		String email = req.getParameter("email");
+		String firstName = "";
+		String lastName = "";
+		String address = "";
+		String phoneNumber = "";
+		String email = "";
 		
 		String[] info = (String[]) req.getAttribute("accinfo");
 		System.out.println(info);
 	}
-	
 }
