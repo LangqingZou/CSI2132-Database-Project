@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+	id="WebApp_ID" 
+	version="3.0">
+ <display-name>jspServletLoginTest</display-name>
+ <servlet>
+  	<description></description>
+	<display-name>emplogin</display-name>
+  	<servlet-name>emploginServlet</servlet-name>
+  	<servlet-class>eHotel.servlet.EmployeeloginServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>emploginServlet</servlet-name>
+  	<url-pattern>/emplogin</url-pattern>
+ </servlet-mapping>
+ 
+ <!-- add a customer register servlet here add a new customer in customer table -->
+ <servlet>
+ 	<description></description>
+ 	<display-name>register</display-name>
+ 	<servlet-name>regServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.RegisterServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>regServlet</servlet-name>
+  	<url-pattern>/Register</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+ 	<description></description>
+ 	<display-name>login</display-name>
+ 	<servlet-name>loginServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.LoginServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>loginServlet</servlet-name>
+  	<url-pattern>/Login</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+ 	<description></description>
+ 	<display-name>roombook</display-name>
+ 	<servlet-name>roombookServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.RoombookServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>roombookServlet</servlet-name>
+  	<url-pattern>/roombook</url-pattern>
+ </servlet-mapping>
+ 
+ <welcome-file-list>
+  	<welcome-file>Login.html</welcome-file>
+ </welcome-file-list>
+</web-app>

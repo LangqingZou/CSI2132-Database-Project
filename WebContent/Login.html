@@ -1,0 +1,37 @@
+<!DOCTYPE unspecified PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title>Login</title>
+	<meta charset="UTF-8">
+	<script>
+		function validate() {
+			var email = document.getElementById("email");
+			var pass = document.getElementById("pass");
+			if(email.value == ""){
+				alert("email can't be null");
+				return false;
+			} else if(pass.value == "") {
+				alert("password can't be null");
+				return false;
+			}else return true;
+		}
+	</script>
+	<style type="text/css">
+		button {margin:0 10 0 10}
+	</style>
+</head>
+<body>
+	<h2>Login Page</h2>
+	<div>		
+		<form method="post" action="Login">  <!--cuslogin is here -->
+			Email:<input type="text" id="email" name="Email"><br><br>
+			Password:<input type="password" id="pass" name="pwd"><br><br>
+			<!--button type="Submit" value="Register" onclick="location.href='Register.html'">Register</button>-->
+			<button type="Submit" value="Login" onclick="return validate();">Login</button>
+		</form>
+		<button type="button"  value="Register"><a href="Register.html">Register</a></button>
+	</div>
+</body>
+
+
+</html>
