@@ -7,8 +7,7 @@ Login.html:
 	<button>:
 		login -> 
 			(fail ?) login_fail.jsp : 
-				(if Host) HostMenu.jsp
-				(if Guest) GuestMenu.jsp
+				(if Host or Guest) Menu.jsp
 				(if Employee) EmployeeMenu.jsp
 		register -> register.html
 		
@@ -21,16 +20,18 @@ register.html
 			(fail ?) register_fail.jsp : login.html
 		reset   //reset all input
 
-HostMenu.jsp:
+
+Menu.jsp:
 	Info:
-		Account info:
-			name
-			address
+		 info:
+			Name
 			...
 	<button>:
-		My Property list -> PropertyList.jsp
-		My rental agree -> RetalAgreementList.jsp
-
+		My rental agreement -> RetalAgreementList.jsp
+		My propertyList -> myPropertyList.jsp
+		add property -> Addproperty.jsp
+		Book a Room -> PropertyList.jsp
+		
 PropertyList.jsp
 	Info:
 		All property info:
@@ -75,14 +76,7 @@ Pay.html:
 	<button>:
 		Pay
 
-GuestMenu.jsp:
-	Info:
-		Guest info:
-			Name
-			...
-	<button>:
-		My rental agreement -> RetalAgreementList.jsp
-		Book a Room -> PropertyList.jsp
+
 	
 	
 	
