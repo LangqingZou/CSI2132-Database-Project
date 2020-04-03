@@ -6,6 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import org.eclipse.jdt.internal.compiler.classfmt.NonNullDefaultAwareTypeAnnotationWalker;
+
+import com.oracle.wls.shaded.org.apache.bcel.generic.NEW;
 
 import eHotel.entities.Property;
 
@@ -52,6 +57,25 @@ public class PropertyConn {
 			e.printStackTrace();
 			return false;
 		}
+		
+	}
+	
+	public String[] getpropertyInfo(int idpr) {
+		String[] propertyInfo = new String[7];
+		try {
+			preparedStatement = db.prepareStatement("select * from project.property where IDH = ?");
+			preparedStatement.setInt(1, idpr);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				for(int i = 0;i<propertyInfo.length;i++) {
+					propertyInfo[i] = resultSet.getString(i);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return propertyInfo;
 		
 	}
 	

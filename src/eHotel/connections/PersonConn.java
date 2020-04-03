@@ -10,10 +10,10 @@ import eHotel.connections.DBConnect;
 import eHotel.entities.Person;
 
 public class PersonConn{
-
+	
 	private String sql;
-	private Statement st = null;
 	private Connection db;
+	private Statement st = null;
 	private ResultSet resultSet = null;
 	private PreparedStatement preparedStatement = null;
 	
@@ -83,4 +83,21 @@ public class PersonConn{
         }
 		return info;       
     }
+	
+	public int getPID(String email) {
+		int pid = 0;
+		try {
+			preparedStatement = db.prepareStatement("select * from project.person where email = ?");
+			preparedStatement.setString(1, email);
+	    	resultSet = preparedStatement.executeQuery();
+	    	pid = resultSet.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("PID getting error.");
+			e.printStackTrace();
+		}
+		return pid;
+    	
+	}
+	
+	
 }

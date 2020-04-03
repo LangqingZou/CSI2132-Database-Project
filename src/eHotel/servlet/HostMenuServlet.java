@@ -9,7 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.jdt.internal.compiler.lookup.ImplicitNullAnnotationVerifier;
+
 import eHotel.connections.DBConnect;
+import eHotel.connections.HostConn;
+import eHotel.connections.PersonConn;
+import eHotel.connections.PropertyConn;
 import eHotel.entities.Room;
 
 public class HostMenuServlet extends HttpServlet{
@@ -23,14 +28,32 @@ public class HostMenuServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
 		
-		String firstName = "";
-		String lastName = "";
-		String address = "";
-		String phoneNumber = "";
-		String email = "";
+		String role = req.getParameter("");
 		
+	    HostConn hConn = new HostConn(dbConnect);
+	    PropertyConn propertyConn = new PropertyConn(dbConnect);
 		String[] info = (String[]) session.getAttribute("accinfo");
+		int pidDB = Integer.parseInt(info[0]);
+		int hidDB = hConn.getHID(pidDB);
 		
-		System.out.println(info[1]);
+		//My Property List
+		ArrayList<String[]> myPropertyList = hConn.getPropertyList(hidDB);
+		session.setAttribute("propertyList", myPropertyList);
+		System.out.print(myPropertyList);
+		
+		
+		resp.sendRedirect("PropertyList.jsp");
+		
+		//My retal Agreement
+		int idraDB = hConn.getIdraFromRetalAgreement(hidDB);
+		int idprDB = hConn.getIdprFromRetalAgreement(idraDB);
+		String[] propertyInfo = propertyConn.getpropertyInfo(idprDB);
+		
+		
+		
+		
+		
+		
+		
 	}
 }

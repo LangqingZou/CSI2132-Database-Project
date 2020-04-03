@@ -36,6 +36,9 @@ public class LoginServlet extends HttpServlet {
 		PersonConn pconn = new PersonConn(dbConnect);
 		String[] infoDB = pconn.getInfo(email);
 		String pwdDB = infoDB[6];
+		int pidDB = Integer.parseInt(infoDB[0]);
+		
+		
 		
 		// Check password
 		if(pwdDB.equals(pwd)) {
