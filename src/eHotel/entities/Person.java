@@ -19,7 +19,7 @@ public class Person {
 		password = "";
 	}
 	
-	public Person(int pid, String firstName, String lastName, String address, String email,String phone,String password) {
+	public Person(int pid, String email, String password, String firstName, String lastName, String address, String phone) {
 		this.pid = pid;
 		this.email = email;
 		this.password = password;

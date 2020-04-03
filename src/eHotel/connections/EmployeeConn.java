@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import eHotel.entities.Employee;
 import eHotel.connections.DBConnect;
 
-public class EmployeeConn implements DBRequest {
+public class EmployeeConn {
 	
 	private String sql;
 	private Connection db;

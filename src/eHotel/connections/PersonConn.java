@@ -9,17 +9,20 @@ import java.sql.Statement;
 import eHotel.connections.DBConnect;
 import eHotel.entities.Person;
 
-public class PersonConn implements DBRequest{
+public class PersonConn {
 	
 	private String sql;
 	private Connection db;
 	private ResultSet resultSet;
 	private PreparedStatement preparedStatement;
 	
+	private Person person;
+	
 	/*
 	 * Constructor
 	 */
 	public PersonConn(DBConnect dbConnect) {
+		person = new Person();
 		db = dbConnect.getConnection();
 	}
 	
@@ -31,33 +34,33 @@ public class PersonConn implements DBRequest{
 	 * 
 	 * @return int
 	 */
-	public int getID(String email) {
-		int pid = -1;
+	public int getPID(String email) {
 		try {
-			preparedStatement = db.prepareStatement("select * from project.person where email = ?");
+			preparedStatement = db.prepareStatement("select pid from project.person where email = ?");
 			preparedStatement.setString(1, email);
 	    	resultSet = preparedStatement.executeQuery();
-	    	pid = resultSet.getInt(1);
+	    	person.setPID(resultSet.getInt(1));
 		} catch (SQLException e) {
-			System.out.println("PID getting error.");
+			System.out.println("Error while getting PID.");
 			e.printStackTrace();
 		}
-		return pid;
+		return person.getPID();
 	}
 	
 	/*
 	 * @Description 
-	 * 		Insert new person in to database, return -1 if insertion failed
+	 * 		Insert new person into database, return false if insertion failed or person already existed
 	 * 
 	 * @param Person
 	 * 
-	 * @return int
+	 * @return boolean
 	 */
-	public int insertNew(Person person) {
+	public boolean insertNew(Person person) {
 		try {
-			if(checkExistence(person.getEmail())) {
-				return -1;
+			if(getPID(person.getEmail()) == -1) {
+				return false;
 			}
+			
 			sql = "insert into project.Person(email,password,firstName,lastName,address,phone) values(?,?,?,?,?,?) returning pid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setString(1, person.getEmail());
@@ -70,66 +73,46 @@ public class PersonConn implements DBRequest{
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				person.setPID(resultSet.getInt(1));
+				this.person = person;
+				return true;
 			}
-			return person.getPID();
+			
+			return false;
+			
 		} catch (SQLException e) {
 			System.out.println("Error while inserting new person.");
-			e.printStackTrace();
-			return -1;
-		}
-	}
-	
-	/*
-	 * @Description 
-	 * 		Check the existence of the entered email in database, return false if the email already exist
-	 * 
-	 * @param String
-	 * 
-	 * @return boolean
-	 */
-	public boolean checkExistence(String email) {
-		try {
-			sql = "select pid from project.person where email = ?";
-			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setString(1, email);
-			resultSet = preparedStatement.executeQuery();
-			
-			if(!resultSet.next()) {
-				return false;
-			}
-			
-			return true;
-		}catch (SQLException e) {
-			System.out.println("Error while checking person existence.");
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
+		
 	/*
 	 * @Description 
-	 * 		Return the info of the entered email in database, return null if the email is invalid
+	 * 		Return the a Person found by the email, return null if the email is invalid
 	 * 
 	 * @param String
 	 * 
-	 * @return String[]
+	 * @return Person
 	 */
-	public String[] getInfo(String email){
-		String[] info = new String[7];
-
+	public Person getPerson(String email){
         try{
         	preparedStatement = db.prepareStatement("select * from project.person where email = ?");
         	preparedStatement.setString(1, email); 
         	resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				for (int index = 0; index < info.length; index++) {
-					info[index] = resultSet.getString(index+1);
-				}
+				person.setPID(resultSet.getInt(1));
+				person.setEmail(resultSet.getString(2));
+				person.setPassword(resultSet.getString(3));
+				person.setFirstName(resultSet.getString(4));
+				person.setLastName(resultSet.getString(5));
+				person.setAddress(resultSet.getString(6));
+				person.setPhone(resultSet.getString(7));
 			}
         }catch(SQLException e){
-        	System.out.println("Person info getting error.");
+        	System.out.println("Error while getting person.");
             e.printStackTrace();
+            return null;
         }
-		return info;       
+		return person;       
     }	
 }

@@ -13,7 +13,7 @@ import org.eclipse.jdt.internal.compiler.lookup.ImplicitNullAnnotationVerifier;
 import eHotel.entities.Guest;
 import eHotel.entities.Host;
 
-public class HostConn implements DBRequest {
+public class HostConn {
 	
 	private String sql;
 	private Connection db;
