@@ -48,6 +48,7 @@ public class HostMenuServlet extends HttpServlet{
 		int idraDB = hConn.getIdraFromRetalAgreement(hidDB);
 		int idprDB = hConn.getIdprFromRetalAgreement(idraDB);
 		String[] propertyInfo = propertyConn.getpropertyInfo(idprDB);
+		session.setAttribute("retalAgreeProperty", propertyInfo);
 		
 		
 		

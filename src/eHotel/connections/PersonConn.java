@@ -99,5 +99,19 @@ public class PersonConn{
     	
 	}
 	
+	public int getHID(int pid) {
+		int hid = 0;
+		try {
+			preparedStatement = db.prepareStatement("select idh from project.host where pid = ?");
+			preparedStatement.setInt(1, pid);
+			resultSet = preparedStatement.executeQuery();
+			hid = resultSet.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return hid;
+	}
+	
 	
 }

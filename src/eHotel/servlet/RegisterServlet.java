@@ -60,7 +60,7 @@ public class RegisterServlet extends HttpServlet{
 		}
 		switch (role) {
 		case "host":
-			Host host = new Host(newPID,-1);
+		    Host host = new Host(newPID,-1);
 			HostConn hconn = new HostConn(dbConnect);
 			hconn.createHost(host);
 		case "emp":
