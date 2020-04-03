@@ -13,16 +13,40 @@ import org.eclipse.jdt.internal.compiler.lookup.ImplicitNullAnnotationVerifier;
 import eHotel.entities.Guest;
 import eHotel.entities.Host;
 
-public class HostConn extends DBConnect{
+public class HostConn implements DBRequest {
 	
-	private Connection db;
-	private PreparedStatement preparedStatement = null;
-	private Statement st = null;
 	private String sql;
-	private ResultSet resultSet = null;
+	private Connection db;
+	private ResultSet resultSet;
+	private PreparedStatement preparedStatement;
 	
+	/*
+	 * Constructor
+	 */
 	public HostConn(DBConnect dbConnect) {
 		db = dbConnect.getConnection();
+	}
+	
+	/*
+	 * @Description 
+	 * 		Get person's PID from database, return -1 if email not in person table
+	 * 
+	 * @param String
+	 * 
+	 * @return int
+	 */
+	public int getID(int pid) {
+		int hid = -1;
+		try {
+			preparedStatement = db.prepareStatement("select hid from project.host where pid = ?");
+			preparedStatement.setInt(1, pid);
+			resultSet = preparedStatement.executeQuery();
+			hid = resultSet.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("Error while getting hid.");
+			e.printStackTrace();
+		}
+		return hid;
 	}
 	
 	public int createHost(Host host) {
@@ -36,7 +60,7 @@ public class HostConn extends DBConnect{
 			}
 			return host.getIDH();
 		} catch (SQLException e) {
-			System.out.println("Host creation error.");
+			System.out.println("Error while inserting new host.");
 			e.printStackTrace();
 			return 0;
 		}

@@ -8,13 +8,16 @@ import java.sql.Statement;
 
 import eHotel.entities.Guest;
 
-public class GuestConn{
-	private Connection db;
-	private Statement st = null;
-	private String sql;
-	private ResultSet resultSet = null;
-	private PreparedStatement preparedStatement = null;
+public class GuestConn implements DBRequest {
 	
+	private String sql;
+	private Connection db;
+	private ResultSet resultSet;
+	private PreparedStatement preparedStatement;
+	
+	/*
+	 * Constructor
+	 */
 	public GuestConn(DBConnect dbConnect) {
 		db = dbConnect.getConnection();
 	}

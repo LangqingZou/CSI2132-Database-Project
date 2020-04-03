@@ -4,6 +4,11 @@ public class Guest extends Person{
 	private int pid;
 	private int gid;
 	
+	public Guest() {
+		super();
+		gid = -1;
+	}
+	
 	public Guest(int pid, int gid, String firstName, String lastName, String address, String email, String phone, String password) {
 		super(pid, firstName, lastName, address, email, phone, password);
 		this.pid = pid;

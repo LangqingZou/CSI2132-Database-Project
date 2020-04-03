@@ -8,13 +8,16 @@ import java.sql.SQLException;
 import eHotel.entities.Employee;
 import eHotel.connections.DBConnect;
 
-public class EmployeeConn extends DBConnect{
-	private Connection db;
-	private PreparedStatement preparedStatement = null;
-	private String sql;
-	private ResultSet resultSet = null;
-	//private boolean connected = false;
+public class EmployeeConn implements DBRequest {
 	
+	private String sql;
+	private Connection db;
+	private ResultSet resultSet;
+	private PreparedStatement preparedStatement;
+	
+	/*
+	 * Constructor
+	 */
 	public EmployeeConn(DBConnect dbConnect) {
 		db = dbConnect.getConnection();	
 	}

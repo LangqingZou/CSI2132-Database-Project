@@ -6,6 +6,11 @@ public class Employee extends Person {
 	private int salary;
 	private String position;
 	
+	public Employee() {
+		super();
+		eid = -1;
+	}
+	
 	public Employee(int pid, int eid, String firstName, String lastName, String address, String email, String phone, String password, String position, int salary) {
 		super(pid, firstName, lastName, address, email, phone, password);
 		this.pid = pid;
