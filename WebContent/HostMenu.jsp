@@ -11,18 +11,18 @@
 </head>
 	<body>
 		<form method="post" action="hostmenu">
-			<p style="text-align: center;">Host Menu</p>
-			<div id="" style = "margin-left: 42%">
+			<div style = "">
+				<p style="text-align: center;">Host Menu</p>
 				<hr>
 		        <%
 		        	//Get user info from session
 		            String[] info = (String[])session.getAttribute("accinfo");
-		        	//Loop info elems
-		            for(int i=0; i<info.length; i++)
-		            {
-		                String elem = info[i];
-		                out.println(elem + "<br>");
-		            }
+		        	//Display info
+		        	out.println("First Name: " + info[1] + "<br>");
+		        	out.println("Last Name: " + info[2] + "<br>");
+		        	out.println("Address: " + info[3] + "<br>");
+		        	out.println("Email Address: " + info[4] + "<br>");
+		        	out.println("Phone Number: " + info[5] + "<br>");
 		           %>
 		        <hr>
 				<button type="Submit"><a href="PropertyList.jsp"></a>My Properties</button>
