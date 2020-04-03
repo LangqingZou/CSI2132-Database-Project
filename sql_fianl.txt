@@ -1,96 +1,93 @@
 create table Person (
-	PID serial, 
-	FirstName varchar(255) NOT NULL,
-	LastName varchar(255), 
-	Address varchar(255) NOT NULL, 
-	Email varchar(255) NOT NULL, 
-	PhoneNumber varchar(255), 
+	pid serial, 
+	email varchar(255) NOT NULL, 
 	password varchar(10),
-	PRIMARY KEY(PID));
+	firstName varchar(255) NOT NULL,
+	lastName varchar(255) NOT NULL,
+	address varchar(255) NOT NULL,
+	phone varchar(255),
+	PRIMARY KEY(pid));
 	
 create table Host(
-	PID int, 
-	IDH serial,
-	PRIMARY KEY(PID,IDH));
+	hid serial,
+	pid int, 
+	PRIMARY KEY(hid));
 
 create table Guest(
-	PID int,
-	IDG serial,
-	PRIMARY KEY(PID,IDG));
+	gid serial,
+	pid int, 
+	PRIMARY KEY(gid));
 	
 create table Employee(
-	PID int NOT NULL,
-	EmployID serial,
-	Position varchar(255) NOT NULL, 
-	Salary varchar(20) NOT NULL, 
-	PRIMARY KEY(PID,EmployID));
+	eid serial,
+	pid int,
+	position varchar(255), 
+	salary varchar(20), 
+	PRIMARY KEY(eid));
 	
 create table Pricing(
-	IDPricing int NOT NULL,
-	Price int NOT NULL, 
-	RoomRule varchar(255), 
-	Amenity varchar(255), 
-	IDPR int,
-	PRIMARY KEY(IDPricing)
-	FOREIGN KEY (IDPR) REFERENCES Property(IDPR));
+	prcid serial,
+	price int, 
+	rule varchar(255), 
+	amenity varchar(255), 
+	PRIMARY KEY(prcid));
 
 create table Branch(
-	Country varchar(255) NOT NULL, 
-	PRIMARY KEY(Country));
+	country varchar(255) NOT NULL, 
+	PRIMARY KEY(country));
 
 create table Property(
-	IDPR serial, 
-	Address varchar(255) NOT NULL, 
-	PropertyType varchar(255) NOT NULL, 
-	Roomnumber int NOT NULL, 
-	Title varchar(255) NOT NULL, 
-	Country varchar(255) NOT NULL, 
-	IDH int,
-	PRIMARY KEY(IDPR),  
-	FOREIGN KEY (Country) REFERENCES Branch(Country)
-	FOREIGN KEY (IDH) REFERENCES Host(IDH));
+	proid serial, 
+	hid int,
+	prcid int,
+	title varchar(255), 
+	type varchar(255), 
+	address varchar(255) NOT NULL, 
+	numRoom int, 
+	country varchar(255) NOT NULL, 
+	PRIMARY KEY(proid),  
+	FOREIGN KEY (country) REFERENCES Branch(country),
+	FOREIGN KEY (hid) REFERENCES Host(hid)),
+	FOREIGN KEY (prcid) REFERENCES pricing(prcid));
 
 
 create table RetalAgreement(
-	IDRA int NOT NULL, 
-	StartDate date NOT NULL, 
-	EndDate date NOT NULL, 
-	IDG int NOT NULL, 
-	IDH int NOT NULL, 
-	IDP INT NOT NULL, 
-	PRIMARY KEY(IDRA), 
-	FOREIGN KEY (IDG) REFERENCES Guest(IDG),
-	FOREIGN KEY (IDP) REFERENCES Property(IDP), 
-	FOREIGN KEY (IDH) REFERENCES Host(IDH));
+	raid serial, 
+	proid int,
+	payid int,
+	gid int,
+	hid int,
+	startDate date NOT NULL, 
+	endDate date NOT NULL, 
+	approve varchar(10),
+	PRIMARY KEY(raid), 
+	FOREIGN KEY (proid) REFERENCES property(proid),
+	FOREIGN KEY (payid) REFERENCES payment(payid), 
+	FOREIGN KEY (gid) REFERENCES Guest(gid)),
+	FOREIGN KEY (hid) REFERENCES Host(hid))
 
 create table Payment(
-	IDRA int NOT NULL, 
-	IDPAY int NOT NULL, 
-	Amount int NOT NULL, 
-	PaymentType varchar(255) NOT NULL, 
-	Status varchar(255) NOT NULL, 
-	Approve varchar(10) NOT NULL, 
-	IDH int NOT NULL, 
-	PRIMARY KEY(IDRA,IDPAY), 
-	FOREIGN KEY (IDH) REFERENCES Host(IDH));
+	payid serial,
+	gid int,
+	amount int NOT NULL, 
+	payType varchar(255) NOT NULL, 
+	status varchar(255) NOT NULL, 
+	PRIMARY KEY(payid), 
+	FOREIGN KEY (gid) REFERENCES Guest(gid));
 
 create table Review(
-	IDR int NOT NULL, 
-	Rating int NOT NULL, 
-	Communication int NOT NULL, 
-	Cleanliness int NOT NULL, 
-	ReValue int NOT NULL, 
-	IDG int NOT NULL, 
-	IDP int NOT NULL, 
-	PRIMARY KEY(IDR), 
-	FOREIGN KEY (IDG) REFERENCES Guest(IDG), 
-	FOREIGN KEY (IDP) REFERENCES Property(IDP));
+	reid serial, 
+	proid int,
+	gid int,
+	rating int, 
+	communication int NOT NULL, 
+	cleanliness int NOT NULL, 
+	value int,  
+	PRIMARY KEY(reid), 
+	FOREIGN KEY (proid) REFERENCES property(proid), 
+	FOREIGN KEY (gid) REFERENCES Guest(gid));
 
-create table login(
-	username varchar(20) NOT NULL,
-	userpassword varchar(20) NOT NULL,
-	PID int NOT NULL,
-	PRIMARY KEY(username,userpassword),FOREIGN KEY(PID) REFERENCES Person (PID));
+
 
 
 
