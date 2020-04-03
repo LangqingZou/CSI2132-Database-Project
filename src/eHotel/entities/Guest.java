@@ -1,25 +1,26 @@
 package eHotel.entities;
 
-public class Guest {
-	private int PID;
-	private int IDG;
+public class Guest extends Person{
+	private int pid;
+	private int gid;
 	
-	public Guest(int PID, int IDG) {
-		this.PID = PID;
-		this.IDG = IDG;
+	public Guest(int pid, int gid, String firstName, String lastName, String address, String email, String phone, String password) {
+		super(pid, firstName, lastName, address, email, phone, password);
+		this.pid = pid;
+		this.gid = gid;
 	}
 	
 	public int getPID() {
-		return PID;
+		return pid;
 	}
-	public void setPID(int pID) {
-		PID = pID;
+	public void setPID(int pid) {
+		this.pid = pid;
 	}
-	public int getIDG() {
-		return IDG;
+	public int getGID() {
+		return gid;
 	}
-	public void setIDG(int iDG) {
-		IDG = iDG;
+	public void setGID(int gid) {
+		this.gid = gid;
 	}
 	
 

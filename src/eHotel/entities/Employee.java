@@ -1,42 +1,48 @@
 package eHotel.entities;
 
-public class Employee {
-	private int PID;
-	private int EmployID;
-	private String Position;
-	private String Salary;
+public class Employee extends Person {
+	private int pid;
+	private int eid;
+	private int salary;
+	private String position;
 	
-	public Employee(int PID, int EmployID, String Position, String Salary) {
-		this.PID = PID;
-		this.EmployID = EmployID;
-		this.Position = Position;
-		this.Salary = Salary;
+	public Employee(int pid, int eid, String firstName, String lastName, String address, String email, String phone, String password, String position, int salary) {
+		super(pid, firstName, lastName, address, email, phone, password);
+		this.pid = pid;
+		this.eid = eid;
+		this.salary = salary;
+		this.position = position;
 	}
 	
 	public int getPID() {
-		return PID;
+		return pid;
 	}
-	public void setPID(int pID) {
-		PID = pID;
+	
+	public void setPID(int pid) {
+		this.pid = pid;
 	}
-	public int getEmployID() {
-		return EmployID;
+	
+	public int getEID() {
+		return eid;
 	}
-	public void setEmployID(int employID) {
-		EmployID = employID;
+	
+	public void setEID(int eid) {
+		this.eid = eid;
 	}
+	
+	public int getSalary() {
+		return salary;
+	}
+	
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+	
 	public String getPosition() {
-		return Position;
+		return position;
 	}
+	
 	public void setPosition(String position) {
-		Position = position;
+		this.position = position;
 	}
-	public String getSalary() {
-		return Salary;
-	}
-	public void setSalary(String salary) {
-		Salary = salary;
-	}
-
-
 }
