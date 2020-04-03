@@ -1,0 +1,92 @@
+Login.html:
+	Info:
+		login title
+	<input>:
+		email
+		password
+	<button>:
+		login -> 
+			(fail ?) login_fail.jsp : 
+				(if Host or Guest) Menu.jsp
+				(if Employee) EmployeeMenu.jsp
+		register -> register.html
+		
+register.html
+	<input>:
+		name
+		...
+	<button>:
+		submit -> 
+			(fail ?) register_fail.jsp : login.html
+		reset   //reset all input
+
+
+Menu.jsp:
+	Info:
+		 info:
+			Name
+			...
+	<button>:
+		My rental agreement -> RetalAgreementList.jsp
+		My propertyList -> myPropertyList.jsp
+		add property -> Addproperty.jsp
+		Book a Room -> PropertyList.jsp
+		
+PropertyList.jsp
+	Info:
+		All property info:
+			(if Host): display "own"
+			title
+			price
+			address
+			...
+			
+	<button>:
+		Add Property -> AddProperty.html
+		(if Guest): Book 	// create rental agreement
+		Menu -> HostMenu.jsp
+
+RetalAgreementList.jsp
+	Info:
+		All related agreements info:
+			property name
+			(if Host): guest name
+			(if Guest): host name
+			payment status
+			approve status
+	<button>:
+		(if Host): Approve
+		(if Host): Disapprove
+		(if Guest): Pay	-> Pay.html
+
+AddProperty.html
+	<input>:
+		title
+		address
+		price
+		...
+	<button>:
+		Add
+
+Pay.html:
+	<input>:
+		Card Number
+	<Select>:
+		Payment Method
+	<button>:
+		Pay
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
