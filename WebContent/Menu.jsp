@@ -11,7 +11,7 @@
 	</script>
 </head>
 	<body>
-		<div style="margin: 0 400px 0 400px; text-align: center;">
+		<div style="margin: 0 40% 0 40%; text-align: center;">
 			<h1 style="text-align: center;"> Main Menu </h1>
 			<hr>
 			<div>

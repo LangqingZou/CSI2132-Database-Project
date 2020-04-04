@@ -32,12 +32,12 @@
 		<h2>Add Property</h2>
 		<div>		
 			<form method="post" action="addProperty" onSubmit="return validate();">
-				Title:<input type="text" id="title" name="title"><br><br>
-				Type:<input type="text" id="type" name="type"><br><br>
-				Address:<input type="text" id="address" name="address"><br><br>
-				NumRoom:<input type="text" id="numRoom" name="numRoom"><br><br>
-				Country:<input type="text" id="country" name="country"><br><br>
-				Price:<input type="text" id="price" name="price"><br><br>
+				Title:<br><input type="text" id="title" name="title"><br><br>
+				Type:<br><input type="text" id="type" name="type"><br><br>
+				Address:<br><input type="text" id="address" name="address"><br><br>
+				NumRoom:<br><input type="number" id="numRoom" name="numRoom"><br><br>
+				Country:<br><input type="text" id="country" name="country"><br><br>
+				Price:<br><input type="number" id="price" name="price"><br><br>
 				<button type="Submit" value="Login" id="confirm">Confirm</button>
 				<button type="button" value="Login" id="confirm" href="Menu.jsp">Return</button>
 			</form>
