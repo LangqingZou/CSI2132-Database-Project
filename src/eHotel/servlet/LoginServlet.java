@@ -11,7 +11,8 @@ import javax.servlet.http.HttpSession;
 import eHotel.connections.DBConnect;
 import eHotel.connections.LoginConn;
 import eHotel.connections.PersonConn;
-import eHotel.entities.Login;
+import eHotel.entities.Person;
+
 
 
 public class LoginServlet extends HttpServlet {
@@ -34,12 +35,24 @@ public class LoginServlet extends HttpServlet {
 		String pwd = req.getParameter("pwd");
 		
 		PersonConn pconn = new PersonConn(dbConnect);
-		String[] infoDB = pconn.getInfo(email);
-		String pwdDB = infoDB[6];
-		int pidDB = Integer.parseInt(infoDB[0]);
+		Person person = new Person();
+		person = pconn.getPerson(email);
+		String pwdDB = person.getPassword();
 		
+		if(pwdDB.equals(pwd)) {
+			session.setAttribute("loginPerson", person);
+			resp.sendRedirect("Menu.jsp");
+		}else {
+			session.setAttribute("pwdAlert", "true");
+			//req.getRequestDispatcher(next page).forward(req, resp);  -> url unchanged
+			//resp.sendRedirect("move back to the last page"); -> url change and request cannot be shared
+			resp.sendRedirect("Login.jsp");
+		}
+		dbConnect.closeDB();
+	}
 		
-		
+}		
+/*		
 		// Check password
 		if(pwdDB.equals(pwd)) {
 			//req.setAttribute(Tagname,Value) 
@@ -55,6 +68,5 @@ public class LoginServlet extends HttpServlet {
 			resp.sendRedirect("Login.jsp");
 		}
 		dbConnect.closeDB();
-		
-	}
-}
+	
+*/

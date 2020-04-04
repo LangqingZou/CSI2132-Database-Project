@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet{
 		String position = req.getParameter("position");
 		String salary = req.getParameter("salary");
 		String email = req.getParameter("email");
-		String role = req.getParameter("role");
+		String propertyTitle = req.getParameter("Propertytitle");
 		
 		// Establish connection
 		DBConnect dbConnect = new DBConnect();
@@ -48,8 +48,10 @@ public class RegisterServlet extends HttpServlet{
 		PersonConn pconn = new PersonConn(dbConnect);
 
 		//insert into table Person
-		Person p = new Person(100,firstName,lastName,address,phone,email,pwd);
-		int newPID = pconn.createPerson(p);
+		Person p = new Person(100,email,pwd,firstName,lastName,address,phone);
+		pconn.insertNew(p);
+		int newPID = pconn.getPID(email);
+		
 		
 		System.out.println("Local PID:" + p.getPID()+ "DB PID:" + newPID);
 		
@@ -58,6 +60,29 @@ public class RegisterServlet extends HttpServlet{
 			resp.sendRedirect("Register.jsp");
 			return;
 		}
+		
+		//every person login default as guest
+		GuestConn gconn = new GuestConn(dbConnect);
+		gconn.insertNew(newPID);
+		
+		//if the person add property, he will be regarded as a guest and host
+		if(propertyTitle != "") {
+			HostConn hconn = new HostConn(dbConnect);
+			hconn.insertNew(newPID);
+		}
+		//if the person input the position and salary, he will be regarded as a guest and employee
+		if(position != "" && salary != "") {
+			EmployeeConn econn = new EmployeeConn(dbConnect);
+			econn.insertNew(newPID);
+		}
+		
+	}	
+		
+		
+		
+		
+		
+		/*
 		switch (role) {
 		case "host":
 		    Host host = new Host(newPID,-1);
@@ -79,7 +104,7 @@ public class RegisterServlet extends HttpServlet{
 		// Close connection
 		dbConnect.closeDB();
 		return;
-	}
+		*/
 	
 
 }
