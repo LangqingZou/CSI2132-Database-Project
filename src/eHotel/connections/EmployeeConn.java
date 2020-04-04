@@ -82,11 +82,11 @@ public class EmployeeConn {
 	 * 
 	 * @return Employee
 	 */
-	public Employee getEmployee(int hid) {
+	public Employee getEmployee(int eid) {
 		try {
-			sql = "select * from project.employee natural join project.Person where hid = ?";
+			sql = "select * from project.employee natural join project.Person where eid = ?";
 			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setInt(1, hid);
+			preparedStatement.setInt(1, eid);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				employee.setPID(resultSet.getInt(1));

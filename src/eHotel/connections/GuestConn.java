@@ -83,7 +83,7 @@ public class GuestConn {
 	 */
 	public Guest getGuest(int gid) {
 		try {
-			sql = "select * from project.Guest where gid = ?";
+			sql = "select * from project.Guest nature join project.Person where gid = ?";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, gid);
 			resultSet = preparedStatement.executeQuery();
