@@ -12,6 +12,8 @@
 		    var btn = document.getElementById("addPropBtn");
 		    if (type == "host") {
 		        btn.style.display = "block";
+		    }else{
+		    	btn.style.display = "none";
 		    }
 		}
 		window.onload = DisplayHostBtn

@@ -57,7 +57,7 @@
 			transform: translate(-50%,-50%);
 		    background-color: rgba(100, 115, 115, 0.89);
 			border-radius: 5px;
-			padding:170px 150px;
+			padding:80px 100px;
 		}
 		.input-container{
 			position:relative;
