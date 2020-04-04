@@ -49,7 +49,7 @@ public class AddPropertyServlet {
 		newProperty.setType(type);
 		newProperty.setNumRoom(Integer.parseInt(numRoom));
 		newProperty.setCountry(country);
-		newProperty.setPrice(newPricing.getPrice());
+		newProperty.setPrcid(prcid);
 
 		if(PropertyConn.insertNew(Property property)) {
 			HostConn hConn  = new HostConn(dbConnect);
@@ -62,18 +62,18 @@ public class AddPropertyServlet {
 					newHost = hConn.getHost(hConn.getHID(pid));
 					newProperty.setHID(newHost.getHID());
 				}else {
-					session.setAttribute("AddPropertyAlert", "true");
+					session.setAttribute("PrpertyFail", "true");
+					resp.sendRedirect("add.jsp");
 				}
-				
-				
-				
 			}
-			
+		}else {
+			session.setAttribute("PrpertyFail", "true");
+			resp.sendRedirect("add.jsp");
 		}
-		PropertyConn propertyConn = new PropertyConn(dbConnect);
-		
+		dbConnect.closeDB();
 		
 	}
 	
-
+	
+	
 }
