@@ -8,8 +8,15 @@ public class Payment {
 	private String payType;
 	private String status;
 	
+	public Payment() {
+		this.payid = -1;
+		this.gid = -1;
+		this.amount = -1;
+		this.payType = "";
+		this.status = "";
+	}
+	
 	public Payment(int payid, int gid, int amount, String payType, String status) {
-		super();
 		this.payid = payid;
 		this.gid = gid;
 		this.amount = amount;

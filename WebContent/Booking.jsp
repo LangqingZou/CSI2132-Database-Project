@@ -25,8 +25,9 @@
 					out.println("<p> Country: " + p.getCountry() + "</p>");
 					out.println("<p> Address: " + p.getAddress() + "</p>");
 					out.println("<p> Number of room: " + p.getNumRoom() + "</p><br><br>");
-					out.println("<input id='startdate' name='startdate' type='date'> Startdate: " + p.getNumRoom() + "</input><br>");
-					out.println("<input id='enddate' name='enddate' type='date'> Number of room: " + p.getNumRoom() + "</input><br>");
+					out.println("<input id='startDate' name='startDate' type='date'> Startdate: " + p.getNumRoom() + "</input><br>");
+					out.println("<input id='endDate' name='endDate' type='date'> Number of room: " + p.getNumRoom() + "</input><br>");
+					out.println("<select id='payType' name='payType'><option value='credit'>Credit</option><option value='debit'>Debit</option></select>");
 					out.println("<button id='bookBtn' name='bookBtn' type='Submit' value='book'>Book This!</button>");
 					out.println("<hr>");
 				}
