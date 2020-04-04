@@ -50,17 +50,17 @@
 			</div>
 			<hr>
         </div>
-		<form method="post" action="menu">
+		<form method="post" action="myproperties">
 			<button type="Submit" onclick="window.location.href='PropertyList.jsp'">My Properties</button>
 		</form>
-		<form method="post" action="menu">
+		<form method="post" action="rentals">
 			<button type="Submit" onclick="window.location.href='AgreementList.jsp'">Rental Agreements</button>
 		</form>
-		<form method="post" action="menu">
+		<form method="post" action="addproperty">
 			<button type="Submit" onclick="window.location.href='AddProperty.jsp'">Add Property</button>
 		</form>
-		<form method="post" action="menu">
-			<button type="Submit" onclick="window.location.href='Booking.jsp'">Add Property</button>
+		<form method="post" action="booking">
+			<button type="Submit" onclick="window.location.href='Booking.jsp'">Book Now</button>
 		</form>
 	</body>
 </html>
