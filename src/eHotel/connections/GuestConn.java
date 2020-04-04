@@ -26,7 +26,7 @@ public class GuestConn {
 	
 	/*
 	 * @Description 
-	 * 		Get guest's GID from database, return -1 if email not in guest table
+	 * 		Get guest's gid from database, return -1 if gid not in guest table
 	 * 
 	 * @param int
 	 * 

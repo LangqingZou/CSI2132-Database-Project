@@ -57,11 +57,14 @@ public class EmployeeConn {
 	 * 
 	 * @return boolean
 	 */
-	public boolean insertNew(int pid) {
+	public boolean insertNew(int pid, String position, int salary, String country) {
 		try {
 			sql = "insert into project.Employee(pid,position,salary,country) values(?,?,?,?) returning eid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, pid);
+			preparedStatement.setString(2, position);
+			preparedStatement.setInt(1, salary);
+			preparedStatement.setString(1, country);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				employee.setEID(resultSet.getInt(1));

@@ -27,7 +27,7 @@ public class PersonConn {
 	
 	/*
 	 * @Description 
-	 * 		Get person's PID from database, return -1 if email not in person table
+	 * 		Get person's pid from database, return -1 if email not in person table
 	 * 
 	 * @param String
 	 * 
