@@ -59,32 +59,27 @@ public class PersonConn {
 	public boolean insertNew(Person person) {
 		try {
 			if(getPID(person.getEmail()) == -1) {
-				return false;
-			}
-			
-			sql = "insert into project.Person(email,password,firstName,lastName,address,phone) values(?,?,?,?,?,?) returning pid";
-			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setString(1, person.getEmail());
-			preparedStatement.setString(2, person.getPassword());
-			preparedStatement.setString(3, person.getFirstName());
-			preparedStatement.setString(4, person.getLastName());
-			preparedStatement.setString(5,person.getAddress());
-			preparedStatement.setString(6, person.getPhone());
+				sql = "insert into project.Person(email,password,firstName,lastName,address,phone) values(?,?,?,?,?,?) returning pid";
+				preparedStatement = db.prepareStatement(sql);
+				preparedStatement.setString(1, person.getEmail());
+				preparedStatement.setString(2, person.getPassword());
+				preparedStatement.setString(3, person.getFirstName());
+				preparedStatement.setString(4, person.getLastName());
+				preparedStatement.setString(5,person.getAddress());
+				preparedStatement.setString(6, person.getPhone());
 
-			ResultSet resultSet = preparedStatement.executeQuery();
-			if(resultSet.next()) {
-				person.setPID(resultSet.getInt(1));
-				this.person = person;
-				return true;
+				ResultSet resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()) {
+					person.setPID(resultSet.getInt(1));
+					this.person = person;
+					return true;
+				}
 			}
-			
-			return false;
-			
 		} catch (SQLException e) {
 			System.out.println("Error while inserting new person.");
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 		
 	/*
