@@ -43,20 +43,20 @@
 				white-space: nowrap;}
 		body {
 			background-color: #323234;
-			color: #bebebe
+			color: #ffffff
 		}
 		.loginBtn{
-			float left;
+			float: left;
 		}
 		.registerBtn{
-			float right;
+			float: right;
 		}
 		.container{
 			position:absolute;
 			left:50%;
 			top:50%;
 			transform: translate(-50%,-50%);
-		    background-color: rgba(101, 32, 115, 0.89);
+		    background-color: rgba(100, 115, 115, 0.89);
 			border-radius:3px;
 			padding:70px 100px;
 		}
