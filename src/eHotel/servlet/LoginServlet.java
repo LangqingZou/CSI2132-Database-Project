@@ -41,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 		EmployeeConn eConn = new EmployeeConn(dbConnect);
 		
 		int pid = pConn.getPID(email);
+		session.setAttribute("pid", pid);
 		System.out.println(pid);
 		if(pid != -1) {		// if person exist
 			Person person = pConn.getPerson(email);

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import eHotel.connections.DBConnect;
 import eHotel.connections.HostConn;
 import eHotel.connections.PropertyConn;
+import eHotel.entities.Host;
 import eHotel.entities.Pricing;
 import eHotel.entities.Property;
 
@@ -24,26 +25,50 @@ public class AddPropertyServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
+		String roleType = (String) session.getAttribute("roleType");
+		int pid = (int) session.getAttribute("pid");
 		
-		Property newProperty = new Property();
-		Pricing newPricing = new Pricing();
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
 		String type = req.getParameter("type");
 		String numRoom = req.getParameter("numRoom");
 		String country = req.getParameter("country");
 		String price = req.getParameter("price");
+		String rule = req.getParameter("rule");
+		String amenity = req.getParameter("amenity");
+		
+		Property newProperty = new Property();
+		Pricing newPricing = new Pricing();
+		PricingConn priConn = new PricingConn(dbConnect);
+		
+		int prcid = priConn.insertNew(newPricing);
+		
 		
 		newProperty.setTitle(title);
 		newProperty.setAddress(address);
 		newProperty.setType(type);
 		newProperty.setNumRoom(Integer.parseInt(numRoom));
 		newProperty.setCountry(country);
-		newProperty.setPrice(price);
+		newProperty.setPrice(newPricing.getPrice());
 
 		if(PropertyConn.insertNew(Property property)) {
 			HostConn hConn  = new HostConn(dbConnect);
-			PricingConn priConn = new PricingConn(dbConnect);
+			if(roleType == "host") {
+				Host host = (Host) session.getAttribute("loginRole");
+				newProperty.setHID(host.getHID());
+			}else{
+				Host newHost = new Host();
+				if(hConn.insertNew(pid)) {
+					newHost = hConn.getHost(hConn.getHID(pid));
+					newProperty.setHID(newHost.getHID());
+				}else {
+					session.setAttribute("AddPropertyAlert", "true");
+				}
+				
+				
+				
+			}
+			
 		}
 		PropertyConn propertyConn = new PropertyConn(dbConnect);
 		
