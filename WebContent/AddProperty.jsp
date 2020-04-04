@@ -39,6 +39,7 @@
 				Country:<input type="text" id="country" name="country"><br><br>
 				Price:<input type="text" id="price" name="price"><br><br>
 				<button type="Submit" value="Login" id="confirm">Confirm</button>
+				<button type="button" value="Login" id="confirm" href="Menu.jsp">Return</button>
 			</form>
 		</div>
 	</body>

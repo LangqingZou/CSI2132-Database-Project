@@ -66,6 +66,7 @@ public class AddPropertyServlet {
 					resp.sendRedirect("add.jsp");
 				}
 			}
+			session.setAttribute("price", price);
 		}else {
 			session.setAttribute("PrpertyFail", "true");
 			resp.sendRedirect("add.jsp");
