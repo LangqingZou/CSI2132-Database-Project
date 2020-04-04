@@ -1,19 +1,11 @@
 package eHotel.connections;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-
-import org.eclipse.jdt.internal.compiler.classfmt.NonNullDefaultAwareTypeAnnotationWalker;
-
-import com.oracle.wls.shaded.org.apache.bcel.generic.NEW;
 
 import eHotel.entities.Pricing;
-import eHotel.entities.Property;
 
 public class PricingConn {
 	
@@ -30,46 +22,38 @@ public class PricingConn {
 	
 	public int insertNew(Pricing pricing) {
 		try {
-			sql = "insert into project.Pricing values(?,?,?,?,?) returning prcid";
+			sql = "insert into project.Pricing values(?,?,?) returning prcid";
 			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setInt(1, property.getHID());
-			preparedStatement.setInt(2, property.getPrcid());
-			preparedStatement.setString(3, property.getTitle());
-			preparedStatement.setString(4, property.getType());
-			preparedStatement.setString(5, property.getCountry());
-			preparedStatement.setString(6, property.getAddress());
-			preparedStatement.setInt(7, property.getNumRoom());
+			preparedStatement.setInt(1, pricing.getPrice());
+			preparedStatement.setString(2, pricing.getRule());
+			preparedStatement.setString(3, pricing.getAmenity());
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
-				this.property = property;
-				this.property.setProid(resultSet.getInt(1));
+				this.pricing = pricing;
+				this.pricing.setPrcid(resultSet.getInt(1));
 			}
 		} catch (SQLException e) {
-			System.out.println("Error while inserting new property.");
+			System.out.println("Error while inserting new pricing.");
 			e.printStackTrace();
 		}
-		return property.getProid();
+		return pricing.getPrcid();
 	}
 	
-	public Property getProperty(int proid) {
+	public Pricing getPricing(int prcid) {
 		try {
-			preparedStatement = db.prepareStatement("select * from project.property where proid = ?");
-			preparedStatement.setInt(1, proid);
+			preparedStatement = db.prepareStatement("select * from project.Pricing where prcid = ?");
+			preparedStatement.setInt(1, prcid);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
-				property.setProid(resultSet.getInt(1));
-				property.setHID(resultSet.getInt(2));
-				property.setPrcid(resultSet.getInt(3));
-				property.setTitle(resultSet.getString(4));
-				property.setType(resultSet.getString(5));
-				property.setCountry(resultSet.getString(6));
-				property.setAddress(resultSet.getString(7));
-				property.setNumRoom(resultSet.getInt(8));
+				pricing.setPrcid(resultSet.getInt(1));
+				pricing.setPrice(resultSet.getInt(2));
+				pricing.setRule(resultSet.getString(3));
+				pricing.setAmenity(resultSet.getString(4));
 			}
 		} catch (SQLException e) {
-			System.out.println("Error while getting property's info.");
+			System.out.println("Error while getting pricing's info.");
 			e.printStackTrace();
 		}
-		return property;
+		return pricing;
 	}
 }

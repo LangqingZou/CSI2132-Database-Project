@@ -48,17 +48,16 @@
 			float: left;
 		}
 		.registerBtn{
-			margin-left: 25px;
 			float: right;
 		}
 		.container{
 			position:absolute;
-			left:50%;
-			top:50%;
+			left:40%;
+			top:40%;
 			transform: translate(-50%,-50%);
 		    background-color: rgba(100, 115, 115, 0.89);
 			border-radius: 5px;
-			padding:70px 100px;
+			padding:70px 50px;
 		}
 		.input-container{
 			position:relative;
@@ -89,13 +88,12 @@
 		}
 		.btn{
 			color:#fff;
-			background-color:transparent;
+			background-color:#e74c3c;
 			outline: none;
 			border: 0;
 			color: #fff;
 			padding:10px 20px;
 			text-transform:uppercase;
-			border-radius:5px;
 			cursor:pointer;
 			position:relative;
 		}

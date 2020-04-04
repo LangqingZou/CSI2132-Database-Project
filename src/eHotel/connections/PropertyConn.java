@@ -45,7 +45,7 @@ public class PropertyConn {
 	
 	public Property getProperty(int proid) {
 		try {
-			preparedStatement = db.prepareStatement("select * from project.property where proid = ?");
+			preparedStatement = db.prepareStatement("select * from project.Property where proid = ?");
 			preparedStatement.setInt(1, proid);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
