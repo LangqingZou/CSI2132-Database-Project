@@ -45,6 +45,14 @@
 			background-color: #323234;
 			color: #ffffff
 		}
+		.text-center{
+			color:#fff;	
+			text-transform:uppercase;
+		    font-size: 23px;
+		    margin: -50px 0 80px 0;
+		    display: block;
+		    text-align: center;
+		}
 		.loginBtn{
 			float: left;
 		}
