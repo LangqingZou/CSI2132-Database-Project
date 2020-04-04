@@ -32,8 +32,15 @@
 	</script>
 	
 	<style type="text/css">
-		button {margin:0 10 0 10}
-		background {color: #000000}
+		button {background-color: #4CAF50;
+				color: #ffffff;
+				border-color: #4CAF50;
+				padding: 8px 16px;
+				margin:0 10 0 10;
+				text-align: center;
+				cursor: pointer;
+				white-space: nowrap;}
+		body {background-color: #000000}
 	</style>
 </head>
 	<body>
