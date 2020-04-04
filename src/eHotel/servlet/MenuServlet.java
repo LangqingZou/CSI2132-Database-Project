@@ -20,7 +20,7 @@ import eHotel.connections.GuestConn;
 import eHotel.connections.HostConn;
 import eHotel.connections.PersonConn;
 import eHotel.connections.PropertyConn;
-import eHotel.connections.RetalAgreementConn;
+import eHotel.connections.AgreementConn;
 import eHotel.entities.Person;
 
 
@@ -52,35 +52,35 @@ public class MenuServlet extends HttpServlet{
 		
 		//if also an employee, get the employee id
 		EmployeeConn eConn = new EmployeeConn(dbConnect);
-		int employDB = eConn.
+		int employDB = eConn.getEID(pidDB);
 		
 		
 		//1.My retal Agreement
-		RentalAgreementConn rentalAgreementConn = new RentalAgreementConn(dbConnect);
+//		AgreementConn agreementConn = new AgreementConn(dbConnect);
 		
 		//get retalAgreementList by gid
-			ArrayList<String[]> rentalAgreeByGid = 
-			session.setAttribute("rentalAgreementGuest", rentalAgreeByGid);
+//			ArrayList<String[]> rentalAgreeByGid = 
+//			session.setAttribute("rentalAgreementGuest", rentalAgreeByGid);
 		//get retalAgreementList by hid
 		if(hidDB != -1 ) {
-			ArrayList<String[]> rentalAgreeByHid = 
-			session.setAttribute("rentalAgreementHost", rentalAgreeByHid);
+//			ArrayList<String[]> rentalAgreeByHid = 
+//			session.setAttribute("rentalAgreementHost", rentalAgreeByHid);
 		}
 		resp.sendRedirect("RentalAgreementList.jsp");
 		
 		
 		//2.My Property List (host only)
 		if(hidDB != -1) {
-			ArrayList<String[]> myPropertyList = hConn.getPropertyList(hidDB);
-			session.setAttribute("propertyList", myPropertyList);
+//			ArrayList<String[]> myPropertyList = hConn.getPropertyList(hidDB);
+//			session.setAttribute("propertyList", myPropertyList);
 			resp.sendRedirect("myPropertyList.jsp");
 		}
 		
 		//3.add property
 		PropertyConn propertyConn = new PropertyConn(dbConnect);
-		propertyConn.insertNew();
-		String[] newProperty = propertyConn.;
-		resp.sendRedirect("addProperty.jsp");
+//		propertyConn.insertNew();
+//		String[] newProperty = propertyConn.;
+//		resp.sendRedirect("addProperty.jsp");
 		
 		
 		//4. book a room

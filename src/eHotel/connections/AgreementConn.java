@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import eHotel.entities.RentalAgreement;
 
-public class RetalAgreementConn {
+public class AgreementConn {
 	
 	private Connection db;
 	private PreparedStatement preparedStatement = null;
@@ -17,7 +17,7 @@ public class RetalAgreementConn {
 	private String sql;
 	private ResultSet resultSet = null;
 	
-	public RetalAgreementConn(DBConnect dbConnect) {
+	public AgreementConn(DBConnect dbConnect) {
 		db = dbConnect.getConnection();			
 	}
 
