@@ -31,13 +31,13 @@
  
  <servlet>
  	<description></description>
- 	<display-name>HostMenu</display-name>
- 	<servlet-name>hostMenuServlet</servlet-name>
- 	<servlet-class>eHotel.servlet.HostMenuServlet</servlet-class>
+ 	<display-name>Menu</display-name>
+ 	<servlet-name>MenuServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.MenuServlet</servlet-class>
  </servlet>
  <servlet-mapping>
-  	<servlet-name>hostMenuServlet</servlet-name>
-  	<url-pattern>/hostmenu</url-pattern>
+  	<servlet-name>MenuServlet</servlet-name>
+  	<url-pattern>/menu</url-pattern>
  </servlet-mapping>
  
  <welcome-file-list>

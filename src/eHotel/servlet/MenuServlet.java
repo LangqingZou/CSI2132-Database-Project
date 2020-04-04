@@ -88,26 +88,6 @@ public class MenuServlet extends HttpServlet{
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		dbConnect.closeDB();
 	}
 }

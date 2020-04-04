@@ -10,7 +10,7 @@
 	</script>
 </head>
 	<body>
-		<form method="post" action="hostmenu">
+		<form method="post" action="menu">
 			<div style = "">
 				<p style="text-align: center;">Host Menu</p>
 				<hr>

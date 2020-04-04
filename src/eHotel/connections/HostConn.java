@@ -23,6 +23,7 @@ public class HostConn {
 	 * Constructor
 	 */
 	public HostConn(DBConnect dbConnect) {
+		host = new Host();
 		db = dbConnect.getConnection();
 	}
 	

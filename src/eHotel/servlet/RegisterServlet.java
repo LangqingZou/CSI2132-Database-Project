@@ -42,7 +42,14 @@ public class RegisterServlet extends HttpServlet{
 		PersonConn pconn = new PersonConn(dbConnect);
 
 		//insert into table Person
-		Person p = new Person(100,email,pwd,firstName,lastName,address,phone);
+		Person p = new Person();
+		p.setEmail(email);
+		p.setPassword(pwd);
+		p.setFirstName(firstName);
+		p.setLastName(lastName);
+		p.setAddress(address);
+		p.setPhone(phone);
+		
 		if(pconn.insertNew(p)) {
 			int newPID = pconn.getPID(email);
 			if(role.equals("guest")) {
@@ -56,7 +63,7 @@ public class RegisterServlet extends HttpServlet{
 		} else {
 			session.setAttribute("emailAlert", "true");
 			resp.sendRedirect("Register.jsp");
-			return;
 		}
+		dbConnect.closeDB();
 	}
 }

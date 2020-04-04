@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 		//everything contained in form called parameter which is not null
 		//while attributes is null at the beginning until setAttribute() was called
 		String email = req.getParameter("email");
-		String pwd = req.getParameter("pwd");
+		String pwd = req.getParameter("pass");
 		
 		Person role;
 		PersonConn pConn = new PersonConn(dbConnect);
@@ -41,8 +41,10 @@ public class LoginServlet extends HttpServlet {
 		EmployeeConn eConn = new EmployeeConn(dbConnect);
 		
 		int pid = pConn.getPID(email);
+		System.out.println(pid);
 		if(pid != -1) {		// if person exist
 			Person person = pConn.getPerson(email);
+			System.out.println(person.getPassword().equals(pwd));
 			if(person.getPassword().equals(pwd)) {
 				int gid = gConn.getGID(pid);
 				int hid = hConn.getHID(pid);
@@ -56,9 +58,12 @@ public class LoginServlet extends HttpServlet {
 				}
 				session.setAttribute("loginRole", role);
 				resp.sendRedirect("Menu.jsp");
+			}else{
+				session.setAttribute("pwdAlert", "true");
+				resp.sendRedirect("Login.jsp");
 			}
 		}else {
-			session.setAttribute("pwdAlert", "true");
+			session.setAttribute("emailAlert", "true");
 			//req.getRequestDispatcher(next page).forward(req, resp);  -> url unchanged
 			//resp.sendRedirect("move back to the last page"); -> url change and request cannot be shared
 			resp.sendRedirect("Login.jsp");

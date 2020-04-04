@@ -5,8 +5,12 @@
 	<title>Login</title>
 	<meta charset="UTF-8">
 	<script type="text/javascript">
- 		function pwdAlert(){
+ 		function alerts(){
+ 			var emailAlert ='<%=session.getAttribute("emailAlert")%>';
  			var pwdAlert ='<%=session.getAttribute("pwdAlert")%>';
+ 			if (!isNaN(emailAlert)) {
+ 				alert("Email not exist!");
+ 			}
  			if (!isNaN(pwdAlert)) {
  				alert("Password incorrect!");
  			}
@@ -16,19 +20,20 @@
 			var email = document.getElementById("email");
 			var pass = document.getElementById("pass");
 			if(email.value == ""){
-				alert("email can't be null");
+				alert("Email can't be null");
 				return false;
 			} else if(pass.value == "") {
-				alert("password can't be null");
+				alert("Password can't be null");
 				return false;
 			}else return true;
 		}
 		
-		window.onload = pwdAlert; 
+		window.onload = alerts; 
 	</script>
 	
 	<style type="text/css">
 		button {margin:0 10 0 10}
+		register {margin: 10 10}
 	</style>
 </head>
 	<body>
@@ -36,11 +41,11 @@
 		<div>
 			<!-- when we click SUBMIT, only "return validate();" is true, the form will be submited -->		
 			<form method="post" action="login" onSubmit="return validate();">  <!--cuslogin is here -->
-				Email:<input type="text" id="email" name="Email"><br><br>
-				Password:<input type="password" id="pass" name="pwd"><br><br>
+				Email:<input type="text" id="email" name="email"><br><br>
+				Password:<input type="password" id="pass" name="pass"><br><br>
 				<button type="Submit" value="Login">Login</button>
 			</form>
-			<button type="button"  value="Register"><a href="Register.jsp">Register</a></button>
+			<button type="button"  value="Register" class="register"><a href="Register.jsp">Register</a></button>
 		</div>
 	</body>
 </html>
