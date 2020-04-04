@@ -2,43 +2,54 @@ package eHotel.entities;
 
 public class Pricing {
 
-	private int IDPricing;
-	private int Price;
-	private String RoomRule;
-	private String Amenity;
+	private int prcid;
+	private int price;
+	private String rule;
+	private String amenity;
 	
-	public Pricing(int iDPricing, int price, String roomRule, String amenity) {
-		this.IDPricing = iDPricing;
-		this.Price = price;
-		this.RoomRule = roomRule;
-		this.Amenity = amenity;
-	}
-	
-	public int getIDPricing() {
-		return IDPricing;
-	}
-	public void setIDPricing(int iDPricing) {
-		IDPricing = iDPricing;
-	}
-	public int getPrice() {
-		return Price;
-	}
-	public void setPrice(int price) {
-		Price = price;
-	}
-	public String getRoomRule() {
-		return RoomRule;
-	}
-	public void setRoomRule(String roomRule) {
-		RoomRule = roomRule;
-	}
-	public String getAmenity() {
-		return Amenity;
-	}
-	public void setAmenity(String amenity) {
-		Amenity = amenity;
+	public Pricing() {
+		this.prcid = -1;
+		this.price = -1;
+		this.rule = "";
+		this.amenity = "";
 	}
 	
-	
+	public Pricing(int prcid, int price, String rule, String amenity) {
+		this.prcid = prcid;
+		this.price = price;
+		this.rule = rule;
+		this.amenity = amenity;
+	}
 
+	public int getPrcid() {
+		return prcid;
+	}
+
+	public void setPrcid(int prcid) {
+		this.prcid = prcid;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getRule() {
+		return rule;
+	}
+
+	public void setRule(String rule) {
+		this.rule = rule;
+	}
+
+	public String getAmenity() {
+		return amenity;
+	}
+
+	public void setAmenity(String amenity) {
+		this.amenity = amenity;
+	}
 }

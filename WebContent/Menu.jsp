@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>HostMenu</title>
+	<title>Main Menu</title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="Content-Language" content="ch-cn">
 	<script type="text/javascript">
@@ -54,10 +54,10 @@
 			<button type="Submit"><a href="PropertyList.jsp"></a>My Properties</button>
 		</form>
 		<form method="post" action="menu">
-			<button type="Submit"><a href="RetalAgreementList.jsp">Rental Agreements</a></button>
+			<button type="Submit"><a href="AgreementList.jsp">Rental Agreements</a></button>
 		</form>
 		<form method="post" action="menu">
-			<button type="Submit"><a href="Add.jsp">Add Property</a></button>
+			<button type="Submit"><a href="AddProperty.jsp">Add Property</a></button>
 		</form>
 	</body>
 </html>
