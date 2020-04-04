@@ -17,7 +17,8 @@
 			<div style="margin: 50px 50px 50px 50px; text-align: center;">
 		        <%
 		        	//Get user info from session
-		        	if (session.getAttribute("role") instanceof Guest){
+		        	String type = (String) session.getAttribute("roleType");
+		        	if (type.equals("guest")){
 		        		Guest guest = (Guest) session.getAttribute("role");
 		        		//Display guest info
 		        		out.println("<h2> WELCOME " + guest.getFirstName() + " " + guest.getLastName() + "!</h2>");
@@ -25,7 +26,7 @@
 			        	out.println("Address: " + guest.getAddress() + "<br>");
 			        	out.println("Email Address: " + guest.getEmail() + "<br>");
 			        	out.println("Phone Number: " + guest.getPhone() + "<br>");
-		        	}else if (session.getAttribute("role") instanceof Host){
+		        	}else if (type.equals("host")){
 		        		Host host = (Host) session.getAttribute("role");
 		        		//Display host info
 		        		out.println("<h2> WELCOME " + host.getFirstName() + " " + host.getLastName() + "!</h2>");
