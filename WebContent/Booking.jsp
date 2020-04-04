@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="eHotel.entities.Person"%>
+<%@ page import="java.util.ArrayList, eHotel.entities.Property"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +14,7 @@
 		<div>
 		<%
 			//Get property list info from session
-			ArrayList<Property> list = (ArrayList<Property>) session.getAttribute("loginRole");
+			ArrayList<Property> list = (ArrayList<Property>) session.getAttribute("allPropertyList");
 			if (list.size() != 0){
 				//Display property info
 				for (int i = 0; i < list.size(); i++){
@@ -24,16 +24,18 @@
 					out.println("<h5>" + p.getType() + "</h5>");
 					out.println("<p> Country: " + p.getCountry() + "</p>");
 					out.println("<p> Address: " + p.getAddress() + "</p>");
-					out.println("<p> Number of room: " + p.getNumRoom() + "</p>");
+					out.println("<p> Number of room: " + p.getNumRoom() + "</p><br><br>");
+					out.println("<input id='startdate' name='startdate' type='date'> Startdate: " + p.getNumRoom() + "</input><br>");
+					out.println("<input id='enddate' name='enddate' type='date'> Number of room: " + p.getNumRoom() + "</input><br>");
+					out.println("<button id='bookBtn' name='bookBtn' type='Submit' value='book'>Book This!</button>");
 					out.println("<hr>");
 				}
 			}else{
 				out.println("<hr>");
-				out.println("<h2>Sorry, you don't have any property yet &#128517;</h2>");
+				out.println("<h3>Sorry, we don't have any property yet &#128517;</h3>");
 				out.println("<hr>");
 			}
 		%>
 		</div>
-		
 	</body>
 </html>
