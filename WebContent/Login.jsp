@@ -40,7 +40,7 @@
 			color:#fff;	
 			text-transform:uppercase;
 		    font-size: 23px;
-		    margin: 0px 0 0px 0;
+		    margin: 0px 0 10px 0;
 		    display: block;
 		    text-align: center;
 		}
@@ -118,7 +118,7 @@
 	<body>
 		<div class="container">
 			<span class="text-center">LOGIN</span>
-			<hr>
+			<hr style="margin-bottom:30px">
 			<!-- when we click SUBMIT, only "return validate();" is true, the form will be submited -->	
 			<!--login is here -->	
 			<form method="post" action="login" onSubmit="return validate();">
@@ -132,7 +132,7 @@
 				</div>
 				<button class="btn loginBtn" type="Submit" value="Login">Login</button>
 			</form>
-			<button class="btn regBtn" type="button" value="Register" onclick="window.location.href='/Register.jsp'">Register</button>
+			<button class="btn regBtn" type="button" value="Register" onclick="window.location.href='Register.jsp'">Register</button>
 		</div>
 	</body>
 </html>
