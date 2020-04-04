@@ -9,7 +9,7 @@
 		<div style="margin: 40% 20%">
 			<%
 				//Get property list info from session
-				ArrayList<Property> list = (ArrayList<Property>) session.getAttribute("loginRole");
+				ArrayList<Property> list = (ArrayList<Property>) session.getAttribute("myPropertyList");
 				if (list.size() != 0){
 					//Display property info
 					for (int i = 0; i < list.size(); i++){

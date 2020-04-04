@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import eHotel.entities.Agreement;
 import eHotel.entities.Guest;
+import eHotel.entities.Property;
 
 public class GuestConn {
 	
@@ -143,5 +144,32 @@ public class GuestConn {
 			e.printStackTrace();
 		}
 		return agreementList; 	// length = 0; if no matched agreements
+	}
+	
+	public ArrayList<Property> getAllProperties() {
+		ArrayList<Property> propertyList = new ArrayList<Property>();
+		try {
+			preparedStatement = db.prepareStatement("select * from project.Property");
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				// [proid, hid, prcid, title, type, country, address, numRoom]
+				Property property = new Property();
+				if(resultSet.next()) {
+					property.setProid(resultSet.getInt(1));
+					property.setHID(resultSet.getInt(2));
+					property.setPrcid(resultSet.getInt(3));
+					property.setTitle(resultSet.getString(4));
+					property.setType(resultSet.getString(5));
+					property.setCountry(resultSet.getString(6));
+					property.setAddress(resultSet.getString(7));
+					property.setNumRoom(resultSet.getInt(8));
+				}
+				propertyList.add(property);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error while getting all properties.");
+			e.printStackTrace();
+		}
+		return propertyList;	// length = 0; if no matched properties
 	}
 }
