@@ -52,12 +52,12 @@
 		}
 		.container{
 			position:absolute;
-			left:40%;
-			top:40%;
+			left:50%;
+			top:50%;
 			transform: translate(-50%,-50%);
 		    background-color: rgba(100, 115, 115, 0.89);
 			border-radius: 5px;
-			padding:70px 50px;
+			padding:170px 150px;
 		}
 		.input-container{
 			position:relative;

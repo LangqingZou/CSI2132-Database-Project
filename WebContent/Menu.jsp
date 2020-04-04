@@ -7,7 +7,14 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="Content-Language" content="ch-cn">
 	<script type="text/javascript">
-		
+		function DisplayHostBtn() {
+			var type = '<%=session.getAttribute("roleType")%>';
+		    var btn = document.getElementById("addPropBtn");
+		    if (type == "host") {
+		        btn.style.display = "block";
+		    }
+		}
+		window.onload = DisplayHostBtn
 	</script>
 </head>
 	<body>
@@ -51,7 +58,7 @@
 			<hr>
         </div>
 		<form method="post" action="myproperties">
-			<button type="Submit" onclick="window.location.href='PropertyList.jsp'">My Properties</button>
+			<button id="addPropBtn" type="Submit" onclick="window.location.href='PropertyList.jsp'">My Properties</button>
 		</form>
 		<form method="post" action="rentals">
 			<button type="Submit" onclick="window.location.href='AgreementList.jsp'">Rental Agreements</button>
