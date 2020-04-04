@@ -6,12 +6,12 @@
 	<meta charset="UTF-8">
 	<script type="text/javascript">
  		function alerts(){
- 			var emailAlert ='<%=session.getAttribute("emailAlert")%>';
- 			var pwdAlert ='<%=session.getAttribute("pwdAlert")%>';
- 			if (!isNaN(emailAlert)) {
+ 			var emailExist = '<%=session.getAttribute("emailExist")%>';
+ 			var pwdAlert = '<%=session.getAttribute("pwdAlert")%>';
+ 			if (emailExist == 'true') {
  				alert("Email not exist!");
  			}
- 			if (!isNaN(pwdAlert)) {
+ 			if (pwdAlert == 'true') {
  				alert("Password incorrect!");
  			}
  		}	 

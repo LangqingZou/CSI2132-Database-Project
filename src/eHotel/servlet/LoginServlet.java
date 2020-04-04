@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 				resp.sendRedirect("Login.jsp");
 			}
 		}else {
-			session.setAttribute("emailAlert", "true");
+			session.setAttribute("emailExist", "true");
 			//req.getRequestDispatcher(next page).forward(req, resp);  -> url unchanged
 			//resp.sendRedirect("move back to the last page"); -> url change and request cannot be shared
 			resp.sendRedirect("Login.jsp");

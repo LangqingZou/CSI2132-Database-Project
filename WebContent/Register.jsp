@@ -7,7 +7,7 @@
 	<script type="text/javascript">
  		function emailAlert(){
  			var emailAlert = '<%=session.getAttribute("emailAlert")%>';
- 			if (!isNaN(emailAlert)) {
+ 			if (emailAlert == 'true') {
  				alert("Email has been registered!");
  			}
  		}
