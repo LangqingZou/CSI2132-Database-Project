@@ -1,7 +1,6 @@
 package eHotel.servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,12 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import eHotel.connections.DBConnect;
-import eHotel.connections.LoginConn;
+import eHotel.connections.EmployeeConn;
+import eHotel.connections.GuestConn;
+import eHotel.connections.HostConn;
 import eHotel.connections.PersonConn;
 import eHotel.entities.Person;
 
-
-
+@SuppressWarnings("serial")
 public class LoginServlet extends HttpServlet {
 
 	@Override
@@ -31,17 +31,32 @@ public class LoginServlet extends HttpServlet {
 		DBConnect dbConnect = new DBConnect();
 		//everything contained in form called parameter which is not null
 		//while attributes is null at the beginning until setAttribute() was called
-		String email = req.getParameter("Email");
+		String email = req.getParameter("email");
 		String pwd = req.getParameter("pwd");
 		
-		PersonConn pconn = new PersonConn(dbConnect);
-		Person person = new Person();
-		person = pconn.getPerson(email);
-		String pwdDB = person.getPassword();
+		Person role;
+		PersonConn pConn = new PersonConn(dbConnect);
+		GuestConn gConn = new GuestConn(dbConnect);
+		HostConn hConn = new HostConn(dbConnect);
+		EmployeeConn eConn = new EmployeeConn(dbConnect);
 		
-		if(pwdDB.equals(pwd)) {
-			session.setAttribute("loginPerson", person);
-			resp.sendRedirect("Menu.jsp");
+		int pid = pConn.getPID(email);
+		if(pid != -1) {		// if person exist
+			Person person = pConn.getPerson(email);
+			if(person.getPassword().equals(pwd)) {
+				int gid = gConn.getGID(pid);
+				int hid = hConn.getHID(pid);
+				int eid = eConn.getEID(pid);
+				if(hid != -1) {
+					role = hConn.getHost(hid);
+				}else if(gid != -1) {
+					role = gConn.getGuest(gid);
+				}else {
+					role = eConn.getEmployee(eid);
+				}
+				session.setAttribute("loginRole", role);
+				resp.sendRedirect("Menu.jsp");
+			}
 		}else {
 			session.setAttribute("pwdAlert", "true");
 			//req.getRequestDispatcher(next page).forward(req, resp);  -> url unchanged
@@ -50,23 +65,4 @@ public class LoginServlet extends HttpServlet {
 		}
 		dbConnect.closeDB();
 	}
-		
-}		
-/*		
-		// Check password
-		if(pwdDB.equals(pwd)) {
-			//req.setAttribute(Tagname,Value) 
-			//session.setAttribute(Tagname,Value) wrong: we want to carry the req to the next page, while 
-			//session will finish in the current page
-			session.setAttribute("accinfo", infoDB);
-			
-			resp.sendRedirect("HostMenu.jsp");
-		}else {
-			session.setAttribute("pwdAlert", "true");
-			//req.getRequestDispatcher(next page).forward(req, resp);  -> url unchanged
-			//resp.sendRedirect("move back to the last page"); -> url change and request cannot be shared
-			resp.sendRedirect("Login.jsp");
-		}
-		dbConnect.closeDB();
-	
-*/
+}

@@ -44,6 +44,7 @@ public class MenuServlet extends HttpServlet{
 		//get the gid
 		GuestConn gConn = new GuestConn(dbConnect);
 		int gidDB  = gConn.getGID(pidDB);
+
 		
 		//if also a host, get host id
 		HostConn hConn = new HostConn(dbConnect);
