@@ -25,11 +25,11 @@ public class Payment {
 		this.payid = payid;
 	}
 
-	public int getGid() {
+	public int getGID() {
 		return gid;
 	}
 
-	public void setGid(int gid) {
+	public void setGID(int gid) {
 		this.gid = gid;
 	}
 

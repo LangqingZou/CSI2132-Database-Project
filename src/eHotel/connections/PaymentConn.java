@@ -1,62 +1,61 @@
 package eHotel.connections;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import eHotel.entities.Payment;
 
 public class PaymentConn {
 	
-	private Connection db;
-	private PreparedStatement preparedStatement = null;
-	private Statement st = null;
 	private String sql;
-	private ResultSet resultSet = null;
+	private Connection db;
+	private ResultSet resultSet;
+	private PreparedStatement preparedStatement;
+	
+	private Payment payment;
 	
 	public PaymentConn(DBConnect dbConnect) {
-		db = dbConnect.getConnection();		
+		db = dbConnect.getConnection();	
 	}
 	
-	public int createPayment(Payment pay) {
+	public int insertNew(Payment payment) {
 		try {
-			sql = "insert into payment values(?,?,?,?,?,?)";
+			sql = "insert into project.Payment values(?,?,?,?) returning payid";
 			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setInt(1, pay.getIDRA());
-			preparedStatement.setInt(2, pay.getIDPAY());
-			preparedStatement.setInt(3, pay.getAmount());
-			preparedStatement.setString(4, pay.getPaymentType());
-			preparedStatement.setString(5, pay.getStatus());
-			preparedStatement.setString(6, pay.getApprove());
-			return preparedStatement.executeUpdate();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return 0;
-		}
-	}
-	
-	public boolean findPayment(Payment pay) {
-		try {
-			sql = "select * from payment where IDPAY = ?";
-			preparedStatement = db.prepareStatement(sql);
+			preparedStatement.setInt(1, payment.getGID());
+			preparedStatement.setInt(2, payment.getAmount());
+			preparedStatement.setString(3, payment.getPayType());
+			preparedStatement.setString(4, payment.getStatus());
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				return true;
+			if(resultSet.next()) {
+				this.payment = payment;
+				this.payment.setPayid(resultSet.getInt(1));
 			}
-			return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while inserting new payment.");
 			e.printStackTrace();
-			return false;
-		
 		}
-		
+		return payment.getPayid();
 	}
 	
-	
+	public Payment getPayment(int payid) {
+		try {
+			preparedStatement = db.prepareStatement("select * from project.Payment where payid = ?");
+			preparedStatement.setInt(1, payid);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				payment.setPayid(resultSet.getInt(1));
+				payment.setGID(resultSet.getInt(2));
+				payment.setAmount(resultSet.getInt(3));
+				payment.setPayType(resultSet.getString(4));
+				payment.setStatus(resultSet.getString(5));
+			}
+		} catch (SQLException e) {
+			System.out.println("Error while getting payment's info.");
+			e.printStackTrace();
+		}
+		return payment;
+	}
 }
