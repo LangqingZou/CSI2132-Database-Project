@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import eHotel.connections.DBConnect;
 import eHotel.connections.HostConn;
 import eHotel.connections.PropertyConn;
+import eHotel.entities.Pricing;
 import eHotel.entities.Property;
 
 public class AddPropertyServlet {
@@ -24,6 +25,8 @@ public class AddPropertyServlet {
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
 		
+		Property newProperty = new Property();
+		Pricing newPricing = new Pricing();
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
 		String type = req.getParameter("type");
@@ -31,7 +34,13 @@ public class AddPropertyServlet {
 		String country = req.getParameter("country");
 		String price = req.getParameter("price");
 		
-		Property newProperty = new Property(100,);
+		newProperty.setTitle(title);
+		newProperty.setAddress(address);
+		newProperty.setType(type);
+		newProperty.setNumRoom(Integer.parseInt(numRoom));
+		newProperty.setCountry(country);
+		newProperty.setPrice(price);
+
 		if(PropertyConn.insertNew(Property property)) {
 			HostConn hConn  = new HostConn(dbConnect);
 			PricingConn priConn = new PricingConn(dbConnect);
