@@ -49,7 +49,7 @@
 			color:#fff;	
 			text-transform:uppercase;
 		    font-size: 23px;
-		    margin: -50px 0 80px 0;
+		    margin: 0px 0 80px 0;
 		    display: block;
 		    text-align: center;
 		}
@@ -57,6 +57,7 @@
 			float: left;
 		}
 		.registerBtn{
+			margin-left: 25px;
 			float: right;
 		}
 		.container{
@@ -65,7 +66,7 @@
 			top:50%;
 			transform: translate(-50%,-50%);
 		    background-color: rgba(100, 115, 115, 0.89);
-			border-radius:3px;
+			border-radius: 5px;
 			padding:70px 100px;
 		}
 		.input-container{
@@ -103,8 +104,7 @@
 		    color: #fff;
 			padding:10px 20px;
 			text-transform:uppercase;
-			margin-top:50px;
-			border-radius:2px;
+			border-radius:5px;
 			cursor:pointer;
 			position:relative;
 		}
@@ -127,6 +127,7 @@
 	<body>
 		<div class="container">
 			<span class="text-center">LOGIN</span>
+			<hr>
 			<!-- when we click SUBMIT, only "return validate();" is true, the form will be submited -->	
 			<!--login is here -->	
 			<form method="post" action="login" onSubmit="return validate();">
@@ -135,13 +136,12 @@
 					<label>Email</label>
 				</div>
 				<div class="input-container">
-					<input type="text" required=""/>
+					<input type="password" required=""/>
 					<label>Password</label>		
 				</div>
-				<hr>
-				<button class="btn loginBtn" type="submit" value="login">Login</button>
+				<button class="btn loginBtn" type="Submit" value="Login">Login</button>
 			</form>
-			<button class="btn regBtn" type="button"  value="register" href="Register.jsp">Register</button>
+			<button class="btn regBtn" type="button"  value="Register"><a href="Register.jsp">Register</a></button>
 		</div>
 	</body>
 </html>
