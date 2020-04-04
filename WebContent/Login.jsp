@@ -34,25 +34,38 @@
 	<style type="text/css">
 		button {background-color: #4CAF50;
 				color: #ffffff;
+				text-decoration: none;
 				border-color: #4CAF50;
 				padding: 8px 16px;
-				margin:0 10 0 10;
+				margin:0 10 0 10;	top, right, bottom, left
 				text-align: center;
 				cursor: pointer;
 				white-space: nowrap;}
-		body {background-color: #000000}
+		body {background-color: #323234}
+		.loginBtn{
+			float left;
+		}
+		.registerBtn{
+			float right;
+		}
+		.Container(){
+			margin: 30% 40% 30% 40%;
+		}
 	</style>
 </head>
 	<body>
 		<h2>Login Page</h2>
-		<div>
-			<!-- when we click SUBMIT, only "return validate();" is true, the form will be submited -->		
-			<form method="post" action="login" onSubmit="return validate();">  <!--cuslogin is here -->
-				Email:<input type="text" id="email" name="email"><br><br>
-				Password:<input type="password" id="pass" name="pass"><br><br>
-				<button type="Submit" value="Login">Login</button>
+		<div class="Container" style = "text-color: #ffffff">
+			<!-- when we click SUBMIT, only "return validate();" is true, the form will be submited -->	
+			<!--login is here -->	
+			<form method="post" action="login" onSubmit="return validate();">  
+				Email:<br><input type="text" id="email" name="email"><br><br>
+				Password:<br><input type="password" id="pass" name="pass"><br><br>
+				<hr>
+				<button class="loginBtn" type="Submit" value="Login">Login</button>
 			</form>
-			<button type="button"  value="Register" class="register"><a href="Register.jsp">Register</a></button>
+			<button class="registerBtn" type="button"  value="Register" class="register" href="Register.jsp">Register</button>
+			<hr>
 		</div>
 	</body>
 </html>
