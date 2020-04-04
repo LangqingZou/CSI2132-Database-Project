@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import eHotel.entities.RentalAgreement;
+import eHotel.entities.Agreement;
 
 public class AgreementConn {
 	
@@ -21,7 +21,7 @@ public class AgreementConn {
 		db = dbConnect.getConnection();			
 	}
 
-	public int createRetalAgreement(RentalAgreement ra) {
+	public int createRetalAgreement(Agreement ra) {
 		try {
 			sql = "insert into RetalAgreement values(?,?,?,?,?,?)";
 			preparedStatement = db.prepareStatement(sql);
@@ -39,7 +39,7 @@ public class AgreementConn {
 		}
 	}
 	
-	public boolean findRetalAgreement(RentalAgreement ra) {
+	public boolean findRetalAgreement(Agreement ra) {
 		try {
 			sql = "select * from RetalAgreement where IDRA = ?";
 			preparedStatement = db.prepareStatement(sql);

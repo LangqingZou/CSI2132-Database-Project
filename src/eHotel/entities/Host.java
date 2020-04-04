@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Host extends Person{
 	private int pid;
 	private int hid;
-	private ArrayList<RentalAgreement> agreementList;
+	private ArrayList<Agreement> agreementList;
 	private ArrayList<Property> propertyList;
 	
 	public Host() {
@@ -19,11 +19,11 @@ public class Host extends Person{
 		this.hid = hid;
 	}
 	
-	public ArrayList<RentalAgreement> getAgreementList(){
+	public ArrayList<Agreement> getAgreementList(){
 		return agreementList;
 	}
 	
-	public void setAgreementList(ArrayList<RentalAgreement> agreementList) {
+	public void setAgreementList(ArrayList<Agreement> agreementList) {
 		this.agreementList = agreementList;
 	}
 	

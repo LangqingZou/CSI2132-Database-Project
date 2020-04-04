@@ -2,7 +2,7 @@ package eHotel.entities;
 
 import java.sql.Date;
 
-public class RentalAgreement {
+public class Agreement {
 	
 	private int raid;
 	private int proid;
@@ -13,7 +13,7 @@ public class RentalAgreement {
 	private Date endDate;
 	private String approve;
 	
-	public RentalAgreement() {
+	public Agreement() {
 		this.raid = -1;
 		this.proid = -1;
 		this.payid = -1;
@@ -22,7 +22,7 @@ public class RentalAgreement {
 		this.approve = "";
 	}
 	
-	public RentalAgreement(int raid, int proid, int payid, int gid, int hid, Date startDate, Date endDate, String approve) {
+	public Agreement(int raid, int proid, int payid, int gid, int hid, Date startDate, Date endDate, String approve) {
 		this.raid = raid;
 		this.proid = proid;
 		this.payid = payid;

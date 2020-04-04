@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import eHotel.entities.Host;
 import eHotel.entities.Property;
-import eHotel.entities.RentalAgreement;
+import eHotel.entities.Agreement;
 
 public class HostConn {
 	
@@ -118,15 +118,15 @@ public class HostConn {
 	 * 
 	 * @return ArrayList<RentalAgreement>
 	 */
-	public ArrayList<RentalAgreement> getRentalAgreementList(int hid) {
-		ArrayList<RentalAgreement> agreementList = new ArrayList<RentalAgreement>();
+	public ArrayList<Agreement> getRentalAgreementList(int hid) {
+		ArrayList<Agreement> agreementList = new ArrayList<Agreement>();
 		try {
 			preparedStatement = db.prepareStatement("select * from project.RetalAgreement where hid = ?");
 			preparedStatement.setInt(1, hid);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				// [raid, proid, payid, gid, hid, startDate, endDate, approve]
-				RentalAgreement agreement = new RentalAgreement();
+				Agreement agreement = new Agreement();
 				if(resultSet.next()) {
 					agreement.setRaid(resultSet.getInt(1));
 					agreement.setProid(resultSet.getInt(2));
