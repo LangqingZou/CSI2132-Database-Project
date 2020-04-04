@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import eHotel.connections.DBConnect;
-import eHotel.connections.HostConn;
-import eHotel.entities.Host;
-import eHotel.entities.Property;
+import com.oracle.wls.shaded.org.apache.xpath.operations.String;
 
-public class PropertyListServlet extends HttpServlet {
+import eHotel.connections.DBConnect;
+import eHotel.connections.GuestConn;
+import eHotel.connections.HostConn;
+import eHotel.entities.Agreement;
+
+public class RentalServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
@@ -24,12 +26,16 @@ public class PropertyListServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
-		
+		String role = (String) session.getAttribute("roleType");
 		int pid = (int) session.getAttribute("pid");
-		Host host = (Host) session.getAttribute("loginRole");
-		HostConn hConn = new HostConn(dbConnect);
-		ArrayList<Property> myPropertyList = hConn.getPropertyList(host.getHID());
-		session.setAttribute("myPropertyList", myPropertyList);
-		dbConnect.closeDB();
+		if(role.equals("host")) {
+			HostConn hConn = new HostConn(dbConnect);
+			ArrayList<Agreement> rentalAgreeByHid = hConn.getRentalAgreementList(hConn.getHID(pid));
+			session.setAttribute("rentalAgreementHost", rentalAgreeByHid);
+		}else {
+			GuestConn gConn = new GuestConn(dbConnect);
+			ArrayList<Agreement> rentalAgreeByGid = gConn.getRentalAgreementList(gConn.getGID(pid));
+			session.setAttribute("rentalAgreementGuest", rentalAgreeByGid);
+		}
 	}
 }
