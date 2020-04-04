@@ -10,7 +10,7 @@ import eHotel.entities.Host;
 import eHotel.entities.Property;
 import eHotel.entities.Agreement;
 
-public class HostConn {
+public class HostConn extends PersonConn {
 	
 	private String sql;
 	private Connection db;
@@ -23,8 +23,8 @@ public class HostConn {
 	 * Constructor
 	 */
 	public HostConn(DBConnect dbConnect) {
+		super(dbConnect);
 		host = new Host();
-		db = dbConnect.getConnection();
 	}
 	
 	/*

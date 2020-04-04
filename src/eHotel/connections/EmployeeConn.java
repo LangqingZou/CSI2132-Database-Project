@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import eHotel.entities.Employee;
 import eHotel.connections.DBConnect;
 
-public class EmployeeConn {
+public class EmployeeConn extends PersonConn {
 	
 	private String sql;
 	private Connection db;
@@ -21,8 +21,8 @@ public class EmployeeConn {
 	 * Constructor
 	 */
 	public EmployeeConn(DBConnect dbConnect) {
+		super(dbConnect);
 		employee = new Employee();
-		db = dbConnect.getConnection();	
 	}
 	
 	/*
