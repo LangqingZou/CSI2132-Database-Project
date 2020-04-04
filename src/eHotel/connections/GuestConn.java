@@ -93,10 +93,11 @@ public class GuestConn {
 				guest.setPID(resultSet.getInt(1));
 				guest.setGID(resultSet.getInt(2));
 				guest.setEmail(resultSet.getString(3));
-				guest.setFirstName(resultSet.getString(4));
-				guest.setLastName(resultSet.getString(5));
-				guest.setAddress(resultSet.getString(6));
-				guest.setPhone(resultSet.getString(7));
+				guest.setPassword(resultSet.getString(4));
+				guest.setFirstName(resultSet.getString(5));
+				guest.setLastName(resultSet.getString(6));
+				guest.setAddress(resultSet.getString(7));
+				guest.setPhone(resultSet.getString(8));
 				return guest;
 			}
 		} catch (SQLException e) {

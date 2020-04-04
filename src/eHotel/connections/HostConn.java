@@ -96,14 +96,15 @@ public class HostConn {
 				host.setPID(resultSet.getInt(1));
 				host.setHID(resultSet.getInt(2));
 				host.setEmail(resultSet.getString(3));
-				host.setFirstName(resultSet.getString(4));
-				host.setLastName(resultSet.getString(5));
-				host.setAddress(resultSet.getString(6));
-				host.setPhone(resultSet.getString(7));
+				host.setPassword(resultSet.getString(4));
+				host.setFirstName(resultSet.getString(5));
+				host.setLastName(resultSet.getString(6));
+				host.setAddress(resultSet.getString(7));
+				host.setPhone(resultSet.getString(8));
 				return host;
 			}
 		} catch (SQLException e) {
-			System.out.println("Error while getting guest's info.");
+			System.out.println("Error while getting host's info.");
 			e.printStackTrace();
 		}
 		return null;

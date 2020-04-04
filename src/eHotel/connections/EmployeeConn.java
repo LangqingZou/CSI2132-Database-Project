@@ -96,11 +96,12 @@ public class EmployeeConn {
 				employee.setEID(resultSet.getInt(2));
 				employee.setPosition(resultSet.getString(3));
 				employee.setSalary(resultSet.getInt(4));
-				employee.setEmail(resultSet.getString(5));
-				employee.setFirstName(resultSet.getString(6));
-				employee.setLastName(resultSet.getString(7));
-				employee.setAddress(resultSet.getString(8));
-				employee.setPhone(resultSet.getString(9));
+				employee.setEmail(resultSet.getString(3));
+				employee.setPassword(resultSet.getString(4));
+				employee.setFirstName(resultSet.getString(5));
+				employee.setLastName(resultSet.getString(6));
+				employee.setAddress(resultSet.getString(7));
+				employee.setPhone(resultSet.getString(8));
 				return employee;
 			}
 		} catch (SQLException e) {

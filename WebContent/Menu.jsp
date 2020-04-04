@@ -12,7 +12,7 @@
 </head>
 	<body>
 		<div>
-			<p style="text-align: center;">Host Menu</p>
+			<h1 style="text-align: center;"> Main Menu </h1>
 			<hr>
 			<div style="margin: 50px 50px 50px 50px; text-align: center;">
 		        <%
