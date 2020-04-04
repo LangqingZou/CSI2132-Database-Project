@@ -13,18 +13,20 @@
  		}
 
 		function validate() {
+			var email = document.getElementById("email");
+			var pwd = document.getElementById("pwd");
+			var pwdAgain = document.getElementById("pwdAgain");
 			var firstName = document.getElementById("firstname");
 			var lastName  = document.getElementById("lastname");
 			var address = document.getElementById("address");
 			var phone = document.getElementById("phonenumber");
-			var pwd = document.getElementById("pwd");
-			var pwdAgain = document.getElementById("pwdAgain");
 			var position = document.getElementById("position");
 			var salary = document.getElementById("salary");
-			var email = document.getElementById("email");
+			var country = document.getElementById("country");
 			var role = document.getElementById("role");
 			
-			if(firstName.value == "" 
+			if(email.value == "" 
+				|| firstName.value == "" 
 				|| lastName.value == "" 
 				|| address.value == "" 
 				|| phone.value == "" 
@@ -33,12 +35,12 @@
 				alert("You need to fill in all the information");
 				return false;
 			}
-			if (role.value == "emp" && (position.value == "" || salary.value == "")){
+			if (role.value == "emp" && (position.value == "" || salary.value == "" || country.value == "")){
 				alert("You need to fill in employee's information");
 				return false
 			}
 			if(pwd.value != pwdAgain.value){
-				alert("Please confirm your password");
+				alert("Please confirm your password again");
 				return false;
 			}
 			return true;
@@ -57,11 +59,11 @@
 		Password:<br><input type="password" id="pwd" name="pwd"><br><br>
 		Confirm Password:<br><input type="password" id="pwdAgain" name="pwdAgain"><br><br>
 		Position: <br><input type="text" id="position" name="position"> (For Employee)<br><br> 
-		Salary: <br><input type="text" id="salary" name="salary"> (For Employee)<br><br>
+		Salary: <br><input type="number" id="salary" name="salary"> (For Employee)<br><br>
+		Country: <br><input type="text" id="country" name="country"> (For Employee)<br><br>
 		
 		<select id="role" name="role">
 			<option value="guest">Guest</option>
-			<option value="host">Host</option>
 			<option value="emp">Employee</option>
 		</select>
 		

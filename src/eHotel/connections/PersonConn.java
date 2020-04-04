@@ -38,7 +38,9 @@ public class PersonConn {
 			preparedStatement = db.prepareStatement("select pid from project.person where email = ?");
 			preparedStatement.setString(1, email);
 	    	resultSet = preparedStatement.executeQuery();
-	    	person.setPID(resultSet.getInt(1));
+	    	if(resultSet.next()) {
+	    		person.setPID(resultSet.getInt(1));
+	    	}
 		} catch (SQLException e) {
 			System.out.println("Error while getting PID.");
 			e.printStackTrace();

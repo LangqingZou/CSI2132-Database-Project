@@ -26,13 +26,13 @@ public class RegisterServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		String email = req.getParameter("email");
 		String pwd = req.getParameter("pwd");
-		String pwdAgain = req.getParameter("pwdAgain");
 		String firstName = req.getParameter("firstname");
 		String lastName  = req.getParameter("lastname");
 		String address = req.getParameter("address");
 		String phone = req.getParameter("phonenumber");
 		String position = req.getParameter("position");
 		String salary = req.getParameter("salary");
+		String country = req.getParameter("country");
 		String role = req.getParameter("role");
 		
 		// Establish connection
@@ -50,9 +50,9 @@ public class RegisterServlet extends HttpServlet{
 				gconn.insertNew(newPID);
 			} else {
 				EmployeeConn econn = new EmployeeConn(dbConnect);
-				econn.insertNew(newPID);
+				econn.insertNew(newPID, position, Integer.parseInt(salary), country);
 			}
-			
+			resp.sendRedirect("Login.jsp");
 		} else {
 			session.setAttribute("emailAlert", "true");
 			resp.sendRedirect("Register.jsp");
