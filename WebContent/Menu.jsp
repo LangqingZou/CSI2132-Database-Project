@@ -52,8 +52,12 @@
         </div>
 		<form method="post" action="menu">
 			<button type="Submit"><a href="PropertyList.jsp"></a>My Properties</button>
+		</form>
+		<form method="post" action="menu">
 			<button type="Submit"><a href="RetalAgreementList.jsp">Rental Agreements</a></button>
-			<button type="Submit"><a href="RetalAgreementList.jsp">Add Property</a></button>
+		</form>
+		<form method="post" action="menu">
+			<button type="Submit"><a href="Add.jsp">Add Property</a></button>
 		</form>
 	</body>
 </html>
