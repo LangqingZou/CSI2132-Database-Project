@@ -10,10 +10,10 @@
 		function DisplayHostBtn() {
 			var type = '<%=session.getAttribute("roleType")%>';
 		    var btn = document.getElementById("addPropBtn");
-		    if (type == "host") {
-		        btn.style.display = "block";
+		    if (type == 'host') {
+		        btn.style.display = 'block';
 		    }else{
-		    	btn.style.display = "none";
+		    	btn.style.display = 'none';
 		    }
 		}
 		window.onload = DisplayHostBtn

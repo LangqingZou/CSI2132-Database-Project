@@ -1,20 +1,23 @@
 package eHotel.servlet;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import eHotel.connections.DBConnect;
 import eHotel.connections.HostConn;
+import eHotel.connections.PricingConn;
 import eHotel.connections.PropertyConn;
 import eHotel.entities.Host;
 import eHotel.entities.Pricing;
 import eHotel.entities.Property;
 
-public class AddPropertyServlet {
+public class AddPropertyServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
@@ -38,20 +41,16 @@ public class AddPropertyServlet {
 		String amenity = req.getParameter("amenity");
 		
 		Property newProperty = new Property();
-		Pricing newPricing = new Pricing();
-		PricingConn priConn = new PricingConn(dbConnect);
-		
-		int prcid = priConn.insertNew(newPricing);
-		
-		
+		PropertyConn prConn = new PropertyConn(dbConnect);
+
 		newProperty.setTitle(title);
 		newProperty.setAddress(address);
 		newProperty.setType(type);
 		newProperty.setNumRoom(Integer.parseInt(numRoom));
 		newProperty.setCountry(country);
-		newProperty.setPrcid(prcid);
-
-		if(PropertyConn.insertNew(Property property)) {
+		
+		//create a property
+		if(prConn.insertNew(newProperty)!= -1) {
 			HostConn hConn  = new HostConn(dbConnect);
 			if(roleType == "host") {
 				Host host = (Host) session.getAttribute("loginRole");
@@ -67,14 +66,26 @@ public class AddPropertyServlet {
 				}
 			}
 			session.setAttribute("price", price);
+			//create a pricing
+			Pricing newPricing = new Pricing();
+			PricingConn priConn = new PricingConn(dbConnect);
+			int prcid = priConn.insertNew(newPricing);
+			//add prcid to the new property
+			newProperty.setPrcid(prcid);
+			
+			newPricing.setPrice(Integer.parseInt(price));
+			newPricing.setRule(rule);
+			newPricing.setAmenity(amenity);
+			if(priConn.insertNew(newPricing)!=-1) {
+				session.setAttribute("addSuccessfully", "true");
+			}
+			
 		}else {
 			session.setAttribute("PrpertyFail", "true");
 			resp.sendRedirect("add.jsp");
 		}
-		dbConnect.closeDB();
 		
+		dbConnect.closeDB();
 	}
-	
-	
-	
+
 }

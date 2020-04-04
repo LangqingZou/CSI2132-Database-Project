@@ -12,10 +12,12 @@ import javax.servlet.http.HttpSession;
 import eHotel.connections.DBConnect;
 import eHotel.connections.GuestConn;
 import eHotel.connections.PropertyConn;
+import eHotel.connections.ReviewConn;
 import eHotel.entities.Agreement;
 import eHotel.entities.Payment;
 import eHotel.entities.Pricing;
 import eHotel.entities.Property;
+import eHotel.entities.Review;
 
 public class BookingServlet extends HttpServlet{
 	@Override
@@ -30,8 +32,8 @@ public class BookingServlet extends HttpServlet{
 		
 		int proid = (int) session.getAttribute("propertyID");
 		int pid = (int) session.getAttribute("pid");
-		Date startDate = session.getAttribute("startDate");
-		Date endSDate = session.getAttribute("endDate");
+		Date startDate = req.getParameter("startDate");
+		Date endSDate = req.getParameter("endDate");
 		String approve = session.getAttribute("approve");
 		GuestConn gConn = new GuestConn(dbConnect);
 		PropertyConn pConn = new PropertyConn(dbConnect);
@@ -66,6 +68,17 @@ public class BookingServlet extends HttpServlet{
 		newPay.setStatus(status);
 		session.setAttribute("payment", newPay);
 		
-		
+		//create a review
+		ReviewConn rConn = new ReviewConn(dbConnect);
+		Review newReview = new Review();
+		newReview.setProid(proid);
+		newReview.setGid(gid);
+//		newReview.setRating(rating);
+//		newReview.setCommunication(communication);
+//		newReview.setCleaniliness(cleaniliness);
+//		newReview.setValue(value);
+		session.setAttribute("review", newReview);
+		dbConnect.closeDB();
 	}
+	
 }
