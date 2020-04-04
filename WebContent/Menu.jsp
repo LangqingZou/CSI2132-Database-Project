@@ -19,7 +19,7 @@
 		        	//Get user info from session
 		        	String type = (String) session.getAttribute("roleType");
 		        	if (type.equals("guest")){
-		        		Guest guest = (Guest) session.getAttribute("role");
+		        		Guest guest = (Guest) session.getAttribute("loginRole");
 		        		//Display guest info
 		        		out.println("<h2> WELCOME " + guest.getFirstName() + " " + guest.getLastName() + "!</h2>");
 		        		out.println("<hr>");
@@ -27,7 +27,7 @@
 			        	out.println("Email Address: " + guest.getEmail() + "<br>");
 			        	out.println("Phone Number: " + guest.getPhone() + "<br>");
 		        	}else if (type.equals("host")){
-		        		Host host = (Host) session.getAttribute("role");
+		        		Host host = (Host) session.getAttribute("loginRole");
 		        		//Display host info
 		        		out.println("<h2> WELCOME " + host.getFirstName() + " " + host.getLastName() + "!</h2>");
 		        		out.println("<hr>");
@@ -37,7 +37,7 @@
 			        	out.println("<hr>");
 			        	out.println("<h3> Currently you have " + host.getPropertyList().size() + " properties registered.</h3>");
 		        	}else{
-		        		Employee employee = (Employee) session.getAttribute("role");
+		        		Employee employee = (Employee) session.getAttribute("loginRole");
 		        		out.println("<h2> WELCOME " + employee.getFirstName() + " " + employee.getLastName() + "!</h2>");
 		        		out.println("<hr>");
 			        	out.println("Address: " + employee.getAddress() + "<br>");
