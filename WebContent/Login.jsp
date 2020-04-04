@@ -33,7 +33,7 @@
 	
 	<style type="text/css">
 		button {margin:0 10 0 10}
-		register {margin: 10 10}
+		background {color: #000000}
 	</style>
 </head>
 	<body>

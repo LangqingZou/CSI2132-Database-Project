@@ -1,28 +1,36 @@
 package eHotel.connections;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
+import org.eclipse.jdt.internal.compiler.classfmt.NonNullDefaultAwareTypeAnnotationWalker;
+
+import com.oracle.wls.shaded.org.apache.bcel.generic.NEW;
+
+import eHotel.entities.Pricing;
 import eHotel.entities.Property;
 
-public class PropertyConn {
+public class PricingConn {
 	
 	private String sql;
 	private Connection db;
 	private ResultSet resultSet;
 	private PreparedStatement preparedStatement;
 	
-	private Property property;
+	private Pricing pricing;
 	
-	public PropertyConn(DBConnect dbConnect) {
+	public PricingConn(DBConnect dbConnect) {
 		db = dbConnect.getConnection();	
 	}
 	
-	public int insertNew(Property property) {
+	public int insertNew(Pricing pricing) {
 		try {
-			sql = "insert into project.Property values(?,?,?,?,?,?,?) returning proid";
+			sql = "insert into project.Pricing values(?,?,?,?,?) returning prcid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, property.getHID());
 			preparedStatement.setInt(2, property.getPrcid());
