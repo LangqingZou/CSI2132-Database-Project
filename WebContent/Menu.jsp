@@ -11,10 +11,10 @@
 	</script>
 </head>
 	<body>
-		<div>
+		<div style="margin: 0 400px 0 400px; text-align: center;">
 			<h1 style="text-align: center;"> Main Menu </h1>
 			<hr>
-			<div style="margin: 50px 50px 50px 50px; text-align: center;">
+			<div>
 		        <%
 		        	//Get user info from session
 		        	String type = (String) session.getAttribute("roleType");
@@ -54,6 +54,6 @@
 			<button type="Submit"><a href="PropertyList.jsp"></a>My Properties</button>
 			<button type="Submit"><a href="RetalAgreementList.jsp">Rental Agreements</a></button>
 			<button type="Submit"><a href="RetalAgreementList.jsp">Add Property</a></button>
-		</form>>
+		</form>
 	</body>
 </html>
