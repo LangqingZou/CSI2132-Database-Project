@@ -124,7 +124,7 @@
 			<form method="post" action="login" onSubmit="return validate();">
 				<div class="input-container">
 					<input type="text" required=""/>
-					<label>Email</label>		
+					<label>Email</label>
 				</div>
 				<div class="input-container">
 					<input type="text" required=""/>
@@ -134,7 +134,6 @@
 				<button class="btn loginBtn" type="submit" value="login">Login</button>
 			</form>
 			<button class="btn regBtn" type="button"  value="register" href="Register.jsp">Register</button>
-			<hr>
 		</div>
 	</body>
 </html>
