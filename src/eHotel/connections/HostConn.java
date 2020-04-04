@@ -4,14 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
-import org.eclipse.jdt.internal.compiler.lookup.ImplicitNullAnnotationVerifier;
-
-import eHotel.entities.Guest;
 import eHotel.entities.Host;
+import eHotel.entities.Property;
+import eHotel.entities.RentalAgreement;
 
 public class HostConn {
 	
@@ -19,6 +16,8 @@ public class HostConn {
 	private Connection db;
 	private ResultSet resultSet;
 	private PreparedStatement preparedStatement;
+	
+	private Host host;
 	
 	/*
 	 * Constructor
@@ -29,103 +28,159 @@ public class HostConn {
 	
 	/*
 	 * @Description 
-	 * 		Get person's PID from database, return -1 if email not in person table
+	 * 		Get person's HID from database, return -1 if pid not in Host table
 	 * 
-	 * @param String
+	 * @param int
 	 * 
 	 * @return int
 	 */
-	public int getID(int pid) {
-		int hid = -1;
+	public int getHID(int pid) {
 		try {
-			preparedStatement = db.prepareStatement("select hid from project.host where pid = ?");
+			preparedStatement = db.prepareStatement("select hid from project.Host where pid = ?");
 			preparedStatement.setInt(1, pid);
 			resultSet = preparedStatement.executeQuery();
-			hid = resultSet.getInt(1);
+			if (resultSet.next()) {
+	    		host.setHID(resultSet.getInt(1));
+	    		host.setPID(pid);
+	    		
+	    	}
 		} catch (SQLException e) {
 			System.out.println("Error while getting hid.");
 			e.printStackTrace();
 		}
-		return hid;
+		return host.getHID();
 	}
 	
-	public int createHost(Host host) {
+	/*
+	 * @Description 
+	 * 		Insert new host into database, return false if insertion failed
+	 * 
+	 * @param Host
+	 * 
+	 * @return boolean
+	 */
+	public boolean insertNew(int pid) {
 		try {
-			sql = "insert into project.host(PID) values(?) returning IDH";
+			sql = "insert into project.Host(pid) values(?) returning hid";
 			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setInt(1, host.getPID());
+			preparedStatement.setInt(1, pid);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
-				host.setIDH(resultSet.getInt(1));
+				host.setHID(resultSet.getInt(1));
+				return true;
 			}
-			return host.getIDH();
+			return false;
 		} catch (SQLException e) {
 			System.out.println("Error while inserting new host.");
 			e.printStackTrace();
-			return 0;
-		}
-		
+			return false;
+		}	
 	}
 	
-
-	public ArrayList<String[]> getPropertyList(int hid) {
-		ArrayList<String[]> propertyList = new ArrayList<String[]>();
+	/*
+	 * @Description 
+	 * 		Return the a Host found by the hid, return null if the hid is invalid
+	 * 
+	 * @param int
+	 * 
+	 * @return Host
+	 */
+	public Host getHost(int hid) {
 		try {
-			preparedStatement = db.prepareStatement("select * from project.property where IDH = ?");
+			sql = "select * from project.Host natural join project.Person where hid = ?";
+			preparedStatement = db.prepareStatement(sql);
+			preparedStatement.setInt(1, hid);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				host.setPID(resultSet.getInt(1));
+				host.setHID(resultSet.getInt(2));
+				host.setEmail(resultSet.getString(3));
+				host.setFirstName(resultSet.getString(4));
+				host.setLastName(resultSet.getString(5));
+				host.setAddress(resultSet.getString(6));
+				host.setPhone(resultSet.getString(7));
+				return host;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error while getting guest's info.");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/*
+	 * @Description 
+	 * 		get agreement list of host with specified hid from database, 
+	 * 		return ArrayList with length = 0 if fail to obtain
+	 * 
+	 * @param int
+	 * 
+	 * @return ArrayList<RentalAgreement>
+	 */
+	public ArrayList<RentalAgreement> getRentalAgreementList(int hid) {
+		ArrayList<RentalAgreement> agreementList = new ArrayList<RentalAgreement>();
+		try {
+			preparedStatement = db.prepareStatement("select * from project.RetalAgreement where hid = ?");
 			preparedStatement.setInt(1, hid);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				String[] property = new String[7];
-				for(int i=0;i<property.length;i++) {
-					property[i] = resultSet.getString(i);
+				// [raid, proid, payid, gid, hid, startDate, endDate, approve]
+				RentalAgreement agreement = new RentalAgreement();
+				if(resultSet.next()) {
+					agreement.setRaid(resultSet.getInt(1));
+					agreement.setProid(resultSet.getInt(2));
+					agreement.setPayid(resultSet.getInt(3));
+					agreement.setGID(resultSet.getInt(4));
+					agreement.setHID(resultSet.getInt(5));
+					agreement.setStartDate(resultSet.getDate(6));
+					agreement.setEndDate(resultSet.getDate(7));
+					agreement.setApprove(resultSet.getString(8));
+				}
+				agreementList.add(agreement);
+			}
+			host.setAgreementList(agreementList);
+		} catch (SQLException e) {
+			System.out.println("Error while getting host's rental agreements list.");
+			e.printStackTrace();
+		}
+		return null; 	// length = 0; if no matched agreements
+	}
+	
+	/*
+	 * @Description 
+	 * 		get property list of host with specified hid from database, 
+	 * 		return ArrayList with length = 0 if fail to obtain
+	 * 
+	 * @param int
+	 * 
+	 * @return ArrayList<Property>
+	 */
+	public ArrayList<Property> getPropertyList(int hid) {
+		ArrayList<Property> propertyList = new ArrayList<Property>();
+		try {
+			preparedStatement = db.prepareStatement("select * from project.Property where hid = ?");
+			preparedStatement.setInt(1, hid);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				// [proid, hid, prcid, title, type, country, address, numRoom]
+				Property property = new Property();
+				if(resultSet.next()) {
+					property.setProid(resultSet.getInt(1));
+					property.setHID(resultSet.getInt(2));
+					property.setPrcid(resultSet.getInt(3));
+					property.setTitle(resultSet.getString(4));
+					property.setType(resultSet.getString(5));
+					property.setCountry(resultSet.getString(6));
+					property.setAddress(resultSet.getString(7));
+					property.setNumRoom(resultSet.getInt(8));
 				}
 				propertyList.add(property);
 			}
+			host.setPropertyList(propertyList);
 		} catch (SQLException e) {
+			System.out.println("Error while getting host's rental agreements list.");
 			e.printStackTrace();
 		}
-		return propertyList;
-	}
-	
-	public int getHID(int pid) {
-		int hid = 0;
-		try {
-			preparedStatement = db.prepareStatement("select idh from project.host where pid = ?");
-			preparedStatement.setInt(1, pid);
-			resultSet = preparedStatement.executeQuery();
-			hid = resultSet.getInt(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return hid;
-	}
-	
-	public int getIdraFromRetalAgreement(int hid) {
-		int idra = 0;
-		try {
-			preparedStatement = db.prepareStatement("select idra from project.retalAgreement where hid = ?");
-			preparedStatement.setInt(1, hid);
-			resultSet = preparedStatement.executeQuery();
-			idra = resultSet.getInt(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return idra;
-	}
-	
-	public int getIdprFromRetalAgreement(int idra) {
-		int idpr = 0;
-		try {
-			preparedStatement = db.prepareStatement("select idra from project.retalAgreement where hid = ?");
-			preparedStatement.setInt(1, idra);
-			resultSet = preparedStatement.executeQuery();
-			idra = resultSet.getInt(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return idpr;
+		return propertyList;	// length = 0; if no matched properties
 	}
 }

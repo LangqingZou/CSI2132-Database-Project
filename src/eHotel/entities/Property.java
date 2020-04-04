@@ -1,64 +1,100 @@
 package eHotel.entities;
 
-import java.sql.Date;
-
 public class Property {
 
-	private int IDP;
-	private String Address;
-	private String PropertyType;
-	private int Roomnumber;
-	private String Title;
-	private String Country;
+	private int proid;
+	private int hid;
+	private int prcid;
+	private String title;
+	private String type;
+	private String country;
+	private String address;
+	private int numRoom;
 	
-	public Property(int iDP, String address, String propertyType, int roomnumber, String title,
-			String country) {
-		this.IDP = iDP;
-		this.Address = address;
-		this.PropertyType = propertyType;
-		this.Roomnumber = roomnumber;
-		this.Title = title;
-		this.Country = country;
-	}
-	
-	public int getIDP() {
-		return IDP;
-	}
-	public void setIDP(int iDP) {
-		IDP = iDP;
-	}
-	public String getAddress() {
-		return Address;
-	}
-	public void setAddress(String address) {
-		Address = address;
-	}
-	public String getPropertyType() {
-		return PropertyType;
-	}
-	public void setPropertyType(String propertyType) {
-		PropertyType = propertyType;
-	}
-	public int getRoomnumber() {
-		return Roomnumber;
-	}
-	public void setRoomnumber(int roomnumber) {
-		Roomnumber = roomnumber;
+	public Property() {
+		this.proid = -1;
+		this.hid = -1;
+		this.prcid = -1;
+		this.title = "";
+		this.type = "";
+		this.country = "";
+		this.address = "";
+		this.numRoom = -1;
 	}
 	
+	public Property(int proid, int hid, int prcid, String title, String type, String country, String address, int numRoom) {
+		this.proid = proid;
+		this.hid = hid;
+		this.prcid = prcid;
+		this.title = title;
+		this.type = type;
+		this.country = country;
+		this.address = address;
+		this.numRoom = numRoom;
+	}
+
+	public int getProid() {
+		return proid;
+	}
+
+	public void setProid(int proid) {
+		this.proid = proid;
+	}
+
+	public int getHID() {
+		return hid;
+	}
+
+	public void setHID(int hid) {
+		this.hid = hid;
+	}
+
+	public int getPrcid() {
+		return prcid;
+	}
+
+	public void setPrcid(int prcid) {
+		this.prcid = prcid;
+	}
+
 	public String getTitle() {
-		return Title;
+		return title;
 	}
+
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public String getCountry() {
-		return Country;
+		return country;
 	}
+
 	public void setCountry(String country) {
-		Country = country;
+		this.country = country;
 	}
-	
-	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getNumRoom() {
+		return numRoom;
+	}
+
+	public void setNumRoom(int numRoom) {
+		this.numRoom = numRoom;
+	}
 
 }

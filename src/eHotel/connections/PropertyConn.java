@@ -16,11 +16,10 @@ import eHotel.entities.Property;
 
 public class PropertyConn {
 	
-	private Connection db;
-	private PreparedStatement preparedStatement = null;
-	private Statement st = null;
 	private String sql;
-	private ResultSet resultSet = null;
+	private Connection db;
+	private ResultSet resultSet;
+	private PreparedStatement preparedStatement;
 	
 	public PropertyConn(DBConnect dbConnect) {
 		db = dbConnect.getConnection();	

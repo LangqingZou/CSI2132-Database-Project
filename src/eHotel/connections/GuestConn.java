@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import eHotel.entities.Guest;
 
@@ -41,14 +40,12 @@ public class GuestConn {
 	    	if (resultSet.next()) {
 	    		guest.setGID(resultSet.getInt(1));
 	    		guest.setPID(pid);
-	    		return guest.getGID();
 	    	}
-	    	return -1;
 		} catch (SQLException e) {
 			System.out.println("Error while getting GID.");
 			e.printStackTrace();
-			return -1;
 		}
+		return guest.getGID();
 	}
 	
 	/*
@@ -69,20 +66,18 @@ public class GuestConn {
 				guest.setGID(resultSet.getInt(1));
 				return true;
 			}
-			return false;
 		} catch (SQLException e) {
 			System.out.println("Error while inserting new guest.");
 			e.printStackTrace();
-			return false;
-		}
-		
+		}	
+		return false;
 	}
 	
 	/*
 	 * @Description 
 	 * 		Return the a Guest found by the gid, return null if the gid is invalid
 	 * 
-	 * @param String
+	 * @param int
 	 * 
 	 * @return Guest
 	 */
@@ -92,16 +87,20 @@ public class GuestConn {
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, gid);
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				guest.setGID(resultSet.getInt(1));
-				guest.setPID(resultSet.getInt(2));
+			if (resultSet.next()) {				
+				guest.setPID(resultSet.getInt(1));
+				guest.setGID(resultSet.getInt(2));
+				guest.setEmail(resultSet.getString(3));
+				guest.setFirstName(resultSet.getString(4));
+				guest.setLastName(resultSet.getString(5));
+				guest.setAddress(resultSet.getString(6));
+				guest.setPhone(resultSet.getString(7));
 				return guest;
 			}
-			return null;
 		} catch (SQLException e) {
 			System.out.println("Error while getting guest's info.");
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 }
