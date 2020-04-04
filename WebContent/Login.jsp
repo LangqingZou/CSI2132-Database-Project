@@ -32,15 +32,6 @@
 	</script>
 	
 	<style type="text/css">
-		button {background-color: #4CAF50;
-				color: #ffffff;
-				text-decoration: none;
-				border-color: #4CAF50;
-				padding: 8px 16px;
-				margin:0 10 0 10;	top, right, bottom, left
-				text-align: center;
-				cursor: pointer;
-				white-space: nowrap;}
 		body {
 			background-color: #323234;
 			color: #ffffff
@@ -49,7 +40,7 @@
 			color:#fff;	
 			text-transform:uppercase;
 		    font-size: 23px;
-		    margin: 0px 0 80px 0;
+		    margin: 0px 0 0px 0;
 		    display: block;
 		    text-align: center;
 		}
@@ -83,25 +74,25 @@
 			transition: all 0.5s ease-in-out;
 		}
 		.input-container input{ 
-		  border:0;
-		  border-bottom:1px solid #555;  
-		  background:transparent;
-		  width:100%;
-		  padding:8px 0 5px 0;
-		  font-size:16px;
-		  color:#fff;
+			 border:0;
+			 border-bottom:1px solid #555;  
+			 background:transparent;
+			 width:100%;
+			 padding:8px 0 5px 0;
+			 font-size:16px;
+			 color:#fff;
 		}
 		.input-container input:focus{ 
-		 border:none;	
-		 outline:none;
-		 border-bottom:1px solid #e74c3c;	
+			 border:none;	
+			 outline:none;
+			 border-bottom:1px solid #e74c3c;	
 		}
 		.btn{
 			color:#fff;
-			background-color:#e74c3c;
+			background-color:transparent;
 			outline: none;
-		    border: 0;
-		    color: #fff;
+			border: 0;
+			color: #fff;
 			padding:10px 20px;
 			text-transform:uppercase;
 			border-radius:5px;
@@ -132,16 +123,16 @@
 			<!--login is here -->	
 			<form method="post" action="login" onSubmit="return validate();">
 				<div class="input-container">
-					<input type="text" required=""/>
+					<input type="text" id="email" name="email" required=""/>
 					<label>Email</label>
 				</div>
 				<div class="input-container">
-					<input type="password" required=""/>
+					<input type="password" id="pass" name="pass" required=""/>
 					<label>Password</label>		
 				</div>
 				<button class="btn loginBtn" type="Submit" value="Login">Login</button>
 			</form>
-			<button class="btn regBtn" type="button"  value="Register"><a href="Register.jsp">Register</a></button>
+			<button class="btn regBtn" type="button" value="Register" onclick="window.location.href='/Register.jsp'">Register</button>
 		</div>
 	</body>
 </html>

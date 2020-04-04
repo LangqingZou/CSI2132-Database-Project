@@ -51,13 +51,16 @@
 			<hr>
         </div>
 		<form method="post" action="menu">
-			<button type="Submit"><a href="PropertyList.jsp"></a>My Properties</button>
+			<button type="Submit" onclick="window.location.href='/PropertyList.jsp'">My Properties</button>
 		</form>
 		<form method="post" action="menu">
-			<button type="Submit"><a href="AgreementList.jsp">Rental Agreements</a></button>
+			<button type="Submit" onclick="window.location.href='/AgreementList.jsp'">Rental Agreements</button>
 		</form>
 		<form method="post" action="menu">
-			<button type="Submit"><a href="AddProperty.jsp">Add Property</a></button>
+			<button type="Submit" onclick="window.location.href='/AddProperty.jsp'">Add Property</button>
+		</form>
+		<form method="post" action="menu">
+			<button type="Submit" onclick="window.location.href='/Booking.jsp'">Add Property</button>
 		</form>
 	</body>
 </html>
