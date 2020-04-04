@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import eHotel.entities.Agreement;
 import eHotel.entities.Guest;
 
 public class GuestConn {
@@ -102,5 +104,43 @@ public class GuestConn {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/*
+	 * @Description 
+	 * 		get agreement list of host with specified hid from database, 
+	 * 		return ArrayList with length = 0 if fail to obtain
+	 * 
+	 * @param int
+	 * 
+	 * @return ArrayList<RentalAgreement>
+	 */
+	public ArrayList<Agreement> getRentalAgreementList(int gid) {
+		ArrayList<Agreement> agreementList = new ArrayList<Agreement>();
+		try {
+			preparedStatement = db.prepareStatement("select * from project.RetalAgreement where gid = ?");
+			preparedStatement.setInt(1, gid);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				// [raid, proid, payid, gid, hid, startDate, endDate, approve]
+				Agreement agreement = new Agreement();
+				if(resultSet.next()) {
+					agreement.setRaid(resultSet.getInt(1));
+					agreement.setProid(resultSet.getInt(2));
+					agreement.setPayid(resultSet.getInt(3));
+					agreement.setGID(resultSet.getInt(4));
+					agreement.setHID(resultSet.getInt(5));
+					agreement.setStartDate(resultSet.getDate(6));
+					agreement.setEndDate(resultSet.getDate(7));
+					agreement.setApprove(resultSet.getString(8));
+				}
+				agreementList.add(agreement);
+			}
+			guest.setAgreementList(agreementList);
+		} catch (SQLException e) {
+			System.out.println("Error while getting host's rental agreements list.");
+			e.printStackTrace();
+		}
+		return agreementList; 	// length = 0; if no matched agreements
 	}
 }

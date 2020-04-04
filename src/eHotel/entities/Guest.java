@@ -1,8 +1,11 @@
 package eHotel.entities;
 
+import java.util.ArrayList;
+
 public class Guest extends Person{
 	private int pid;
 	private int gid;
+	private ArrayList<Agreement> agreementList;
 	
 	public Guest() {
 		super();
@@ -13,6 +16,14 @@ public class Guest extends Person{
 		super(pid, firstName, lastName, address, email, phone, password);
 		this.pid = pid;
 		this.gid = gid;
+	}
+	
+	public ArrayList<Agreement> getAgreementList(){
+		return agreementList;
+	}
+	
+	public void setAgreementList(ArrayList<Agreement> agreementList) {
+		this.agreementList = agreementList;
 	}
 	
 	public int getPID() {

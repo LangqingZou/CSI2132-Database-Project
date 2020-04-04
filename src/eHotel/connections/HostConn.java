@@ -144,7 +144,7 @@ public class HostConn {
 			System.out.println("Error while getting host's rental agreements list.");
 			e.printStackTrace();
 		}
-		return null; 	// length = 0; if no matched agreements
+		return agreementList; 	// length = 0; if no matched agreements
 	}
 	
 	/*
