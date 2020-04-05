@@ -22,7 +22,7 @@ public class AgreementConn {
 	
 	public int insertNew(Agreement agreement) {
 		try {
-			sql = "insert into project.Agreement values(?,?,?,?,?,?) returning raid";
+			sql = "insert into project.Agreement(proid,payid,gid,hid,startDate,endDate,approve) values(?,?,?,?,?,?) returning raid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, agreement.getProid());
 			preparedStatement.setInt(2, agreement.getPayid());

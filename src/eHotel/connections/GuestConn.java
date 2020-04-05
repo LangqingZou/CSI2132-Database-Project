@@ -24,6 +24,7 @@ public class GuestConn extends PersonConn {
 	public GuestConn(DBConnect dbConnect) {
 		super(dbConnect);
 		guest = new Guest();
+		db = dbConnect.getConnection();
 	}
 	
 	/*

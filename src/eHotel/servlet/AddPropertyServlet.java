@@ -14,6 +14,7 @@ import eHotel.connections.HostConn;
 import eHotel.connections.PricingConn;
 import eHotel.connections.PropertyConn;
 import eHotel.entities.Host;
+import eHotel.entities.Person;
 import eHotel.entities.Pricing;
 import eHotel.entities.Property;
 
@@ -28,8 +29,6 @@ public class AddPropertyServlet extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
-		String roleType = (String) session.getAttribute("roleType");
-		int pid = (int) session.getAttribute("pid");
 		
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
@@ -40,51 +39,50 @@ public class AddPropertyServlet extends HttpServlet{
 		String rule = req.getParameter("rule");
 		String amenity = req.getParameter("amenity");
 		
+		//create new property
+		PropertyConn proConn = new PropertyConn(dbConnect);
 		Property newProperty = new Property();
-		PropertyConn prConn = new PropertyConn(dbConnect);
-
 		newProperty.setTitle(title);
 		newProperty.setAddress(address);
 		newProperty.setType(type);
 		newProperty.setNumRoom(Integer.parseInt(numRoom));
 		newProperty.setCountry(country);
 		
-		//create a property
-		if(prConn.insertNew(newProperty)!= -1) {
-			HostConn hConn  = new HostConn(dbConnect);
-			if(roleType == "host") {
+		//create new pricing
+		PricingConn priConn = new PricingConn(dbConnect);
+		Pricing newPricing = new Pricing();
+		newPricing.setPrice(Integer.parseInt(price));
+		newPricing.setRule(rule);
+		newPricing.setAmenity(amenity);
+		
+		int prcid = priConn.insertNew(newPricing);
+		if(prcid != -1) {
+			//add prcid to the new property
+			newProperty.setPrcid(prcid);
+			// check login role type
+			String roleType = (String) session.getAttribute("roleType");
+			if(roleType.equals("host")) {
 				Host host = (Host) session.getAttribute("loginRole");
 				newProperty.setHID(host.getHID());
 			}else{
-				Host newHost = new Host();
-				if(hConn.insertNew(pid)) {
-					newHost = hConn.getHost(hConn.getHID(pid));
+				HostConn hConn  = new HostConn(dbConnect);
+				Person person = (Person) session.getAttribute("loginRole");
+				Host newHost = new Host(person);
+				if(hConn.insertNew(newHost.getPID())) {
+					newHost.setHID(hConn.getHID(newHost.getPID()));
 					newProperty.setHID(newHost.getHID());
-				}else {
-					session.setAttribute("PrpertyFail", "true");
-					resp.sendRedirect("add.jsp");
 				}
 			}
-			session.setAttribute("price", price);
-			//create a pricing
-			Pricing newPricing = new Pricing();
-			PricingConn priConn = new PricingConn(dbConnect);
-			int prcid = priConn.insertNew(newPricing);
-			//add prcid to the new property
-			newProperty.setPrcid(prcid);
-			
-			newPricing.setPrice(Integer.parseInt(price));
-			newPricing.setRule(rule);
-			newPricing.setAmenity(amenity);
-			if(priConn.insertNew(newPricing)!=-1) {
+			int proid = proConn.insertNew(newProperty);
+			if(proid != -1) {
 				session.setAttribute("addSuccessfully", "true");
+				resp.sendRedirect("Menu.jsp");
+				dbConnect.closeDB();
+				return;
 			}
-			
-		}else {
-			session.setAttribute("PrpertyFail", "true");
-			resp.sendRedirect("add.jsp");
 		}
-		
+		session.setAttribute("PropertyFail", "true");
+		resp.sendRedirect("AddProperty.jsp");
 		dbConnect.closeDB();
 	}
 

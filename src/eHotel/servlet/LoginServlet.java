@@ -53,6 +53,7 @@ public class LoginServlet extends HttpServlet {
 				if(hid != -1) {
 					role = hConn.getHost(hid);
 					session.setAttribute("roleType", "host");
+					session.setAttribute("myProperties", hConn.getAllProperties());
 				}else if(gid != -1) {
 					role = gConn.getGuest(gid);
 					session.setAttribute("roleType", "guest");
@@ -60,6 +61,7 @@ public class LoginServlet extends HttpServlet {
 					role = eConn.getEmployee(eid);
 					session.setAttribute("roleType", "employee");
 				}
+				session.setAttribute("allPropertyList", pConn.getAllProperties());
 				session.setAttribute("loginRole", role);
 				resp.sendRedirect("Menu.jsp");
 			}else{

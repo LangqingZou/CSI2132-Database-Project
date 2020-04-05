@@ -23,6 +23,7 @@ public class EmployeeConn extends PersonConn {
 	public EmployeeConn(DBConnect dbConnect) {
 		super(dbConnect);
 		employee = new Employee();
+		db = dbConnect.getConnection();
 	}
 	
 	/*

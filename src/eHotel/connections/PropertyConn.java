@@ -22,15 +22,15 @@ public class PropertyConn {
 	
 	public int insertNew(Property property) {
 		try {
-			sql = "insert into project.Property values(?,?,?,?,?,?,?) returning proid";
+			sql = "insert into project.Property(hid,prcid,title,type,address,numRoom,country) values(?,?,?,?,?,?,?) returning proid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, property.getHID());
 			preparedStatement.setInt(2, property.getPrcid());
 			preparedStatement.setString(3, property.getTitle());
 			preparedStatement.setString(4, property.getType());
-			preparedStatement.setString(5, property.getCountry());
-			preparedStatement.setString(6, property.getAddress());
-			preparedStatement.setInt(7, property.getNumRoom());
+			preparedStatement.setString(5, property.getAddress());
+			preparedStatement.setInt(6, property.getNumRoom());
+			preparedStatement.setString(7, property.getCountry());
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				this.property = property;

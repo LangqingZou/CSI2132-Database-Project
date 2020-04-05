@@ -34,7 +34,7 @@
 	<style type="text/css">
 		body {
 			background-color: #323234;
-			color: #ffffff
+			color: #fff;
 		}
 		.text-center{
 			color:#fff;	
@@ -44,20 +44,15 @@
 		    display: block;
 		    text-align: center;
 		}
-		.loginBtn{
-			float: left;
-		}
-		.registerBtn{
-			float: right;
-		}
 		.container{
 			position:absolute;
-			left:50%;
-			top:50%;
-			transform: translate(-50%,-50%);
+			left:35%;
+			right:35%;
+			top:20%;
 		    background-color: rgba(100, 115, 115, 0.89);
 			border-radius: 5px;
 			padding:80px 100px;
+			padding-bottom: 40px;
 		}
 		.input-container{
 			position:relative;
@@ -95,12 +90,10 @@
 			padding:10px 20px;
 			text-transform:uppercase;
 			cursor:pointer;
-			position:relative;
+			position:static;
 		}
 		.btn:after{
 			content:"";
-			position:absolute;
-			background:rgba(0,0,0,0.50);
 			top:0;
 			right:0;
 			width:100%;
@@ -128,9 +121,9 @@
 					<input type="password" id="pass" name="pass" required=""/>
 					<label>Password</label>		
 				</div>
-				<button class="btn loginBtn" type="Submit" value="Login">Login</button>
+				<button class="btn loginBtn" style="margin: 0 30% 0 30%" type="Submit" value="Login">Login</button>
 			</form>
-			<button class="btn regBtn" type="button" value="Register" onclick="window.location.href='Register.jsp'">Register</button>
+			<button class="btn regBtn" type="button" value="Register" style="margin: 20px 63px" onclick="window.location.href='Register.jsp'">Register</button>
 		</div>
 	</body>
 </html>

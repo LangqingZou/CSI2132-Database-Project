@@ -19,6 +19,14 @@ public class Host extends Person{
 		this.hid = hid;
 	}
 	
+	public Host(Person person) {
+		super(person.getPID(), person.getFirstName(), 
+				person.getLastName(), person.getAddress(), 
+				person.getEmail(), person.getPhone(), person.getPassword());
+		this.pid = person.getPID();
+		this.hid = -1;
+	}
+	
 	public ArrayList<Agreement> getAgreementList(){
 		return agreementList;
 	}

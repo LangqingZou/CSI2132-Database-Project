@@ -16,12 +16,13 @@
 			String type = (String) session.getAttribute("roleType");
 			if(type.equals("guest")){
 				Guest guest = (Guest) session.getAttribute("loginRole");
-				Agreement aggrement = (Agreement) session.getAttribute("Agreement");
+				ArrayList<Agreement> hostAgreement = (ArrayList<Agreement>) session.getAttribute("rentalAgreementHost");
+
 				out.println("Address: " + guest.getAddress() + "<br>");
 			}else{
-				
+				Guest guest = (Guest) session.getAttribute("loginRole");
 			}
-			%>
+		  %>
 		</div>
 			
 	</body>

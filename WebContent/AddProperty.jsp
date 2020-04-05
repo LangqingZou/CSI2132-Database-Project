@@ -30,16 +30,16 @@
 	<body>
 		<h2>Add Property</h2>
 		<div>		
-			<form method="post" action="addProperty" onSubmit="return validate();">
+			<form method="post" action="addproperty" onSubmit="return validate();">
 				Title:<br><input type="text" id="title" name="title"><br><br>
 				Type:<br><input type="text" id="type" name="type"><br><br>
 				Address:<br><input type="text" id="address" name="address"><br><br>
 				NumRoom:<br><input type="number" id="numRoom" name="numRoom"><br><br>
 				Country:<br><input type="text" id="country" name="country"><br><br>
 				Price:<br><input type="number" id="price" name="price"><br><br>
-				<button type="Submit" value="Login" id="confirm">Confirm</button>
-				<button type="button" value="Login" id="confirm" href="Menu.jsp">Return</button>
+				<button type="Submit" value="Login" id="confirm">Confirm</button><br><br>
 			</form>
+			<a href="Menu.jsp"><button type="button" value="Login" id="confirm">Return</button></a>
 		</div>
 	</body>
 </html>

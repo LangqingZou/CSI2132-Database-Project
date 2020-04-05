@@ -6,17 +6,17 @@
 	<title>My Properties</title>
 </head>
 	<body>
-		<div style="margin: 40% 20%">
+		<div style="margin: 20px 20%">
 			<%
 				//Get property list info from session
-				ArrayList<Property> list = (ArrayList<Property>) session.getAttribute("myPropertyList");
-				if (list.size() != 0){
+				ArrayList<Property> list = (ArrayList<Property>) session.getAttribute("myProperties");
+				if (list != null && list.size() != 0){
 					//Display property info
 					for (int i = 0; i < list.size(); i++){
-						Property p = list.get(i);
+						Property p = (Property)list.get(i);
 						out.println("<hr>");
-						out.println("<h3>" + p.getTitle() + "</h3>");
-						out.println("<h5>" + p.getType() + "</h5>");
+						out.println("<h2 style='text-align: center'>" + p.getTitle() + "</h2>");
+						out.println("<h3 style='text-transform:uppercase'>" + p.getType() + "</h3>");
 						out.println("<p> Country: " + p.getCountry() + "</p>");
 						out.println("<p> Address: " + p.getAddress() + "</p>");
 						out.println("<p> Number of room: " + p.getNumRoom() + "</p>");

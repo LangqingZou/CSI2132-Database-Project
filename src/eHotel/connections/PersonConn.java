@@ -123,16 +123,14 @@ public class PersonConn {
 			while (resultSet.next()) {
 				// [proid, hid, prcid, title, type, country, address, numRoom]
 				Property property = new Property();
-				if(resultSet.next()) {
-					property.setProid(resultSet.getInt(1));
-					property.setHID(resultSet.getInt(2));
-					property.setPrcid(resultSet.getInt(3));
-					property.setTitle(resultSet.getString(4));
-					property.setType(resultSet.getString(5));
-					property.setCountry(resultSet.getString(6));
-					property.setAddress(resultSet.getString(7));
-					property.setNumRoom(resultSet.getInt(8));
-				}
+				property.setProid(resultSet.getInt(1));
+				property.setHID(resultSet.getInt(2));
+				property.setPrcid(resultSet.getInt(3));
+				property.setTitle(resultSet.getString(4));
+				property.setType(resultSet.getString(5));
+				property.setAddress(resultSet.getString(6));
+				property.setNumRoom(resultSet.getInt(7));
+				property.setCountry(resultSet.getString(8));
 				propertyList.add(property);
 			}
 		} catch (SQLException e) {

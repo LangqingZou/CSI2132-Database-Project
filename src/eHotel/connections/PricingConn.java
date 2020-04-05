@@ -22,7 +22,7 @@ public class PricingConn {
 	
 	public int insertNew(Pricing pricing) {
 		try {
-			sql = "insert into project.Pricing values(?,?,?) returning prcid";
+			sql = "insert into project.Pricing(price,rule,amenity) values(?,?,?) returning prcid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, pricing.getPrice());
 			preparedStatement.setString(2, pricing.getRule());
