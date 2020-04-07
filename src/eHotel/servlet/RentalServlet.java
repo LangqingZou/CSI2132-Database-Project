@@ -26,16 +26,6 @@ public class RentalServlet extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
-		String role = (String) session.getAttribute("roleType");
-		int pid = (int) session.getAttribute("pid");
-		if(role.equals("host")) {
-			HostConn hConn = new HostConn(dbConnect);
-			ArrayList<Agreement> rentalAgreeByHid = hConn.getRentalAgreementList(hConn.getHID(pid));
-			session.setAttribute("rentalAgreementHost", rentalAgreeByHid);
-		}else {
-			GuestConn gConn = new GuestConn(dbConnect);
-			ArrayList<Agreement> rentalAgreeByGid = gConn.getRentalAgreementList(gConn.getGID(pid));
-			session.setAttribute("rentalAgreementGuest", rentalAgreeByGid);
-		}
 	}
+		
 }
