@@ -47,8 +47,8 @@
 		  font-size: 0;
 		  white-space: nowrap;
 		  display: inline-block;
-		  width: 250px;
-		  height: 50px;
+		  width: 50px;
+		  height: 10px;
 		  overflow: hidden;
 		  position: relative;
 		  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
@@ -140,7 +140,7 @@
 					out.println("<button id='payBtn' name='payBtn' type='Submit' value='" + a.getPayid() + "'>Pay</button>");
 					out.println("</form>");
 					
-					if (true) {
+					if (reviewState) {
 						out.println("<form method='post' action='postcomment'>");
 						out.print("<p>Communication </p>");
 						out.print("<span class='star-rating'>");
@@ -166,11 +166,10 @@
 						out.print("<input type='radio' name='valueRating' value='4'><i></i>");
 						out.print("<input type='radio' name='valueRating' value='5'><i></i>");
 						out.println("</span>");
-						out.println("<textarea id='comment' name='comment' cols=30 rows=10 aria-required='true'/>");
-						out.println("<button id='revBtn' name='revBtn' type='Submit>Post Comment</button>");
+						out.println("<textarea id='comment' name='comment' cols=30 rows=10 aria-required='true'></textarea>");
+						out.println("<button id='revBtn' name='revBtn' type='Submit value='" + p.getProid() + "'>Post Comment</button>");
 						out.println("</form>");
 					}
-					
 					out.println("<hr>");
 				}
 			}else{

@@ -9,6 +9,7 @@ public class Review {
 	private int communication;
 	private int cleaniliness;
 	private int value;
+	private String comment;
 	
 	public Review() {
 		this.reid = -1;
@@ -18,9 +19,10 @@ public class Review {
 		this.communication = -1;
 		this.cleaniliness = -1;
 		this.value = -1;
+		this.comment = "";
 	}
 	
-	public Review(int reid, int proid, int gid, int rating, int communication, int cleaniliness, int value) {
+	public Review(int reid, int proid, int gid, int rating, int communication, int cleaniliness, int value, String comment) {
 		this.reid = reid;
 		this.proid = proid;
 		this.gid = gid;
@@ -28,6 +30,7 @@ public class Review {
 		this.communication = communication;
 		this.cleaniliness = cleaniliness;
 		this.value = value;
+		this.comment = comment;
 	}
 
 	public int getReid() {
@@ -84,5 +87,13 @@ public class Review {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+	
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }
