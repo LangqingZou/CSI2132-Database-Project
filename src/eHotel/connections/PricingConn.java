@@ -17,6 +17,7 @@ public class PricingConn {
 	private Pricing pricing;
 	
 	public PricingConn(DBConnect dbConnect) {
+		pricing = new Pricing();
 		db = dbConnect.getConnection();	
 	}
 	

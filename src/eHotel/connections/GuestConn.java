@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import eHotel.entities.Agreement;
@@ -120,7 +121,7 @@ public class GuestConn extends PersonConn {
 	public ArrayList<Agreement> getRentalAgreementList(int gid) {
 		ArrayList<Agreement> agreementList = new ArrayList<Agreement>();
 		try {
-			preparedStatement = db.prepareStatement("select * from project.RetalAgreement where gid = ?");
+			preparedStatement = db.prepareStatement("select * from project.RentalAgreement where gid = ?");
 			preparedStatement.setInt(1, gid);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -132,8 +133,8 @@ public class GuestConn extends PersonConn {
 					agreement.setPayid(resultSet.getInt(3));
 					agreement.setGID(resultSet.getInt(4));
 					agreement.setHID(resultSet.getInt(5));
-					agreement.setStartDate(resultSet.getDate(6));
-					agreement.setEndDate(resultSet.getDate(7));
+					agreement.setStartDate(resultSet.getObject(6, LocalDate.class));
+					agreement.setEndDate(resultSet.getObject(7, LocalDate.class));
 					agreement.setApprove(resultSet.getString(8));
 				}
 				agreementList.add(agreement);

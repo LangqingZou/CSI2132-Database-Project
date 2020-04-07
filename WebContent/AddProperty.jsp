@@ -6,6 +6,17 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="Content-Language" content="ch-cn">
 	<script type="text/javascript">
+		function alerts(){
+			var PropertyFail = '<%=session.getAttribute("PropertyFail")%>';
+			var addSuccessfully = '<%=session.getAttribute("addSuccessfully")%>';
+			if (PropertyFail == 'true') {
+				alert("Fail to add property");
+			}
+			if (addSuccessfully == 'true') {
+				alert("Add property successfully!");
+			}
+	
+		}	 
 		function validate(){
 			var title = document.getElementById("title");
 			var type = document.getElementById("type");
@@ -25,6 +36,7 @@
 			}
 			return true;
 		}
+		window.onload = alerts;
 	</script>
 </head>
 	<body>

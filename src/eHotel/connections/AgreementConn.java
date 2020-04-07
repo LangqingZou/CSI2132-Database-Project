@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import eHotel.entities.Agreement;
 
@@ -17,19 +18,20 @@ public class AgreementConn {
 	private Agreement agreement;
 	
 	public AgreementConn(DBConnect dbConnect) {
+		agreement = new Agreement();
 		db = dbConnect.getConnection();	
 	}
 	
 	public int insertNew(Agreement agreement) {
 		try {
-			sql = "insert into project.Agreement(proid,payid,gid,hid,startDate,endDate,approve) values(?,?,?,?,?,?) returning raid";
+			sql = "insert into project.RentalAgreement(proid,payid,gid,hid,startDate,endDate,approve) values(?,?,?,?,?,?,?) returning raid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, agreement.getProid());
 			preparedStatement.setInt(2, agreement.getPayid());
 			preparedStatement.setInt(3, agreement.getGID());
 			preparedStatement.setInt(4, agreement.getHID());
-			preparedStatement.setDate(5, agreement.getStartDate());
-			preparedStatement.setDate(6, agreement.getEndDate());
+			preparedStatement.setObject(5, agreement.getStartDate());
+			preparedStatement.setObject(6, agreement.getEndDate());
 			preparedStatement.setString(7, agreement.getApprove());
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
@@ -45,7 +47,7 @@ public class AgreementConn {
 	
 	public Agreement getAgreement(int raid) {
 		try {
-			preparedStatement = db.prepareStatement("select * from project.Agreement where raid = ?");
+			preparedStatement = db.prepareStatement("select * from project.RentalAgreement where raid = ?");
 			preparedStatement.setInt(1, raid);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
@@ -54,8 +56,8 @@ public class AgreementConn {
 				agreement.setPayid(resultSet.getInt(3));
 				agreement.setGID(resultSet.getInt(4));
 				agreement.setHID(resultSet.getInt(5));
-				agreement.setStartDate(resultSet.getDate(6));
-				agreement.setEndDate(resultSet.getDate(7));
+				agreement.setStartDate(resultSet.getObject(6, LocalDate.class));
+				agreement.setEndDate(resultSet.getObject(7, LocalDate.class));
 				agreement.setApprove(resultSet.getString(8));
 			}
 		} catch (SQLException e) {

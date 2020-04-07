@@ -18,6 +18,14 @@ public class Guest extends Person{
 		this.gid = gid;
 	}
 	
+	public Guest(Person person) {
+		super(person.getPID(), person.getFirstName(), 
+				person.getLastName(), person.getAddress(), 
+				person.getEmail(), person.getPhone(), person.getPassword());
+		this.pid = person.getPID();
+		this.gid = -1;
+	}
+	
 	public ArrayList<Agreement> getAgreementList(){
 		return agreementList;
 	}

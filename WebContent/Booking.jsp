@@ -4,9 +4,20 @@
 <html>
 <head>
 	<title>Booking</title>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta http-equiv="Content-Language" content="ch-cn">
+	<meta charset=UTF-8">
 	<script type="text/javascript">
+		function alerts(){
+			var bookSuccessfully = '<%=session.getAttribute("bookSuccessfully")%>';
+			var bookFail = '<%=session.getAttribute("failToBook")%>';
+			if (bookSuccessfully == 'true') {
+				alert("Booking successfully! Go check your rental agreement");
+			}
+			if (bookFail == 'true') {
+				alert("Fail to book. Try again.");
+			}
+	
+		}
+		window.onload = alerts;
 	</script>
 </head>
 	<body>
@@ -27,10 +38,11 @@
 					out.println("<p> Address: " + p.getAddress() + "</p>");
 					out.println("<p> Number of room: " + p.getNumRoom() + "</p>");
 					out.println("<p>Booking info (fill in if you want to book this):</p>");
+					out.println("<form method='post' action='booking'>");
 					out.println("Start Date:<br><input id='startDate' name='startDate' type='date'/><br>");
 					out.println("End Date:<br><input id='endDate' name='endDate' type='date'/><br><br>");
-					out.println("<select id='payType' name='payType'><option value='credit'>Credit</option><option value='debit'>Debit</option></select>");
-					out.println("<button id='bookBtn' name='bookBtn' type='Submit' value='book'>Book Now!</button>");
+					out.println("<button id='bookBtn' name='bookBtn' type='Submit' value='" + p.getProid() + "'>Book Now!</button>");
+					out.println("</form>");
 					out.println("<hr>");
 				}
 			}else{
@@ -39,6 +51,9 @@
 				out.println("<hr>");
 			}
 		%>
+		<form>
+			<button class="btn retBtn" type="button" value="Return" style="margin: 20px 63px" onclick="window.location.href='Menu.jsp'">Return</button>
+		</form>
 		</div>
 	</body>
 </html>

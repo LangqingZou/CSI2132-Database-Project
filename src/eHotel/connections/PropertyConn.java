@@ -17,6 +17,7 @@ public class PropertyConn {
 	private Property property;
 	
 	public PropertyConn(DBConnect dbConnect) {
+		property = new Property();
 		db = dbConnect.getConnection();	
 	}
 	
@@ -54,9 +55,10 @@ public class PropertyConn {
 				property.setPrcid(resultSet.getInt(3));
 				property.setTitle(resultSet.getString(4));
 				property.setType(resultSet.getString(5));
-				property.setCountry(resultSet.getString(6));
-				property.setAddress(resultSet.getString(7));
-				property.setNumRoom(resultSet.getInt(8));
+				property.setAddress(resultSet.getString(6));
+				property.setNumRoom(resultSet.getInt(7));
+				property.setCountry(resultSet.getString(8));
+				
 			}
 		} catch (SQLException e) {
 			System.out.println("Error while getting property's info.");

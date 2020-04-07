@@ -1,6 +1,6 @@
 package eHotel.entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Agreement {
 	
@@ -9,8 +9,8 @@ public class Agreement {
 	private int payid;
 	private int gid;
 	private int hid;
-	private Date startDate;
-	private Date endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	private String approve;
 	
 	public Agreement() {
@@ -19,10 +19,12 @@ public class Agreement {
 		this.payid = -1;
 		this.gid = -1;
 		this.hid = -1;
-		this.approve = "";
+		this.startDate = LocalDate.MIN;
+		this.endDate = LocalDate.MIN;
+		this.approve = "waiting";
 	}
 	
-	public Agreement(int raid, int proid, int payid, int gid, int hid, Date startDate, Date endDate, String approve) {
+	public Agreement(int raid, int proid, int payid, int gid, int hid, LocalDate startDate, LocalDate endDate, String approve) {
 		this.raid = raid;
 		this.proid = proid;
 		this.payid = payid;
@@ -73,19 +75,19 @@ public class Agreement {
 		this.hid = hid;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

@@ -25,8 +25,11 @@ public class MyPropertyServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
 		
+		int pid = (int) session.getAttribute("pid");
+		
 		HostConn hConn = new HostConn(dbConnect);
-		ArrayList<Property> myProperties = hConn.getAllProperties();
+		System.out.println(hConn.getHID(pid));
+		ArrayList<Property> myProperties = hConn.getPropertyList(hConn.getHID(pid));
 		session.setAttribute("myProperties", myProperties);
 	}
 }

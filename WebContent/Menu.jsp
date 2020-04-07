@@ -9,14 +9,21 @@
 	<script type="text/javascript">
 		function DisplayHostBtn() {
 			var type = '<%=session.getAttribute("roleType")%>';
-		    var btn = document.getElementById("addPropBtn");
+		    var btn = document.getElementById("myPropBtn");
 		    if (type == 'host') {
 		        btn.style.display = 'block';
 		    }else{
 		    	btn.style.display = 'none';
 		    }
 		}
-		window.onload = DisplayHostBtn
+		function alerts(){
+			var addSuccessfully = '<%=session.getAttribute("addSuccessfully")%>';
+			if (addSuccessfully == 'true') {
+				alert("Add Property Successfully");
+			}
+		}	
+		window.onload = alerts;
+		window.onload = DisplayHostBtn;
 	</script>
 	<style type="text/css">
 		body{
@@ -54,7 +61,7 @@
 		}
 	</style>
 </head>
-	<body>
+	<body onload = 'alerts()'>
 		<div class='container'>
 			<h1 style="text-align: center;"> Main Menu </h1>
 			<hr>
@@ -89,7 +96,7 @@
 		        	}
 		           %>
 			</div>
-			<a href="PropertyList.jsp"><button id="addPropBtn" type="Submit" class="btn" style="float:left">My Properties</button></a>
+			<a href="PropertyList.jsp"><button id="myPropBtn" type="Submit" class="btn" style="float:left">My Properties</button></a>
 			<div style="float:right">
 				<a href="AgreementList.jsp"><button type="Submit" class="btn">Rental Agreements</button></a>
 				<a href="AddProperty.jsp"><button type="Submit" class="btn">Add Property</button></a>

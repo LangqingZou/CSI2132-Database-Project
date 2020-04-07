@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import eHotel.entities.Host;
@@ -123,22 +124,20 @@ public class HostConn extends PersonConn {
 	public ArrayList<Agreement> getRentalAgreementList(int hid) {
 		ArrayList<Agreement> agreementList = new ArrayList<Agreement>();
 		try {
-			preparedStatement = db.prepareStatement("select * from project.RetalAgreement where hid = ?");
+			preparedStatement = db.prepareStatement("select * from project.RentalAgreement where hid = ?");
 			preparedStatement.setInt(1, hid);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				// [raid, proid, payid, gid, hid, startDate, endDate, approve]
 				Agreement agreement = new Agreement();
-				if(resultSet.next()) {
-					agreement.setRaid(resultSet.getInt(1));
-					agreement.setProid(resultSet.getInt(2));
-					agreement.setPayid(resultSet.getInt(3));
-					agreement.setGID(resultSet.getInt(4));
-					agreement.setHID(resultSet.getInt(5));
-					agreement.setStartDate(resultSet.getDate(6));
-					agreement.setEndDate(resultSet.getDate(7));
-					agreement.setApprove(resultSet.getString(8));
-				}
+				agreement.setRaid(resultSet.getInt(1));
+				agreement.setProid(resultSet.getInt(2));
+				agreement.setPayid(resultSet.getInt(3));
+				agreement.setGID(resultSet.getInt(4));
+				agreement.setHID(resultSet.getInt(5));
+				agreement.setStartDate(resultSet.getObject(6, LocalDate.class));
+				agreement.setEndDate(resultSet.getObject(7, LocalDate.class));
+				agreement.setApprove(resultSet.getString(8));
 				agreementList.add(agreement);
 			}
 			host.setAgreementList(agreementList);
@@ -172,14 +171,14 @@ public class HostConn extends PersonConn {
 				property.setPrcid(resultSet.getInt(3));
 				property.setTitle(resultSet.getString(4));
 				property.setType(resultSet.getString(5));
-				property.setCountry(resultSet.getString(6));
-				property.setAddress(resultSet.getString(7));
-				property.setNumRoom(resultSet.getInt(8));
+				property.setAddress(resultSet.getString(6));
+				property.setNumRoom(resultSet.getInt(7));
+				property.setCountry(resultSet.getString(8));
 				propertyList.add(property);
 			}
 			host.setPropertyList(propertyList);
 		} catch (SQLException e) {
-			System.out.println("Error while getting host's rental agreements list.");
+			System.out.println("Error while getting host's property list.");
 			e.printStackTrace();
 		}
 		return propertyList;	// length = 0; if no matched properties

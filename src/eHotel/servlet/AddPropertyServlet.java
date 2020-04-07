@@ -71,12 +71,13 @@ public class AddPropertyServlet extends HttpServlet{
 				if(hConn.insertNew(newHost.getPID())) {
 					newHost.setHID(hConn.getHID(newHost.getPID()));
 					newProperty.setHID(newHost.getHID());
+					session.setAttribute("roleType", "host");
 				}
 			}
 			int proid = proConn.insertNew(newProperty);
 			if(proid != -1) {
 				session.setAttribute("addSuccessfully", "true");
-				resp.sendRedirect("Menu.jsp");
+				resp.sendRedirect("Booking.jsp");
 				dbConnect.closeDB();
 				return;
 			}

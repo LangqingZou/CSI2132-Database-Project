@@ -22,7 +22,7 @@ public class PaymentConn {
 	
 	public int insertNew(Payment payment) {
 		try {
-			sql = "insert into project.Payment values(?,?,?,?) returning payid";
+			sql = "insert into project.Payment(gid,amount,payType,status) values(?,?,?,?) returning payid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, payment.getGID());
 			preparedStatement.setInt(2, payment.getAmount());
