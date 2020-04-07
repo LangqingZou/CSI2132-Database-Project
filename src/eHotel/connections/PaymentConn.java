@@ -17,6 +17,7 @@ public class PaymentConn {
 	private Payment payment;
 	
 	public PaymentConn(DBConnect dbConnect) {
+		payment = new Payment();
 		db = dbConnect.getConnection();	
 	}
 	
@@ -65,7 +66,7 @@ public class PaymentConn {
 			preparedStatement.setString(1, "paid");
 			preparedStatement.setString(2, payType);
 			preparedStatement.setInt(3, payid);
-			preparedStatement.executeQuery();
+			preparedStatement.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			System.out.println("Error while updating payment.");

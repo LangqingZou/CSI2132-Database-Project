@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import eHotel.connections.DBConnect;
 import eHotel.connections.PaymentConn;
+import eHotel.entities.Payment;
 
 @SuppressWarnings("serial")
 public class RentalServlet extends HttpServlet{
@@ -24,12 +25,14 @@ public class RentalServlet extends HttpServlet{
 		DBConnect dbConnect = new DBConnect();
 		
 		PaymentConn payConn = new PaymentConn(dbConnect);
-		
+		//Payment pay = new PaymentConn(dbConnect);
 		int payid = Integer.parseInt(req.getParameter("payBtn"));
 		String payType = req.getParameter("payType");
-		
+
 		if(payConn.onPay(payid, payType)) {
 			session.setAttribute("reviewState", true);
+			session.setAttribute("paySuccessfully", true);
+			resp.sendRedirect("AgreementList.jsp");
 		}else {
 			session.setAttribute("reviewState", false);
 		}

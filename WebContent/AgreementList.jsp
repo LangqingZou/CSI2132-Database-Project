@@ -1,3 +1,4 @@
+<%@page import="eHotel.connections.PaymentConn"%>
 <%@page import="eHotel.connections.DBConnect"%>
 <%@page import="eHotel.connections.PropertyConn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -14,11 +15,15 @@
 	<script type="text/javascript">
 		function alerts(){
 			var bookSuccessfully = '<%=session.getAttribute("bookSuccessfully")%>';
+			var paySuccessfully = '<%=session.getAttribute("paySuccessfully")%>';
 			if (bookSuccessfully == 'true') {
 				alert("Book successfully! Go to check your rental agreement.");
 			}
+			if (paySuccessfully == 'true') {
+				alert("Pay successfully! Now you can make a review.");
+			}
 		}
-		window.onload = emailAlert;
+		window.onload = alerts;
 	</script>
 	<style type="text/css">
 		body {
@@ -26,7 +31,7 @@
 			color: #fff;
 		}
 		textarea {
-			width: 100%;
+			width: 50%;
 			background: #f2f2f2;
 			border-radius: 0px;
 			height: 150px;
@@ -34,7 +39,6 @@
 			margin-bottom: 20px;
 			border: 1px solid #cbd0d2;
 			padding: 10px;
-			clear: both;
 			box-sizing: border-box;
 			outline: 0;
 			color: #444;
@@ -47,8 +51,8 @@
 		  font-size: 0;
 		  white-space: nowrap;
 		  display: inline-block;
-		  width: 50px;
-		  height: 10px;
+		  width: 150px;
+		  height: 30px;
 		  overflow: hidden;
 		  position: relative;
 		  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
@@ -109,13 +113,15 @@
 		<h1 style="text-align: center;">Rental Agreement</h1>
 		<div>
 		 <%
-			String type = (String) session.getAttribute("roleType");
-		 	Boolean reviewState = (Boolean) session.getAttribute("reviewState");
+		 	DBConnect dbConnect = new DBConnect();
+		 String type = (String) session.getAttribute("roleType");
 		 	ArrayList<Agreement> guestAgreements = new ArrayList<Agreement>();
 		 	ArrayList<Agreement> hostAgreements = new ArrayList<Agreement>();
 		 	guestAgreements = (ArrayList<Agreement>) session.getAttribute("rentalAgreementGuest");
 		 	hostAgreements = (ArrayList<Agreement>) session.getAttribute("rentalAgreementHost");
-		 	PropertyConn proConn = new PropertyConn(new DBConnect());
+		 	PropertyConn proConn = new PropertyConn(dbConnect);
+		 	PaymentConn payConn = new PaymentConn(dbConnect);
+		 	
 			if(type.equals("guest")){
 				Guest guest = (Guest) session.getAttribute("loginRole");
 				
@@ -128,21 +134,22 @@
 				for (int i = 0; i < guestAgreements.size(); i++){
 					Agreement a = (Agreement)guestAgreements.get(i);
 					Property p = proConn.getProperty(a.getProid());
+					String status = payConn.getPayment(a.getPayid()).getStatus();
 					out.println("<hr>");
 					//out.println("<h2 style='text-align: center'>" + a.getStartDate() + "</h2>");
 					out.println("<h3 style='text-transform:uppercase'>" + p.getTitle() + "</h3>");
 					out.println("<p> Rental start Date: " + a.getStartDate() + "</p>");
 					out.println("<p> Rental end Date: " + a.getEndDate() + "</p>");
-					out.println("<p> Approval status: " + a.getApprove() + "</p>");
+					out.println("<p> Status: " + status + "</p>");
 					out.println("<form method='post' action='rentals'>");
 					out.println("<select id='payType' name='payType'><option value='credit'>Credit</option><option value='debit'>Debit</option></select>");
 					out.println("<p>Card Number: </p><input type='tel' id='card' name='card' required=''/>");
 					out.println("<button id='payBtn' name='payBtn' type='Submit' value='" + a.getPayid() + "'>Pay</button>");
 					out.println("</form>");
 					
-					if (reviewState) {
+					if(status.equals("paid")) {
 						out.println("<form method='post' action='postcomment'>");
-						out.print("<p>Communication </p>");
+						out.print("<p style='display: inline-block'>Communication </p>");
 						out.print("<span class='star-rating'>");
 						out.print("<input type='radio' name='commRating' value='1'><i></i>");
 						out.print("<input type='radio' name='commRating' value='2'><i></i>");
@@ -150,7 +157,7 @@
 						out.print("<input type='radio' name='commRating' value='4'><i></i>");
 						out.print("<input type='radio' name='commRating' value='5'><i></i>");
 						out.println("</span>");
-						out.print("<p>Cleaniliness </p>");
+						out.print("<p style='display: inline-block'>Cleaniliness </p>");
 						out.print("<span class='star-rating'>");
 						out.print("<input type='radio' name='cleanRating' value='1'><i></i>");
 						out.print("<input type='radio' name='cleanRating' value='2'><i></i>");
@@ -158,7 +165,7 @@
 						out.print("<input type='radio' name='cleanRating' value='4'><i></i>");
 						out.print("<input type='radio' name='cleanRating' value='5'><i></i>");
 						out.println("</span>");
-						out.print("<p>Value </p>");
+						out.print("<p style='display: inline-block'>Value </p>");
 						out.print("<span class='star-rating'>");
 						out.print("<input type='radio' name='valueRating' value='1'><i></i>");
 						out.print("<input type='radio' name='valueRating' value='2'><i></i>");
@@ -166,7 +173,7 @@
 						out.print("<input type='radio' name='valueRating' value='4'><i></i>");
 						out.print("<input type='radio' name='valueRating' value='5'><i></i>");
 						out.println("</span>");
-						out.println("<textarea id='comment' name='comment' cols=30 rows=10 aria-required='true'></textarea>");
+						out.println("<textarea id='comment' name='comment'>Comments here...</textarea>");
 						out.println("<button id='revBtn' name='revBtn' type='Submit value='" + p.getProid() + "'>Post Comment</button>");
 						out.println("</form>");
 					}
