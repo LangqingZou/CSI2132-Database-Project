@@ -23,7 +23,7 @@ public class ReviewConn {
 	
 	public int insertNew(Review review) {
 		try {
-			sql = "insert into project.Review values(?,?,?,?,?,?) returning reid";
+			sql = "insert into project.Review(proid,gid,rating,communication,cleanliness,value,comment) values(?,?,?,?,?,?,?) returning reid";
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, review.getProid());
 			preparedStatement.setInt(2, review.getGID());

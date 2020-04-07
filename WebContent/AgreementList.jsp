@@ -16,19 +16,27 @@
 		function alerts(){
 			var bookSuccessfully = '<%=session.getAttribute("bookSuccessfully")%>';
 			var paySuccessfully = '<%=session.getAttribute("paySuccessfully")%>';
+			var commentScucceed = '<%=session.getAttribute("commentScucceed")%>';
 			if (bookSuccessfully == 'true') {
 				alert("Book successfully! Go to check your rental agreement.");
 			}
 			if (paySuccessfully == 'true') {
 				alert("Pay successfully! Now you can make a review.");
 			}
+			if (commentScucceed == 'true') {
+				alert("Comment successfully!~");
+			}
 		}
+		
 		window.onload = alerts;
 	</script>
 	<style type="text/css">
 		body {
 			background-color: #323234;
 			color: #fff;
+			left:35%;
+			right:35%;
+			top:20%;
 		}
 		textarea {
 			width: 50%;
@@ -149,32 +157,32 @@
 					
 					if(status.equals("paid")) {
 						out.println("<form method='post' action='postcomment'>");
-						out.print("<p style='display: inline-block'>Communication </p>");
+						out.print("<p>Communication </p>");
 						out.print("<span class='star-rating'>");
-						out.print("<input type='radio' name='commRating' value='1'><i></i>");
+						out.print("<input type='radio' name='commRating' value='1' checked><i></i>");
 						out.print("<input type='radio' name='commRating' value='2'><i></i>");
 						out.print("<input type='radio' name='commRating' value='3'><i></i>");
 						out.print("<input type='radio' name='commRating' value='4'><i></i>");
 						out.print("<input type='radio' name='commRating' value='5'><i></i>");
 						out.println("</span>");
-						out.print("<p style='display: inline-block'>Cleaniliness </p>");
+						out.print("<p>Cleaniliness </p>");
 						out.print("<span class='star-rating'>");
-						out.print("<input type='radio' name='cleanRating' value='1'><i></i>");
+						out.print("<input type='radio' name='cleanRating' value='1' checked><i></i>");
 						out.print("<input type='radio' name='cleanRating' value='2'><i></i>");
 						out.print("<input type='radio' name='cleanRating' value='3'><i></i>");
 						out.print("<input type='radio' name='cleanRating' value='4'><i></i>");
 						out.print("<input type='radio' name='cleanRating' value='5'><i></i>");
 						out.println("</span>");
-						out.print("<p style='display: inline-block'>Value </p>");
+						out.print("<p>Value </p>");
 						out.print("<span class='star-rating'>");
-						out.print("<input type='radio' name='valueRating' value='1'><i></i>");
+						out.print("<input type='radio' name='valueRating' value='1' checked><i></i>");
 						out.print("<input type='radio' name='valueRating' value='2'><i></i>");
 						out.print("<input type='radio' name='valueRating' value='3'><i></i>");
 						out.print("<input type='radio' name='valueRating' value='4'><i></i>");
 						out.print("<input type='radio' name='valueRating' value='5'><i></i>");
-						out.println("</span>");
-						out.println("<textarea id='comment' name='comment'>Comments here...</textarea>");
-						out.println("<button id='revBtn' name='revBtn' type='Submit value='" + p.getProid() + "'>Post Comment</button>");
+						out.println("</span><br><br>");
+						out.println("<textarea id='comment' name='comment'>Comments here...</textarea><br>");
+						out.println("<button id='revBtn' name='revBtn' type='Submit' value='" + a.getProid() + "'>Post Comment</button>");
 						out.println("</form>");
 					}
 					out.println("<hr>");
@@ -202,6 +210,7 @@
 				out.println("<h2>Sorry, you don't have any host rental agreement yet &#128517;</h2>");
 				out.println("<hr>");
 			}
+			out.println("<button type='button' value='Return' onclick='window.location.href='Menu.jsp''>Return</button>");
 		  %>
 		</div>
 			

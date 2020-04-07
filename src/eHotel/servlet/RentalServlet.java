@@ -35,6 +35,7 @@ public class RentalServlet extends HttpServlet{
 			resp.sendRedirect("AgreementList.jsp");
 		}else {
 			session.setAttribute("reviewState", false);
+			resp.sendRedirect("AgreementList.jsp");
 		}
 	}
 }

@@ -51,8 +51,11 @@ public class CommentServlet extends HttpServlet{
 		
 		if(revConn.insertNew(newReview) != -1) {
 			session.setAttribute("reviewState", true);
+			session.setAttribute("commentScucceed", true);
+			resp.sendRedirect("AgreementList.jsp");
 		}else {
 			session.setAttribute("reviewState", false);
+			resp.sendRedirect("AgreementList.jsp");
 		}
 	}
 }
