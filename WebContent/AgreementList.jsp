@@ -20,12 +20,34 @@
 		
 		window.onload = emailAlert;
 	</script>
+	<style type="text/css">
+		body {
+			background-color: #323234;
+			color: #fff;
+		}
+		textarea {
+			width: 100%;
+			background: #f2f2f2;
+			border-radius: 0px;
+			height: 150px;
+			resize: none;
+			margin-bottom: 20px;
+			border: 1px solid #cbd0d2;
+			padding: 10px;
+			clear: both;
+			box-sizing: border-box;
+			outline: 0;
+			color: #444;
+			transition: border-color 0.4s ease;
+		}
+	</style>
 </head>
 	<body>
 		<h1 style="text-align: center;">Rental Agreement</h1>
 		<div>
 		 <%
 			String type = (String) session.getAttribute("roleType");
+		 	Boolean reviewState = (Boolean) session.getAttribute("reviewState");
 		 	ArrayList<Agreement> guestAgreements = new ArrayList<Agreement>();
 		 	ArrayList<Agreement> hostAgreements = new ArrayList<Agreement>();
 		 	guestAgreements = (ArrayList<Agreement>) session.getAttribute("rentalAgreementGuest");
@@ -50,9 +72,13 @@
 					out.println("<p> Rental end Date: " + a.getEndDate() + "</p>");
 					out.println("<p> Approval status: " + a.getApprove() + "</p>");
 					out.println("<select id='payType' name='payType'><option value='credit'>Credit</option><option value='debit'>Debit</option></select>");
-					out.println("Card Number: <input type='card' id='card' name='card' required=''/>");
+					out.println("<p>Card Number: </p><input type='card' id='card' name='card' required=''/>");
 					out.println("<button id='payBtn' name='payBtn' type='Submit' value='" + p.getProid() + "'>Pay</button>");
 					out.println("<hr>");
+					if (reviewState) {
+						out.println("<textarea id='comment' name='comment' cols=30 rows=10 aria-required='true'/>");
+						out.println("<button id='revBtn' name='revBtn' type='Submit>Post Comment</button>");
+					}
 				}
 			}else{
 				out.println("<hr>");
@@ -70,8 +96,6 @@
 					out.println("<p> Rental start Date: " + a.getStartDate() + "</p>");
 					out.println("<p> Rental end Date: " + a.getEndDate() + "</p>");
 					out.println("<p> Approval status: " + a.getApprove() + "</p>");
-					out.println("<select id='payType' name='payType'><option value='credit'>Credit</option><option value='debit'>Debit</option></select>");
-					out.println("<button id='payBtn' name='payBtn' type='Submit' value='" + p.getProid() + "'>Pay</button>");
 					out.println("<hr>");
 				}
 			}else{
