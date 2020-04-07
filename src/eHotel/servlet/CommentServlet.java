@@ -13,7 +13,7 @@ import eHotel.connections.DBConnect;
 import eHotel.connections.HostConn;
 import eHotel.entities.Property;
 
-public class MyPropertyServlet extends HttpServlet{
+public class CommentServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
@@ -25,11 +25,6 @@ public class MyPropertyServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
 		
-		int pid = (int) session.getAttribute("pid");
 		
-		HostConn hConn = new HostConn(dbConnect);
-		System.out.println(hConn.getHID(pid));
-		ArrayList<Property> myProperties = hConn.getPropertyList(hConn.getHID(pid));
-		session.setAttribute("myProperties", myProperties);
 	}
 }

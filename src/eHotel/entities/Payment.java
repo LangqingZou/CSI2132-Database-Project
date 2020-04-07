@@ -13,7 +13,7 @@ public class Payment {
 		this.gid = -1;
 		this.amount = -1;
 		this.payType = "";
-		this.status = "";
+		this.status = "unpaid";
 	}
 	
 	public Payment(int payid, int gid, int amount, String payType, String status) {

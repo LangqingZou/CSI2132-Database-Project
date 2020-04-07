@@ -58,4 +58,19 @@ public class PaymentConn {
 		}
 		return payment;
 	}
+	
+	public Boolean onPay(int payid, String payType) {
+		try {
+			preparedStatement = db.prepareStatement("update project.Payment set status=?,payType=? where payid = ?");
+			preparedStatement.setString(1, "paid");
+			preparedStatement.setString(2, payType);
+			preparedStatement.setInt(3, payid);
+			preparedStatement.executeQuery();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Error while updating payment.");
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
