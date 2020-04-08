@@ -30,12 +30,13 @@ public class RentalServlet extends HttpServlet{
 		String payType = req.getParameter("payType");
 
 		if(payConn.onPay(payid, payType)) {
-			session.setAttribute("reviewState", true);
-			session.setAttribute("paySuccessfully", true);
+			session.setAttribute("reviewState", "true");
+			session.setAttribute("paySuccessfully", "true");
 			resp.sendRedirect("AgreementList.jsp");
 		}else {
-			session.setAttribute("reviewState", false);
+			session.setAttribute("reviewState", "false");
 			resp.sendRedirect("AgreementList.jsp");
 		}
+		dbConnect.closeDB();
 	}
 }

@@ -41,6 +41,7 @@ public class AddPropertyServlet extends HttpServlet{
 		
 		//create new property
 		PropertyConn proConn = new PropertyConn(dbConnect);
+		HostConn hConn  = new HostConn(dbConnect);
 		Property newProperty = new Property();
 		newProperty.setTitle(title);
 		newProperty.setAddress(address);
@@ -55,6 +56,9 @@ public class AddPropertyServlet extends HttpServlet{
 		newPricing.setRule(rule);
 		newPricing.setAmenity(amenity);
 		
+		Person person = (Person) session.getAttribute("loginRole");
+		Host newHost = new Host(person);
+		
 		int prcid = priConn.insertNew(newPricing);
 		if(prcid != -1) {
 			//add prcid to the new property
@@ -65,19 +69,19 @@ public class AddPropertyServlet extends HttpServlet{
 				Host host = (Host) session.getAttribute("loginRole");
 				newProperty.setHID(host.getHID());
 			}else{
-				HostConn hConn  = new HostConn(dbConnect);
-				Person person = (Person) session.getAttribute("loginRole");
-				Host newHost = new Host(person);
 				if(hConn.insertNew(newHost.getPID())) {
 					newHost.setHID(hConn.getHID(newHost.getPID()));
 					newProperty.setHID(newHost.getHID());
-					session.setAttribute("roleType", "host");
 				}
 			}
 			int proid = proConn.insertNew(newProperty);
 			if(proid != -1) {
+				session.setAttribute("roleType", "host");
+				session.setAttribute("loginRole", newHost);
 				session.setAttribute("addSuccessfully", "true");
-				resp.sendRedirect("Booking.jsp");
+				session.setAttribute("allPropertyList", hConn.getAllProperties());
+				session.setAttribute("myProperties", hConn.getPropertyList(hConn.getHID(person.getPID())));
+				resp.sendRedirect("Menu.jsp");
 				dbConnect.closeDB();
 				return;
 			}

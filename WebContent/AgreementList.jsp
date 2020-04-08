@@ -1,9 +1,11 @@
+<%@page import="eHotel.connections.PersonConn"%>
+<%@page import="eHotel.connections.GuestConn"%>
 <%@page import="eHotel.connections.PaymentConn"%>
 <%@page import="eHotel.connections.DBConnect"%>
 <%@page import="eHotel.connections.PropertyConn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="eHotel.connections.DBConnect, eHotel.connections.PropertyConn, 
-				eHotel.entities.Guest, eHotel.entities.Host, eHotel.entities.Agreement"%>
+<%@ page import="eHotel.connections.DBConnect, eHotel.connections.PropertyConn, eHotel.connections.GuestConn, eHotel.connections.HostConn, eHotel.connections.PersonConn, 
+				eHotel.entities.Person, eHotel.entities.Guest, eHotel.entities.Host, eHotel.entities.Agreement"%>
 <%@ page import="java.util.ArrayList, eHotel.entities.Property"%>
 <!DOCTYPE html>
 <html>
@@ -14,17 +16,15 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script type="text/javascript">
 		function alerts(){
-			var bookSuccessfully = '<%=session.getAttribute("bookSuccessfully")%>';
 			var paySuccessfully = '<%=session.getAttribute("paySuccessfully")%>';
 			var commentScucceed = '<%=session.getAttribute("commentScucceed")%>';
-			if (bookSuccessfully == 'true') {
-				alert("Book successfully! Go to check your rental agreement.");
-			}
 			if (paySuccessfully == 'true') {
 				alert("Pay successfully! Now you can make a review.");
+				<%session.setAttribute("paySuccessfully", "false");%>
 			}
 			if (commentScucceed == 'true') {
-				alert("Comment successfully!~");
+				alert("Comment successfully~");
+				<%session.setAttribute("commentScucceed", "false");%>
 			}
 		}
 		
@@ -34,9 +34,6 @@
 		body {
 			background-color: #323234;
 			color: #fff;
-			left:35%;
-			right:35%;
-			top:20%;
 		}
 		textarea {
 			width: 50%;
@@ -122,40 +119,38 @@
 		<div>
 		 <%
 		 	DBConnect dbConnect = new DBConnect();
-		 String type = (String) session.getAttribute("roleType");
-		 	ArrayList<Agreement> guestAgreements = new ArrayList<Agreement>();
-		 	ArrayList<Agreement> hostAgreements = new ArrayList<Agreement>();
-		 	guestAgreements = (ArrayList<Agreement>) session.getAttribute("rentalAgreementGuest");
-		 	hostAgreements = (ArrayList<Agreement>) session.getAttribute("rentalAgreementHost");
+		 	GuestConn gConn = new GuestConn(dbConnect);
+		 	HostConn hConn = new HostConn(dbConnect);
+		 	PersonConn pConn = new PersonConn(dbConnect);
 		 	PropertyConn proConn = new PropertyConn(dbConnect);
 		 	PaymentConn payConn = new PaymentConn(dbConnect);
+		 
+		 	String type = (String) session.getAttribute("roleType");
+		 	Person person = (Person) session.getAttribute("loginRole");
 		 	
-			if(type.equals("guest")){
-				Guest guest = (Guest) session.getAttribute("loginRole");
-				
-			}else{
-				Host guest = (Host) session.getAttribute("loginRole");
-				
-			}
+		 	ArrayList<Agreement> guestAgreements = new ArrayList<Agreement>();
+		 	ArrayList<Agreement> hostAgreements = new ArrayList<Agreement>();
+		 	
+		 	guestAgreements = gConn.getRentalAgreementList(gConn.getGID(person.getPID()));
+		 	
+		 	if(type.equals("host")){
+		 		hostAgreements = hConn.getRentalAgreementList(hConn.getHID(person.getPID()));
+		 	}
+
 			if (guestAgreements != null && guestAgreements.size() != 0){
 				//Display guest agreements info
 				for (int i = 0; i < guestAgreements.size(); i++){
 					Agreement a = (Agreement)guestAgreements.get(i);
 					Property p = proConn.getProperty(a.getProid());
-					String status = payConn.getPayment(a.getPayid()).getStatus();
+					String statusGuest = payConn.getPayment(a.getPayid()).getStatus();
 					out.println("<hr>");
 					//out.println("<h2 style='text-align: center'>" + a.getStartDate() + "</h2>");
 					out.println("<h3 style='text-transform:uppercase'>" + p.getTitle() + "</h3>");
 					out.println("<p> Rental start Date: " + a.getStartDate() + "</p>");
 					out.println("<p> Rental end Date: " + a.getEndDate() + "</p>");
-					out.println("<p> Status: " + status + "</p>");
-					out.println("<form method='post' action='rentals'>");
-					out.println("<select id='payType' name='payType'><option value='credit'>Credit</option><option value='debit'>Debit</option></select>");
-					out.println("<p>Card Number: </p><input type='tel' id='card' name='card' required=''/>");
-					out.println("<button id='payBtn' name='payBtn' type='Submit' value='" + a.getPayid() + "'>Pay</button>");
-					out.println("</form>");
+					out.println("<p> Status: " + statusGuest + "</p>");
 					
-					if(status.equals("paid")) {
+					if(statusGuest.equals("paid")) {
 						out.println("<form method='post' action='postcomment'>");
 						out.print("<p>Communication </p>");
 						out.print("<span class='star-rating'>");
@@ -181,8 +176,14 @@
 						out.print("<input type='radio' name='valueRating' value='4'><i></i>");
 						out.print("<input type='radio' name='valueRating' value='5'><i></i>");
 						out.println("</span><br><br>");
-						out.println("<textarea id='comment' name='comment'>Comments here...</textarea><br>");
+						out.println("<textarea id='comment' name='comment' required=''>Comments here...</textarea><br>");
 						out.println("<button id='revBtn' name='revBtn' type='Submit' value='" + a.getProid() + "'>Post Comment</button>");
+						out.println("</form>");
+					}else{
+						out.println("<form method='post' action='rentals'>");
+						out.println("<select id='payType' name='payType' required=''><option value='credit'>Credit</option><option value='debit'>Debit</option></select>");
+						out.println("<p>Card Number: </p><input type='tel' id='card' name='card' required=''/>");
+						out.println("<button id='payBtn' name='payBtn' type='Submit' value='" + a.getPayid() + "'>Pay</button>");
 						out.println("</form>");
 					}
 					out.println("<hr>");
@@ -197,12 +198,12 @@
 				for (int i = 0; i < hostAgreements.size(); i++){
 					Agreement a = (Agreement)hostAgreements.get(i);
 					Property p = proConn.getProperty(a.getProid());
+					String statusHost = payConn.getPayment(a.getPayid()).getStatus();
 					out.println("<hr>");
-					//out.println("<h2 style='text-align: center'>" + a.getStartDate() + "</h2>");
 					out.println("<h3 style='text-transform:uppercase'>" + p.getTitle() + "</h3>");
 					out.println("<p> Rental start Date: " + a.getStartDate() + "</p>");
 					out.println("<p> Rental end Date: " + a.getEndDate() + "</p>");
-					out.println("<p> Approval status: " + a.getApprove() + "</p>");
+					out.println("<p> Status: " + statusHost + "</p>");
 					out.println("<hr>");
 				}
 			}else{
@@ -210,9 +211,9 @@
 				out.println("<h2>Sorry, you don't have any host rental agreement yet &#128517;</h2>");
 				out.println("<hr>");
 			}
-			out.println("<button type='button' value='Return' onclick='window.location.href='Menu.jsp''>Return</button>");
+			dbConnect.closeDB();
 		  %>
 		</div>
-			
+			<a href = Menu.jsp><button type='button' value='Return'>Return</button></a>
 	</body>
 </html>

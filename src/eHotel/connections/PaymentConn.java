@@ -62,6 +62,7 @@ public class PaymentConn {
 	
 	public Boolean onPay(int payid, String payType) {
 		try {
+			System.out.println(payid);
 			preparedStatement = db.prepareStatement("update project.Payment set status=?,payType=? where payid = ?");
 			preparedStatement.setString(1, "paid");
 			preparedStatement.setString(2, payType);

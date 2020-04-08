@@ -1,6 +1,9 @@
 package eHotel.servlet;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,32 +40,50 @@ public class RegisterServlet extends HttpServlet{
 		
 		// Establish connection
 		DBConnect dbConnect = new DBConnect();
-	
-		// Check if email already exist
-		PersonConn pconn = new PersonConn(dbConnect);
+		Connection conn = dbConnect.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			
+			PersonConn pconn = new PersonConn(dbConnect);
 
-		//insert into table Person
-		Person p = new Person();
-		p.setEmail(email);
-		p.setPassword(pwd);
-		p.setFirstName(firstName);
-		p.setLastName(lastName);
-		p.setAddress(address);
-		p.setPhone(phone);
-		
-		if(pconn.insertNew(p)) {
-			int newPID = pconn.getPID(email);
-			if(role.equals("guest")) {
-				GuestConn gconn = new GuestConn(dbConnect);
-				gconn.insertNew(newPID);
-			} else {
-				EmployeeConn econn = new EmployeeConn(dbConnect);
-				econn.insertNew(newPID, position, Integer.parseInt(salary), country);
+			//insert into table Person
+			Person p = new Person();
+			p.setEmail(email);
+			p.setPassword(pwd);
+			p.setFirstName(firstName);
+			p.setLastName(lastName);
+			p.setAddress(address);
+			p.setPhone(phone);
+			
+			if(pconn.insertNew(p)) {
+				int newPID = pconn.getPID(email);
+				if(role.equals("guest")) {
+					GuestConn gconn = new GuestConn(dbConnect);
+					if(gconn.insertNew(newPID)) {
+						// register guest succeed
+						resp.sendRedirect("Login.jsp");
+						conn.commit();
+						dbConnect.closeDB();
+						return;
+					}
+					System.out.println("Insert guest failed in register.");
+				} else {
+					EmployeeConn econn = new EmployeeConn(dbConnect);
+					if(econn.insertNew(newPID, position, Integer.parseInt(salary), country)) {
+						// register employee succeed
+						resp.sendRedirect("Login.jsp");
+						conn.commit();
+						dbConnect.closeDB();
+						return;
+					}
+					System.out.println("Insert employee failed in register.");
+				}
 			}
-			resp.sendRedirect("Login.jsp");
-		} else {
+			dbConnect.getConnection().rollback();
 			session.setAttribute("emailAlert", "true");
 			resp.sendRedirect("Register.jsp");
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		dbConnect.closeDB();
 	}

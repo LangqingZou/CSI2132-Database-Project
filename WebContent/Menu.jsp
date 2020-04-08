@@ -9,17 +9,27 @@
 	<script type="text/javascript">
 		function DisplayHostBtn() {
 			var type = '<%=session.getAttribute("roleType")%>';
-		    var btn = document.getElementById("myPropBtn");
+		    var propbtn = document.getElementById("myPropBtn");
+		    var rentalbtn = document.getElementById("rentalBtn");
+		    var addpropbtn = document.getElementById("addPropBtn");
+		    var bookbtn = document.getElementById("bookPropBtn");
 		    if (type == 'host') {
-		        btn.style.display = 'block';
+		    	propbtn.style.display = 'block';
 		    }else{
-		    	btn.style.display = 'none';
+		    	propbtn.style.display = 'none';
+		    }
+		    if (type == 'employee') {
+		    	propbtn.style.display = 'none';
+		    	rentalbtn.style.display = 'none';
+		    	addpropbtn.style.display = 'none';
+		    	bookbtn.style.display = 'none';
 		    }
 		}
 		function alerts(){
 			var addSuccessfully = '<%=session.getAttribute("addSuccessfully")%>';
 			if (addSuccessfully == 'true') {
 				alert("Add Property Successfully");
+				<%session.setAttribute("addSuccessfully", "false");%>
 			}
 		}	
 		window.onload = alerts;
@@ -69,6 +79,7 @@
 		        <%
 		        	//Get user info from session
 		        	String type = (String) session.getAttribute("roleType");
+		        	System.out.println("Menu roleType: " + type);
 		        	if (type.equals("guest")){
 		        		Guest guest = (Guest) session.getAttribute("loginRole");
 		        		//Display guest info
@@ -98,9 +109,9 @@
 			</div>
 			<a href="PropertyList.jsp"><button id="myPropBtn" type="Submit" class="btn" style="float:left">My Properties</button></a>
 			<div style="float:right">
-				<a href="AgreementList.jsp"><button type="Submit" class="btn">Rental Agreements</button></a>
-				<a href="AddProperty.jsp"><button type="Submit" class="btn">Add Property</button></a>
-				<a href="Booking.jsp"><button type="Submit" class="btn">Book Now</button></a>
+				<a href="AgreementList.jsp"><button id="rentalBtn" type="Submit" class="btn">Rental Agreements</button></a>
+				<a href="AddProperty.jsp"><button id="addPropBtn" type="Submit" class="btn">Add Property</button></a>
+				<a href="Booking.jsp"><button id="bookPropBtn" type="Submit" class="btn">Book Now</button></a>
 			</div>
         </div>
 	</body>

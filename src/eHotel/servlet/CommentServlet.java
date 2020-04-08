@@ -57,5 +57,6 @@ public class CommentServlet extends HttpServlet{
 			session.setAttribute("reviewState", false);
 			resp.sendRedirect("AgreementList.jsp");
 		}
+		dbConnect.closeDB();
 	}
 }

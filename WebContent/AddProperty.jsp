@@ -11,9 +11,11 @@
 			var addSuccessfully = '<%=session.getAttribute("addSuccessfully")%>';
 			if (PropertyFail == 'true') {
 				alert("Fail to add property");
+				<%session.setAttribute("PropertyFail", "false");%>
 			}
 			if (addSuccessfully == 'true') {
 				alert("Add property successfully!");
+				<%session.setAttribute("addSuccessfully", "false");%>
 			}
 	
 		}	 
@@ -38,10 +40,16 @@
 		}
 		window.onload = alerts;
 	</script>
+	<style type="text/css">
+		body{
+			background-color: #323234;
+			color: #fff;
+		}
+	</style>
 </head>
 	<body>
-		<h2>Add Property</h2>
-		<div>		
+		<h2 style="text-align:center;">Add Property</h2>
+		<div style="margin: 20px 20%">		
 			<form method="post" action="addproperty" onSubmit="return validate();">
 				Title:<br><input type="text" id="title" name="title"><br><br>
 				Type:<br><input type="text" id="type" name="type"><br><br>

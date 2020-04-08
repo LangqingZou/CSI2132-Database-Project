@@ -10,7 +10,7 @@
 			var bookSuccessfully = '<%=session.getAttribute("bookSuccessfully")%>';
 			var bookFail = '<%=session.getAttribute("failToBook")%>';
 			if (bookSuccessfully == 'true') {
-				alert("Booking successfully! Go check your rental agreement");
+				alert("Booking succeed! Go check your rental agreement!");
 			}
 			if (bookFail == 'true') {
 				alert("Fail to book. Try again.");
@@ -19,10 +19,16 @@
 		}
 		window.onload = alerts;
 	</script>
+	<style type="text/css">
+		body{
+			background-color: #323234;
+			color: #fff;
+		}
+	</style>
 </head>
 	<body>
 		<h1 style="text-align: center;">Booking</h1>
-		<div>
+		<div style="margin: 20px 20%">
 		<%
 			//Get property list info from session
 			ArrayList<Property> list = (ArrayList<Property>) session.getAttribute("allPropertyList");
@@ -51,9 +57,7 @@
 				out.println("<hr>");
 			}
 		%>
-		<form>
-			<button class="btn retBtn" type="button" value="Return" style="margin: 20px 63px" onclick="window.location.href='Menu.jsp'">Return</button>
-		</form>
+		<a href = Menu.jsp><button class="btn retBtn" type="button" value="Return">Return</button></a>
 		</div>
 	</body>
 </html>

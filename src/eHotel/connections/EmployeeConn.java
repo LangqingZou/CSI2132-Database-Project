@@ -64,8 +64,8 @@ public class EmployeeConn extends PersonConn {
 			preparedStatement = db.prepareStatement(sql);
 			preparedStatement.setInt(1, pid);
 			preparedStatement.setString(2, position);
-			preparedStatement.setInt(1, salary);
-			preparedStatement.setString(1, country);
+			preparedStatement.setInt(3, salary);
+			preparedStatement.setString(4, country);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				employee.setEID(resultSet.getInt(1));
@@ -97,12 +97,12 @@ public class EmployeeConn extends PersonConn {
 				employee.setEID(resultSet.getInt(2));
 				employee.setPosition(resultSet.getString(3));
 				employee.setSalary(resultSet.getInt(4));
-				employee.setEmail(resultSet.getString(3));
-				employee.setPassword(resultSet.getString(4));
-				employee.setFirstName(resultSet.getString(5));
-				employee.setLastName(resultSet.getString(6));
-				employee.setAddress(resultSet.getString(7));
-				employee.setPhone(resultSet.getString(8));
+				employee.setEmail(resultSet.getString(6));
+				employee.setPassword(resultSet.getString(7));
+				employee.setFirstName(resultSet.getString(8));
+				employee.setLastName(resultSet.getString(9));
+				employee.setAddress(resultSet.getString(10));
+				employee.setPhone(resultSet.getString(11));
 				return employee;
 			}
 		} catch (SQLException e) {

@@ -4,6 +4,12 @@
 <html>
 <head>
 	<title>My Properties</title>
+	<style type="text/css">
+		body{
+			background-color: #323234;
+			color: #fff;
+		}
+	</style>
 </head>
 	<body>
 		<div style="margin: 20px 20%">
@@ -28,6 +34,7 @@
 					out.println("<hr>");
 				}
 			%>
+			<a href="Menu.jsp"><button type="button" value="Login" id="confirm">Return</button></a>
 		</div>
 	</body>
 </html>

@@ -80,10 +80,8 @@ public class BookingServlet extends HttpServlet{
 			newAgreement.setStartDate(startDate);
 			newAgreement.setEndDate(endDate);
 			
-			if(aConn.insertNew(newAgreement) != 0) {
-				if(session.getAttribute("roleType").equals("guest")){
-					session.setAttribute("rentalAgreementGuest", gConn.getRentalAgreementList(gConn.getGID(person.getPID())));
-				}
+			if(aConn.insertNew(newAgreement) != -1) {
+				session.setAttribute("rentalAgreementGuest", gConn.getRentalAgreementList(guest.getGID()));
 				if(session.getAttribute("roleType").equals("host")){
 					session.setAttribute("rentalAgreementHost", hConn.getRentalAgreementList(hConn.getHID(person.getPID())));
 				}
@@ -100,16 +98,3 @@ public class BookingServlet extends HttpServlet{
 		dbConnect.closeDB();
 	}
 }			
-		
-//		
-//		//create a review
-//		ReviewConn rConn = new ReviewConn(dbConnect);
-//		Review newReview = new Review();
-//		newReview.setProid(proid);
-////		newReview.setGid(gid);
-////		newReview.setRating(rating);
-////		newReview.setCommunication(communication);
-////		newReview.setCleaniliness(cleaniliness);
-////		newReview.setValue(value);
-//		session.setAttribute("review", newReview);
-		

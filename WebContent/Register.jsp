@@ -8,7 +8,7 @@
  		function emailAlert(){
  			var emailAlert = '<%=session.getAttribute("emailAlert")%>';
  			if (emailAlert == 'true') {
- 				alert("Email has been registered!");
+ 				alert("Register failed, somthing went wrong...");
  			}
  		}
 
@@ -47,27 +47,33 @@
 		}
 		//once refresh the page, EMAILALERT is called
 		window.onload = emailAlert;
-</script>
+	</script>
+	<style type="text/css">
+		body{
+			background-color: #323234;
+			color: #fff;
+		}
+	</style>
 </head>
-<body>
-	<form method = "post" action="register" onSubmit="return validate();">
-		FirstName:<br><input type="text" id="firstname" name="firstname"><br><br>
-		LastName:<br><input type="text" id="lastname" name="lastname"><br><br>
-		Email:<br><input type="text" id="email" name="email"><br><br>
-		Address:<br><input type="text" id="address" name="address"><br><br>
-		PhoneNumber:<br><input type="text" id="phonenumber" name="phonenumber"><br><br>
-		Password:<br><input type="password" id="pwd" name="pwd"><br><br>
-		Confirm Password:<br><input type="password" id="pwdAgain" name="pwdAgain"><br><br>
-		Position: <br><input type="text" id="position" name="position"> (For Employee)<br><br> 
-		Salary: <br><input type="number" id="salary" name="salary"> (For Employee)<br><br>
-		Country: <br><input type="text" id="country" name="country"> (For Employee)<br><br>
-		
-		<select id="role" name="role">
-			<option value="guest">Guest</option>
-			<option value="emp">Employee</option>
-		</select>
-		
-		<button type="Submit" value="register">Register</button>
-	</form>
-</body>
+	<body>
+		<form method = "post" action="register" onSubmit="return validate();">
+			FirstName:<br><input type="text" id="firstname" name="firstname"><br><br>
+			LastName:<br><input type="text" id="lastname" name="lastname"><br><br>
+			Email:<br><input type="text" id="email" name="email"><br><br>
+			Address:<br><input type="text" id="address" name="address"><br><br>
+			PhoneNumber:<br><input type="text" id="phonenumber" name="phonenumber"><br><br>
+			Password:<br><input type="password" id="pwd" name="pwd"><br><br>
+			Confirm Password:<br><input type="password" id="pwdAgain" name="pwdAgain"><br><br>
+			Position: <br><input type="text" id="position" name="position"> (For Employee)<br><br> 
+			Salary: <br><input type="number" id="salary" name="salary"> (For Employee)<br><br>
+			Country: <br><input type="text" id="country" name="country"> (For Employee)<br><br>
+			
+			<select id="role" name="role">
+				<option value="guest">Guest</option>
+				<option value="emp">Employee</option>
+			</select>
+			
+			<button type="Submit" value="register">Register</button>
+		</form>
+	</body>
 </html>

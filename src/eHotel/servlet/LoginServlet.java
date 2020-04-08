@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 		String email = req.getParameter("email");
 		String pwd = req.getParameter("pass");
 		
-		Person role;
+		Person role = new Person();
 		PersonConn pConn = new PersonConn(dbConnect);
 		GuestConn gConn = new GuestConn(dbConnect);
 		HostConn hConn = new HostConn(dbConnect);
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		
 		int pid = pConn.getPID(email);
 		session.setAttribute("pid", pid);
-		System.out.println("pid: "+pid);
+		System.out.println("LoginServlet: pid: "+pid);
 		if(pid != -1) {		// if person exist
 			Person person = pConn.getPerson(email);
 			System.out.println(person.getPassword().equals(pwd));
@@ -50,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 				int gid = gConn.getGID(pid);
 				int hid = hConn.getHID(pid);
 				int eid = eConn.getEID(pid);
+				System.out.println("LoginServlet: gid: " + gid + " hid: " + hid + " eid: " + eid);
 				if(gid != -1) {
 					role = gConn.getGuest(gid);
 					session.setAttribute("roleType", "guest");
@@ -60,8 +61,9 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("roleType", "host");
 					session.setAttribute("myProperties", hConn.getPropertyList(hConn.getHID(pid)));
 					session.setAttribute("rentalAgreementHost", hConn.getRentalAgreementList(hConn.getHID(pid)));
-					System.out.println("hid: "+hConn.getHID(pid)+ " rlist: "+hConn.getRentalAgreementList(hConn.getHID(pid)).size());
-				}else{
+//					System.out.println("hid: "+hConn.getHID(pid)+ " rentals: "+hConn.getRentalAgreementList(hConn.getHID(pid)).size());
+				}
+				if(eid != -1){
 					role = eConn.getEmployee(eid);
 					session.setAttribute("roleType", "employee");
 				}
