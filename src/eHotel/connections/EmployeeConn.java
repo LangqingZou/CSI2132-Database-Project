@@ -8,84 +8,107 @@ import java.sql.SQLException;
 import eHotel.entities.Employee;
 import eHotel.connections.DBConnect;
 
-public class EmployeeConn extends DBConnect{
-	private Connection db;
-	private PreparedStatement preparedStatement = null;
+public class EmployeeConn extends PersonConn {
+	
 	private String sql;
-	private ResultSet resultSet = null;
-	//private boolean connected = false;
+	private Connection db;
+	private ResultSet resultSet;
+	private PreparedStatement preparedStatement;
 	
+	private Employee employee;
+	
+	/*
+	 * Constructor
+	 */
 	public EmployeeConn(DBConnect dbConnect) {
-		db = dbConnect.getConnection();	
+		super(dbConnect);
+		employee = new Employee();
+		db = dbConnect.getConnection();
 	}
 	
-	public int createEmployee(Employee employee) {
+	/*
+	 * @Description 
+	 * 		Get person's EID from database, return -1 if pid not in Employee table
+	 * 
+	 * @param int
+	 * 
+	 * @return int
+	 */
+	public int getEID(int pid) {
 		try {
-			//connectDB();
-			sql = "insert into project.Employee(PID,position,salary) values(?,?,?)";
-			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setInt(1, employee.getPID());
-			//preparedStatement.setInt(2, employee.getEmployID());
-			preparedStatement.setString(2, employee.getPosition());
-			preparedStatement.setString(3, employee.getSalary());
-			ResultSet eidResult = preparedStatement.executeQuery();
-			if(eidResult.next()) {
-				employee.setPID(eidResult.getInt(1));
-			}
-			//closeDB();
-			return employee.getEmployID();
+			preparedStatement = db.prepareStatement("select eid from project.Employee where pid = ?");
+			preparedStatement.setInt(1, pid);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+	    		employee.setEID(resultSet.getInt(1));
+	    		employee.setPID(pid);
+	    	}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while getting eid.");
 			e.printStackTrace();
-			closeDB();
-			return 0;
 		}
+		return employee.getEID();
 	}
 	
-	public boolean findEmployee(Employee employee) {
+	/*
+	 * @Description 
+	 * 		Insert new employee into database, return false if insertion failed
+	 * 
+	 * @param int
+	 * 
+	 * @return boolean
+	 */
+	public boolean insertNew(int pid, String position, int salary, String country) {
 		try {
-			//connectDB();
-			sql = "select * from Employee where EmployID = ?";
+			sql = "insert into project.Employee(pid,position,salary,country) values(?,?,?,?) returning eid";
 			preparedStatement = db.prepareStatement(sql);
+			preparedStatement.setInt(1, pid);
+			preparedStatement.setString(2, position);
+			preparedStatement.setInt(3, salary);
+			preparedStatement.setString(4, country);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
-				//closeDB();
+				employee.setEID(resultSet.getInt(1));
 				return true;
 			}
-			return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while inserting new employee.");
 			e.printStackTrace();
-			//closeDB();
-			return false;
 		}
+		return false;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+	/*
+	 * @Description 
+	 * 		Return the an Employee found by the eid, return null if the eid is invalid
+	 * 
+	 * @param String
+	 * 
+	 * @return Employee
+	 */
+	public Employee getEmployee(int eid) {
+		try {
+			sql = "select * from project.employee natural join project.Person where eid = ?";
+			preparedStatement = db.prepareStatement(sql);
+			preparedStatement.setInt(1, eid);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				employee.setPID(resultSet.getInt(1));
+				employee.setEID(resultSet.getInt(2));
+				employee.setPosition(resultSet.getString(3));
+				employee.setSalary(resultSet.getInt(4));
+				employee.setEmail(resultSet.getString(6));
+				employee.setPassword(resultSet.getString(7));
+				employee.setFirstName(resultSet.getString(8));
+				employee.setLastName(resultSet.getString(9));
+				employee.setAddress(resultSet.getString(10));
+				employee.setPhone(resultSet.getString(11));
+				return employee;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error while getting guest's info.");
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

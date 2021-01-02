@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
 	id="WebApp_ID" 
 	version="3.0">
- <display-name>jspServletLoginTest</display-name>
+ <display-name>jspServlet</display-name>
 
  <!-- add a customer register servlet here add a new customer in customer table -->
  <servlet>
@@ -31,13 +31,68 @@
  
  <servlet>
  	<description></description>
- 	<display-name>roombook</display-name>
- 	<servlet-name>roombookServlet</servlet-name>
- 	<servlet-class>eHotel.servlet.RoombookServlet</servlet-class>
+ 	<display-name>Menu</display-name>
+ 	<servlet-name>MenuServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.MenuServlet</servlet-class>
  </servlet>
  <servlet-mapping>
-  	<servlet-name>roombookServlet</servlet-name>
-  	<url-pattern>/roombook</url-pattern>
+  	<servlet-name>MenuServlet</servlet-name>
+  	<url-pattern>/menu</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+ 	<description></description>
+ 	<display-name>MyProperties</display-name>
+ 	<servlet-name>PropertyListServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.PropertyListServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>PropertyListServlet</servlet-name>
+  	<url-pattern>/myproperties</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+ 	<description></description>
+ 	<display-name>Booking</display-name>
+ 	<servlet-name>BookingServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.BookingServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>BookingServlet</servlet-name>
+  	<url-pattern>/booking</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+ 	<description></description>
+ 	<display-name>Rentals</display-name>
+ 	<servlet-name>RentalServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.RentalServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>RentalServlet</servlet-name>
+  	<url-pattern>/rentals</url-pattern>
+ </servlet-mapping>
+ 
+  <servlet>
+ 	<description></description>
+ 	<display-name>AddProperty</display-name>
+ 	<servlet-name>AddPropertyServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.AddPropertyServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>AddPropertyServlet</servlet-name>
+  	<url-pattern>/addproperty</url-pattern>
+ </servlet-mapping>
+ 
+   <servlet>
+ 	<description></description>
+ 	<display-name>Comment</display-name>
+ 	<servlet-name>CommentServlet</servlet-name>
+ 	<servlet-class>eHotel.servlet.CommentServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  	<servlet-name>CommentServlet</servlet-name>
+  	<url-pattern>/postcomment</url-pattern>
  </servlet-mapping>
  
  <welcome-file-list>

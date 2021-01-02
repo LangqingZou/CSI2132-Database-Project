@@ -2,18 +2,21 @@ package eHotel.entities;
 
 public class Branch {
 	
-	private String Country;
+	private String country;
 	
-	public Branch(String Country) {
-		this.Country = Country;
+	public Branch() {
+		this.country = "";
+	}
+	
+	public Branch(String country) {
+		this.country = country;
 	}
 
 	public String getCountry() {
-		return Country;
+		return country;
 	}
 
 	public void setCountry(String country) {
-		Country = country;
+		this.country = country;
 	}
-
 }

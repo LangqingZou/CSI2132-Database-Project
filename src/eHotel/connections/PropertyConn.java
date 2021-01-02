@@ -1,84 +1,69 @@
 package eHotel.connections;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import eHotel.entities.Property;
 
 public class PropertyConn {
 	
-	private Connection db;
-	private PreparedStatement preparedStatement = null;
-	private Statement st = null;
 	private String sql;
-	private ResultSet resultSet = null;
+	private Connection db;
+	private ResultSet resultSet;
+	private PreparedStatement preparedStatement;
+	
+	private Property property;
 	
 	public PropertyConn(DBConnect dbConnect) {
+		property = new Property();
 		db = dbConnect.getConnection();	
 	}
 	
-	public int createProperty(Property property) {
+	public int insertNew(Property property) {
 		try {
-			sql = "insert into property values(?,?,?,?,?)";
+			sql = "insert into project.Property(hid,prcid,title,type,address,numRoom,country) values(?,?,?,?,?,?,?) returning proid";
 			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setInt(1, property.getIDP());
-			preparedStatement.setString(2, property.getAddress());
-			preparedStatement.setString(3, property.getPropertyType());
-			preparedStatement.setString(4, property.getTitle());
-			preparedStatement.setString(5, property.getCountry());
-			return preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return 0;
-		}
-	}
-	
-	public boolean findProperty(Property property) {
-		try {
-			sql = "select * from property where IDP = ?";
-			preparedStatement = db.prepareStatement(sql);
+			preparedStatement.setInt(1, property.getHID());
+			preparedStatement.setInt(2, property.getPrcid());
+			preparedStatement.setString(3, property.getTitle());
+			preparedStatement.setString(4, property.getType());
+			preparedStatement.setString(5, property.getAddress());
+			preparedStatement.setInt(6, property.getNumRoom());
+			preparedStatement.setString(7, property.getCountry());
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				return true;
+			if(resultSet.next()) {
+				this.property = property;
+				this.property.setProid(resultSet.getInt(1));
 			}
-			return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while inserting new property.");
 			e.printStackTrace();
-			return false;
 		}
-		
+		return property.getProid();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+	public Property getProperty(int proid) {
+		try {
+			preparedStatement = db.prepareStatement("select * from project.Property where proid = ?");
+			preparedStatement.setInt(1, proid);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				property.setProid(resultSet.getInt(1));
+				property.setHID(resultSet.getInt(2));
+				property.setPrcid(resultSet.getInt(3));
+				property.setTitle(resultSet.getString(4));
+				property.setType(resultSet.getString(5));
+				property.setAddress(resultSet.getString(6));
+				property.setNumRoom(resultSet.getInt(7));
+				property.setCountry(resultSet.getString(8));
+				
+			}
+		} catch (SQLException e) {
+			System.out.println("Error while getting property's info.");
+			e.printStackTrace();
+		}
+		return property;
+	}
 }

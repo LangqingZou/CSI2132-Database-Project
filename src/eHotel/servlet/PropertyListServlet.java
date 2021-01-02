@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import eHotel.connections.DBConnect;
-import eHotel.entities.Room;
+import eHotel.connections.HostConn;
+import eHotel.entities.Host;
+import eHotel.entities.Property;
 
-public class HostMenuServlet extends HttpServlet{
+public class PropertyListServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		doPost(req, resp);
 	}
 
 	@Override
@@ -23,22 +25,11 @@ public class HostMenuServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		DBConnect dbConnect = new DBConnect();
 		
-		String firstName = req.getParameter("firstname");
-		String lastName = req.getParameter("lastname");
-		String address = req.getParameter("address");
-		String phoneNumber = req.getParameter("phonenumber");
-		String email = req.getParameter("email");
-		
-		String[] info = new String[5];
-		ps = db.prepareStatement("select * from project.Person where email = email");
-		rs = ps.executeQuery();
-		while(rs.next()){
-			String room_no = rs.getString("room_no");
-			String room_status = rs.getString("room_status");
-			Room room = new Room(room_no, room_status);
-			Rooms.add(room);
-		}
-		
+		int pid = (int) session.getAttribute("pid");
+		Host host = (Host) session.getAttribute("loginRole");
+		HostConn hConn = new HostConn(dbConnect);
+		ArrayList<Property> myPropertyList = hConn.getPropertyList(host.getHID());
+		session.setAttribute("myPropertyList", myPropertyList);
+		dbConnect.closeDB();
 	}
-	
 }

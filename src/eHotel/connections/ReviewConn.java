@@ -1,85 +1,66 @@
 package eHotel.connections;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import eHotel.entities.Review;
 
 public class ReviewConn {
 	
-	private Connection db;
-	private PreparedStatement preparedStatement = null;
-	private Statement st = null;
 	private String sql;
-	private ResultSet resultSet = null;
+	private Connection db;
+	private ResultSet resultSet;
+	private PreparedStatement preparedStatement;
+	
+	private Review review;
 	
 	public ReviewConn(DBConnect dbConnect) {
-		db = dbConnect.getConnection();			
+		review = new Review();
+		db = dbConnect.getConnection();	
 	}
 	
-	public int createReview(Review review) {
+	public int insertNew(Review review) {
 		try {
-			sql = "insert into review values(?,?,?,?,?)";
+			sql = "insert into project.Review(proid,gid,rating,communication,cleanliness,value,comment) values(?,?,?,?,?,?,?) returning reid";
 			preparedStatement = db.prepareStatement(sql);
-			preparedStatement.setInt(1, review.getIDR());
-			preparedStatement.setInt(2, review.getRating());
-			preparedStatement.setInt(3, review.getCommunication());
-			preparedStatement.setInt(4, review.getCleanliness());
-			preparedStatement.setInt(5, review.getReValue());
-			return preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return 0;
-		}
-	}
-	
-	public boolean findReview(Review review) {
-		try {
-			sql = "select * from review where IDR = ?";
-			preparedStatement = db.prepareStatement(sql);
+			preparedStatement.setInt(1, review.getProid());
+			preparedStatement.setInt(2, review.getGID());
+			preparedStatement.setInt(3, review.getRating());
+			preparedStatement.setInt(4, review.getCommunication());
+			preparedStatement.setInt(5, review.getCleaniliness());
+			preparedStatement.setInt(6, review.getValue());
+			preparedStatement.setString(7, review.getComment());
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				return true;
+			if(resultSet.next()) {
+				this.review = review;
+				this.review.setReid(resultSet.getInt(1));
 			}
-			return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while inserting new review.");
 			e.printStackTrace();
-			return false;
 		}
+		return review.getReid();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+	public Review getReview(int reid) {
+		try {
+			preparedStatement = db.prepareStatement("select * from project.Review where reid = ?");
+			preparedStatement.setInt(1, reid);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				review.setReid(resultSet.getInt(1));
+				review.setGID(resultSet.getInt(2));
+				review.setRating(resultSet.getInt(3));
+				review.setCommunication(resultSet.getInt(4));
+				review.setCleaniliness(resultSet.getInt(5));
+				review.setValue(resultSet.getInt(6));
+			}
+		} catch (SQLException e) {
+			System.out.println("Error while getting review's info.");
+			e.printStackTrace();
+		}
+		return review;
+	}
 }
